@@ -1,7 +1,7 @@
   <h3> PROJECT DESCRIPTION </h3>
         <ul>
             - Summary: 
-              -Make a virtual bookself! Send the bookshelf to your email or text. Add books via text or pictures<br>
+              -Make a virtual bookself! Send the bookshelf to your email or text. Add books via text or pictures
           
             
             - MVP features (1-3):
@@ -35,4 +35,4 @@
             - Anything else about the project you’d like your advisor to know or would like their feedback on:
                   - I'm probably going to store images and files in an S3 bucket and want to have a really cool UI
             
-        </ul>
+      
