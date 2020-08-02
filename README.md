@@ -1,15 +1,13 @@
   <h3> PROJECT DESCRIPTION </h3>
         <ul>
-            <li>Summary: Make a virtual bookself! Send the bookshelf to your email or text. Add books via text or pictures<br>
-            </li>
-            <li>MVP features (1-3):
+            Summary: Make a virtual bookself! Send the bookshelf to your email or text. Add books via text or pictures<br>
+            
+            MVP features (1-3):
                     <div class= 'inner-list'>
                     <ol> Make a unique bookshelf by adding books either with a picture, form entry</ol>
                     <ol> Send bookshelf to self (email or text) with links to reserve books (library or bookstore)</ol>
                     <ol>Save bookshelf</ol>
                     </div>
-
-            </li>
             
             
             <li>2.0 features (1-3; these aren’t set in stone, but include what you’re thinking about):
