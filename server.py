@@ -23,28 +23,23 @@ client = vision.ImageAnnotatorClient()
 # file_name = os.path.abspath('/home/vagrant/src/hb_project/static/images/demo1.png')
 
 
-# print(response)
-# print('Labels:')
-# for label in labels:
-#     print(label.description)
-
-
-
 @app.route('/', methods=['GET', 'POST'])
 def show_index():
     """Show the index page"""
     if request.method == 'POST':
-        
+        # Get the name of image file to load
         file = request.form['books']
+
         # TO FIGURE OUT STORAGE FOR LATER 
         # Loads the image into memory
         #filename = secure_filename(file.filename)
         #file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+
+        # Open image file and load
         with io.open('static/images/'+file, 'rb') as image_file:
             content = image_file.read()
 
         image = types.Image(content=content)
-
 
         # Performs text detection on the image file
         response = client.annotate_image({'image':image})

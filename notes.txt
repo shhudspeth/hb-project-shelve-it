@@ -1,0 +1,63 @@
+Notes on the Cloud VIsion api
+
+RESPONSE INFO : __> 
+>>> dir(response)
+['ByteSize', 'Clear', 'ClearExtension', 'ClearField', 'CopyFrom', 'DESCRIPTOR',
+ 'DiscardUnknownFields', 'Extensions', 'FindInitializationErrors', 'FromString', 
+ 'HasExtension', 'HasField', 'IsInitialized', 'ListFields', 'MergeFrom', 'MergeFromString',
+  'ParseFromString', 'RegisterExtension', 'SerializePartialToString', 'SerializeToString', 
+  'SetInParent', 'UnknownFields', 'WhichOneof', '_CheckCalledFromGeneratedFile', '_SetListener', 
+  '__class__', '__deepcopy__', '__delattr__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', 
+  '__getattribute__', '__getstate__', '__gt__', '__hash__', '__init__', '__init_subclass__',
+   '__le__', '__lt__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__',
+    '__repr__', '__setattr__', '__setstate__', '__sizeof__', '__slots__', '__str__',
+     '__subclasshook__', '__unicode__', '_extensions_by_name', '_extensions_by_number',
+      'context', 'crop_hints_annotation', 'error', 'face_annotations', 'full_text_annotation',
+       'image_properties_annotation', 'label_annotations', 'landmark_annotations',
+        'localized_object_annotations', 'logo_annotations', 'product_search_results', 
+        'safe_search_annotation', 'text_annotations', 'web_detection']
+
+>>> dir(response.text_annotations)
+['MergeFrom', '__class__', '__deepcopy__', '__delattr__', '__delitem__', 
+'__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__',
+ '__getitem__', '__gt__', '__hash__', '__init__', '__init_subclass__', '__le__', '__len__', 
+ '__lt__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', 
+ '__setitem__', '__sizeof__', '__str__', '__subclasshook__', 'add', 'append', 'extend', 
+ 'insert', 'pop', 'remove', 'sort']
+
+
+ >>> print(response.text_annotations[0])
+locale: "en"
+description: "Hurricane Season Lauren\nIN THE SHADOW\nVIVECA\nOF POWER\n
+THE PULL OF THE STARS DO\nHillbilly Eleky\nJ.D.\nii] KRISTY WOODSON HARV\n16. funny Day by\n"
+bounding_poly {
+  vertices {
+    x: 42
+    y: 59
+  }
+  vertices {
+    x: 224
+    y: 59
+  }
+  vertices {
+    x: 224
+    y: 198
+  }
+  vertices {
+    x: 42
+    y: 198
+  }
+}
+
+
+
+ERROR MESSAGES:
+flask.debughelpers.DebugFilesKeyError: You tried to access the file "books" in the request.files dictionary but it does not exist.  The mimetype for the request is "application/x-www-form-urlencoded" instead of "multipart/form-data" which means that no file contents were transmitted.  To fix this error you should provide enctype="multipart/form-data" in your form.
+
+The browser instead transmitted some file names. This was submitted: "demo2 (hateugive).png"
+
+
+LINKS:
+https://googleapis.dev/python/vision/latest/gapic/v1p3beta1/api.html
+https://flask.palletsprojects.com/en/1.1.x/patterns/fileuploads/
+https://www.instagram.com/explore/tags/bookstack/
