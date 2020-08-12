@@ -66,7 +66,7 @@ class Book(db.Model):
     spine_img_source = db.Column(db.String(100))
     
     # back references to other models/FK
-    bookshelves = db.relationship('shelvedBook')
+    bookshelves = db.relationship('ShelvedBook')
   
     # REPR
     def __repr__(self):
@@ -83,7 +83,7 @@ class Bookshelf(db.Model):
     
     # Definition of Columns and relationships
     shelf_id = db.Column(db.Integer, primary_key=True, nullable=False, autoincrement=True)
-    book_id = db.Column(db.Integer, db.ForeignKey('books.book_id'))
+    shelvedbook_id = db.Column(db.Integer, db.ForeignKey('shelved_books.bookshelfbook_id'))
     user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
     nickname = db.Column(db.String(30), nullable=False)
     sent_to_user = db.Column(db.Boolean)
@@ -91,7 +91,7 @@ class Bookshelf(db.Model):
    
    # back references to other models/FK
     users = db.relationship('User')
-    books = db.relationship('Book')
+    books = db.relationship('ShelvedBook')
   
     #REPR
     def __repr__(self):
@@ -100,13 +100,13 @@ class Bookshelf(db.Model):
 
     
 # Table shelvedBook (book<>BookShelf)
-class shelvedBook(db.Model):
+class ShelvedBook(db.Model):
     """ Data Model for a book that is on a shelf """ 
 
     __tablename__ = "shelved_books"
     
     # Definition of Columns and relationships
-    bookshelfBook_id = db.Column(db.Integer, primary_key=True, nullable=False, autoincrement=True)
+    bookshelfbook_id = db.Column(db.Integer, primary_key=True, nullable=False, autoincrement=True)
     shelf_id = db.Column(db.Integer, db.ForeignKey('bookshelves.shelf_id'))
     book_id = db.Column(db.Integer, db.ForeignKey('books.book_id'))
     
