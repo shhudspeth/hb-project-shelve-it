@@ -60,13 +60,13 @@ class Book(db.Model):
     # Definition of Columns and relationships
     book_id = db.Column(db.Integer, primary_key=True, nullable=False, autoincrement=True)
     isbn = db.Column(db.String(30), unique=True)
-    title = db.Column(db.String(30), nullable=False, unique=True)
+    title = db.Column(db.String(50), nullable=False, unique=True)
     author= db.Column(db.String(30), nullable=False)
-    publisher= db.Column(db.String(30) )
-    year_published = db.Column(db.Integer)
-    cover_img_source = db.Column(db.String(100))
-    description = db.Column(db.String(100))
-    spine_img_source = db.Column(db.String(100))
+    publisher= db.Column(db.String(50) )
+    year_published = db.Column(db.String(30))
+    cover_img_source = db.Column(db.String(200))
+    description = db.Column(db.String(200))
+    spine_img_source = db.Column(db.String(200))
     
     # back references to other models/FK
     bookshelves = db.relationship('ShelvedBook')
@@ -86,20 +86,19 @@ class Bookshelf(db.Model):
     
     # Definition of Columns and relationships
     shelf_id = db.Column(db.Integer, primary_key=True, nullable=False, autoincrement=True)
-    shelvedbook_id = db.Column(db.Integer, db.ForeignKey('shelved_books.bookshelfbook_id'))
     user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
-    nickname = db.Column(db.String(30), nullable=False)
+    nickname = db.Column(db.String(50), nullable=False)
     sent_to_user = db.Column(db.Boolean)
     public_display = db.Column(db.Boolean)
    
    # back references to other models/FK
     users = db.relationship('User', foreign_keys=[user_id])
-    books = db.relationship('ShelvedBook', foreign_keys=[shelvedbook_id])
+    books = db.relationship('ShelvedBook')
   
     #REPR
     def __repr__(self):
             """Return a human-readable representation of a Bookshelf."""
-            return f"<Bookshelf_id = {self.shelf_id} Bookshelf Owner is {self.nickname} SentBookList = {self.sent_to_user}>"
+            return f"<Bookshelf_id = {self.shelf_id} the name of the Bookshelf is {self.nickname} SentBookList = {self.sent_to_user}>"
 
     
 

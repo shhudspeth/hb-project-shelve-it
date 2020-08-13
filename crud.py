@@ -46,6 +46,7 @@ def create_book(title, author, publisher, year_published, isbn, description):
                   year_published=year_published, 
                   isbn=isbn, 
                   description=description)
+                  # cover_img_source=cover_img_source)
     
     db.session.add(book)
     db.session.commit()
@@ -64,12 +65,10 @@ def get_book_by_id(title):
 
 
 # CREATE A BOOKSHELF FOR A USER
-def create_user_bookshelf(shelvedbooks_id, user, nickname, year_published):
+def create_user_bookshelf( user, nickname):
     """ Create and return a new user bookshelf"""
-    user_bookshelf = Bookshelf(shelvedbooks_id=shelvedbooks_id, 
-                  user=user, 
+    user_bookshelf = Bookshelf(user_id=user.user_id, 
                   nickname=nickname, 
-                  year_published=year_published, 
                   sent_to_user=False, 
                   public_display=False)
     
@@ -79,12 +78,15 @@ def create_user_bookshelf(shelvedbooks_id, user, nickname, year_published):
     return user_bookshelf
 
 
-# CRUD FOR A BOOKforaBOOKSELF
+# CRUD FOR A BOOKforaBOOKSELFpsql
 
-def create_shelvedbook(shelf, book):
+def create_shelvedbook(shelf, book, reading_status, owned_status):
     """ Create and return a new shelvedbook (book for a shelf with lots of user preferences"""
     
-    shelved_book = ShelvedBook(shelf=shelf, book=book)
+    shelved_book = ShelvedBook(shelf_id=shelf, 
+                                book_id=book, 
+                                reading_status=reading_status, 
+                                owned_status=owned_status)
 
     
     db.session.add(shelved_book)
