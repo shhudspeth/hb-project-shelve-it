@@ -1,6 +1,9 @@
 from flask_sqlalchemy import SQLAlchemy
 import flask
-from sqlachemy_utils import PasswordType, force_auto_coercion
+from sqlalchemy_utils import PasswordType, force_auto_coercion
+import os
+import json
+from random import choice, randint  
 
 # Instantiate a SQLAlchemy object to create db.Model classes.
 db = SQLAlchemy()
@@ -35,7 +38,7 @@ class User(db.Model):
     text_number = db.Column(db.String(100))
     contact_by_email = db.Column(db.Boolean)
     contact_by_text = db.Column(db.Boolean)
-    share_link = db.Column(varchar(100))
+    share_link = db.Column(db.String(100))
     lat = db.Column(db.Float)
     long = db.Column(db.Float)
 
@@ -71,11 +74,11 @@ class Book(db.Model):
     # REPR
     def __repr__(self):
             """Return a human-readable representation of a Book."""
-            return f"<Book id ={self.book_id} title ={self.title} author = {self.author}>"
+            return f"<Book id ={self.book_id}. The title is {self.title} and the author is {self.author}>"
 
 
 
-# Table bookshelf 
+# Table bookshelf (links shelved books aka books ona shelf to a user)
 class Bookshelf(db.Model):
     """ Data Model for a Bookshelf """ 
 
@@ -90,16 +93,49 @@ class Bookshelf(db.Model):
     public_display = db.Column(db.Boolean)
    
    # back references to other models/FK
-    users = db.relationship('User')
-    books = db.relationship('ShelvedBook')
+    users = db.relationship('User', foreign_keys=[user_id])
+    books = db.relationship('ShelvedBook', foreign_keys=[shelvedbook_id])
   
     #REPR
     def __repr__(self):
             """Return a human-readable representation of a Bookshelf."""
-            return f"<Bookshelf_id ={self.book_id} name ={self.nickname} sent = {self.sent_to_user}>"
+            return f"<Bookshelf_id = {self.shelf_id} Bookshelf Owner is {self.nickname} SentBookList = {self.sent_to_user}>"
 
     
-# Table shelvedBook (book<>BookShelf)
+
+class ReadingStatus(db.Model):
+    """ Data Model for a book that is on a shelf """ 
+
+    __tablename__ = "reading_status"
+    
+    # Definition of Columns and relationships
+    reading_status_id = db.Column(db.Integer, primary_key=True, nullable=False, autoincrement=True)
+    reading_status_name = db.Column(db.String(30), unique=True)
+
+    shelvedbook = db.relationship('ShelvedBook')
+    # REPR
+    def __repr__(self):
+            """Return a human-readable representation of a Book."""
+            return f"< Reading_status = '{self.reading_status_name}' >"
+
+class OwnedStatus(db.Model):
+    """ Data Model for a book that is on a shelf """ 
+
+    __tablename__ = "owned_status"
+    
+    # Definition of Columns and relationships
+    owned_id = db.Column(db.Integer, primary_key=True, nullable=False, autoincrement=True)
+    owned_text = db.Column(db.String(30), unique=True)
+
+    shelvedbook = db.relationship('ShelvedBook')
+
+    # REPR
+    def __repr__(self):
+            """Return a human-readable representation of a Book."""
+            return f"< Owned_status = '{self.owned_text}' >"
+
+
+# Table shelvedBook (book<>BookShelf) many to many table to like books to a shelf to a user
 class ShelvedBook(db.Model):
     """ Data Model for a book that is on a shelf """ 
 
@@ -109,46 +145,20 @@ class ShelvedBook(db.Model):
     bookshelfbook_id = db.Column(db.Integer, primary_key=True, nullable=False, autoincrement=True)
     shelf_id = db.Column(db.Integer, db.ForeignKey('bookshelves.shelf_id'))
     book_id = db.Column(db.Integer, db.ForeignKey('books.book_id'))
+    reading_status = db.Column(db.Integer, db.ForeignKey('reading_status.reading_status_id'))
+    owned_status = db.Column(db.Integer, db.ForeignKey('owned_status.owned_id'))
     
    # back references to other models/FK
-    bookshelves = db.relationship('Bookshelf')
-    books = db.relationship('Book')
+    bookshelves = db.relationship('Bookshelf', foreign_keys=[shelf_id])
+    books = db.relationship('Book', foreign_keys=[book_id])
+    # reading_statuses = db.relationship('ReadingStatus', foreign_keys=[reading_status])
+    # owned_statuses = db.relationship('OwnedStatus', foreign_keys=[owned_status])
   
     # REPR
     def __repr__(self):
             """Return a human-readable representation of a Book."""
-            return f"<shelvedBook_id ={self.bookshelfBook_id} name ={self.user.user_name} bookshelves = {self.shelf_id}>"
-
-
-class reading_status(db.Model):
-    """ Data Model for a book that is on a shelf """ 
-
-    __tablename__ = "reading_status"
-    
-    # Definition of Columns and relationships
-    reading_status_id = db.Column(db.Integer, primary_key=True, nullable=False, autoincrement=True)
-    reading_status_name = db.Column(db.String(30), unique=True)
-
-
-    # REPR
-    def __repr__(self):
-            """Return a human-readable representation of a Book."""
-            return f"< Reading_status ={self.reading_status_name} >"
-
-class owned_status(db.Model):
-    """ Data Model for a book that is on a shelf """ 
-
-    __tablename__ = "owned_status"
-    
-    # Definition of Columns and relationships
-    owned_id = db.Column(db.Integer, primary_key=True, nullable=False, autoincrement=True)
-    owned_text = db.Column(db.String(30), unique=True)
-
-
-    # REPR
-    def __repr__(self):
-            """Return a human-readable representation of a Book."""
-            return f"< Owned_status ={self.owned_text} >"
+            # TODO figure out later how to add name = '{self..user_id.user_nbookshelvesame}'
+            return f"<shelvedBook_id = {self.bookshelfbook_id}  bookshelves = '{self.shelf_id}'>"
 
 
 
@@ -161,3 +171,23 @@ class owned_status(db.Model):
     # liked = db.Column(db.Boolean)
     # didnot_like = db.Column(db.Boolean)
     # removed_from_shelf boolean = db.Column(db.Boolean)
+
+def connect_to_db(flask_app, db_uri='postgresql:///shelve_it', echo=True):
+    flask_app.config['SQLALCHEMY_DATABASE_URI'] = db_uri
+    flask_app.config['SQLALCHEMY_ECHO'] = echo
+    flask_app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+    db.app = flask_app
+    db.init_app(flask_app)
+
+    print('Connected to the db!')
+
+
+if __name__ == '__main__':
+    from server import app
+   
+
+    # Call connect_to_db(app, echo=False) if your program output gets
+    # too annoying; this will tell SQLAlchemy not to print out every
+    # query it executes.
+    connect_to_db(app)

@@ -1,0 +1,17 @@
+[
+    {
+    "reading_status" : "liked"
+}, 
+{
+    "reading_status": "did not like"
+}, 
+{
+    "reading_status": "want to read"
+    }, 
+{
+    "reading_status": "want to reread"
+},
+{
+    "reading_status": "currently reading"
+}
+]

@@ -1,0 +1,14 @@
+[
+    {
+    "owned_status" : "ordered"
+}, 
+{
+    "owned_status": "borrowed"
+}, 
+{
+    "owned_status": "owned"
+    }, 
+{
+    "owned_status": "loaned out"
+}
+]
