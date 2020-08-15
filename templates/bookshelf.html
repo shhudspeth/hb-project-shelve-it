@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<h2> Your books {{session['user']}} </h2>
+
+<div class='form-upload-books'>
+       <form method='POST'>
+       <label for="shelf_name">Please type in your name or name of bookshelf</label>
+       <input type="text" name="shelf_name"> <br>
+
+       <label for="fileElem">Select an image of a stack of books</label>
+       <input type="file" id="bookstack" name="books" accept="image/png, image/jpeg", enctype="multipart/form-data"><br>
+
+       <!-- TO DO : ALSO CREATE IMPORT FOR IMAGE URLS -->
+       <button type='submit'> Click here to upload</button>
+       </form>
+   </div>
+
+   <h3> TEXT FROM IMAGE OF BOOKS</h3>
+   <div class="text"></div>
+     {% if session['response'] %}
+     <img src= "static/images/{{session['file']}}"> <br>
+
+
+     {{session['response']}}
+     {% endif %}
+</div>
+
+       <div>
+           <h3> Add your own books</h3>
+           <form class="form-add-book" method="POST">
+           <button class="form-add-book" type="submit">Add a book</button>
+
+           <select name="shelf_name">
+              <option value="name one">Add Jinji to get shelfnames</option>
+           </select>
+
+              <div class="form-group">
+              <label for="text-field" class="sr-only">Title</label>
+              <input type="text"
+                     name="title"
+                     class="form-control input-lg"
+                     placeholder="Title of Book"
+                     required
+                     autofocus>
+              </div>
+       
+              <div class="form-group">
+              <label for="author" class="sr-only">Author</label>
+              <input type="text"
+                     name="author"
+                     class="form-control input-lg"
+                     placeholder="Author"
+                     required
+                     autofocus>
+              </div>
+              </form>
+       </div>
+
+</div>
+
+
+<a href="/">Go Home</a> 
+<a href="/bookshelf">Your Bookshelf</a> 
+
+
+{% endblock %}
+

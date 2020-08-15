@@ -1,0 +1,105 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<form class="form-signin" method="POST">
+
+  <h2 class="form-signin-heading">Please Register your Bookshelf Account</h2>
+
+  <div class="form-group">
+    <label for="text-field" class="sr-only">Username</label>
+    <input type="text"
+           name="user_name"
+           class="form-control input-lg"
+           placeholder="Username"
+           required
+           autofocus>
+  </div>
+
+  <div class="form-group">
+    <label for="email-field" class="sr-only">Email Address</label>
+    <input type="email"
+           name="email"
+           class="form-control input-lg"
+           placeholder="Email Address"
+           required
+           autofocus>
+  </div>
+
+  <div class="form-group">
+    <label for="password-field" class="sr-only">Password</label>
+    <input type="password"
+           name="password"
+           class="form-control input-lg"
+           placeholder="Password"
+           required>
+  </div>
+  
+  <div class="form-group">
+    <p>Your Display Setting: 
+    
+    <input type="radio"
+           name="public"
+           value="True"
+           class="form-control input-lg"
+            required>
+    <label for="public" class="sr-only">Public Shelf</label>
+    
+    <input type="radio"
+           name="public"
+           value="False"
+           class="form-control input-lg"
+           required> 
+    <label for="public" class="sr-only">Private Shelf</label></p>
+  </div>
+
+  <div class="form-group">
+    <p>How should we send you Books on your Shelf?
+    <label for="text" class="sr-only">Text </label>
+    <input type="radio"
+           name="communicate"
+           value="text_phone"
+           class="form-control input-lg"
+            required>
+    <label for="email_list" class="sr-only">Email</label>
+    <input type="radio"
+           name="communicate"
+           value="email_list"
+           class="form-control input-lg"
+           required>
+           <label for="email_list" class="sr-only">Both</label>
+           <input type="radio"
+                  name="communicate"
+                  value="both"
+                  class="form-control input-lg"
+                  required>
+                  <label for="email_list" class="sr-only">Online access only</label>
+           <input type="radio"
+                  name="communicate"
+                  value="neither"
+                  class="form-control input-lg"
+                  required> </p>
+  </div>
+
+  <label for="phone">If you want us to text you your books, please enter your phone number(optional):</label>
+  <input type="tel" id="phone" name="phone" placeholder="555-555-5555"pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}">
+
+  <div class="form-group">
+    <label for="zip_code" class="sr-only">If you would like us to find local libraries or bookstores, please enter a zip code(optional):</label>
+    <input type="text" 
+           name="zip_code" 
+           placeholder="your zip code"  
+           pattern="^\s*?\d{5}(?:[-\s]\d{4})?\s*?$">
+
+  </div>
+  <p></p>
+  <button class="btn btn-lg btn-primary btn-block" type="submit">Register
+  </button>
+
+</form>
+
+<a href="/">Go Home</a> 
+<a href="/bookshelf">Your Bookshelf</a> 
+
+
+{% endblock %}
+

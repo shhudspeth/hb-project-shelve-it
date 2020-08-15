@@ -65,11 +65,13 @@ class Book(db.Model):
     publisher= db.Column(db.String(50) )
     year_published = db.Column(db.String(30))
     cover_img_source = db.Column(db.String(200))
-    description = db.Column(db.String(200))
+    description = db.Column(db.String())
     spine_img_source = db.Column(db.String(200))
     
     # back references to other models/FK
-    bookshelves = db.relationship('ShelvedBook')
+    shelvedbooks = db.relationship('ShelvedBook')
+
+    bookshelves = db.relationship('Bookshelf', secondary='shelved_books')
   
     # REPR
     def __repr__(self):
@@ -92,8 +94,12 @@ class Bookshelf(db.Model):
     public_display = db.Column(db.Boolean)
    
    # back references to other models/FK
-    users = db.relationship('User', foreign_keys=[user_id])
-    books = db.relationship('ShelvedBook')
+    user = db.relationship('User', foreign_keys=[user_id])
+    shelvedbooks = db.relationship('ShelvedBook')
+
+    # BOOKSHELF TO BOOK
+
+    books = db.relationship('Book',secondary='shelved_books')
   
     #REPR
     def __repr__(self):
@@ -147,12 +153,13 @@ class ShelvedBook(db.Model):
     reading_status = db.Column(db.Integer, db.ForeignKey('reading_status.reading_status_id'))
     owned_status = db.Column(db.Integer, db.ForeignKey('owned_status.owned_id'))
     
-   # back references to other models/FK
-    bookshelves = db.relationship('Bookshelf', foreign_keys=[shelf_id])
-    books = db.relationship('Book', foreign_keys=[book_id])
+   # back references to other models/FK (SINGLE INSTANCES)
+    bookshelf = db.relationship('Bookshelf', foreign_keys=[shelf_id])
+    book = db.relationship('Book', foreign_keys=[book_id])
     # reading_statuses = db.relationship('ReadingStatus', foreign_keys=[reading_status])
     # owned_statuses = db.relationship('OwnedStatus', foreign_keys=[owned_status])
   
+    user = db.relationship('User', secondary='bookshelves')
     # REPR
     def __repr__(self):
             """Return a human-readable representation of a Book."""

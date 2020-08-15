@@ -2,24 +2,24 @@
     {
         "email" : "test@test.com", 
         "password" : "test", 
-        "user_name" : "testusername"
+        "user_name" : "BookWormMary"
     },
     {
         "email" : "test1@test.com", 
         "password" : "test", 
-        "user_name" : "test1username"
+        "user_name" : "BookLoverBoo1"
     },{
         "email" : "test2@test.com", 
         "password" : "test", 
-        "user_name" : "test2username"
+        "user_name" : "ReadReader2"
     },{
         "email" : "test3@test.com", 
         "password" : "test", 
-        "user_name" : "test3username"
+        "user_name" : "WriteReadLive3"
     },{
         "email" : "test4@test.com", 
         "password" : "test", 
-        "user_name" : "test4username"
+        "user_name" : "Pages4Ever"
     }
 
 ]

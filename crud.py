@@ -77,6 +77,13 @@ def create_user_bookshelf( user, nickname):
 
     return user_bookshelf
 
+def return_all_books_on_shelf_by_user(user_id):
+    """ Create and return a list of all books"""
+    return Bookshelf.query.filter(Bookshelf.user_id==user_id).books.all()
+
+def return_all_books_on_shelf_by_name(nickname):
+    """ Create and return a list of all books"""
+    return Bookshelf.query.filter(nickname==nickname).books.all()
 
 # CRUD FOR A BOOKforaBOOKSELFpsql
 

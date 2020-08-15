@@ -25,7 +25,7 @@ for item in book_data:
     publisher = book_data[item]['publisher']
     published_date = book_data[item]['year_published']
     isbn = book_data[item]['isbn']
-    description = book_data[item]['description'][:99]
+    description = book_data[item]['description']
     cover_img_source = book_data[item]['cover_img_source']
 
     new_book = crud.create_book(title, author, publisher, published_date, isbn, description)
