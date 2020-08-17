@@ -15,6 +15,22 @@ def create_user(email, password, user_name):
 
     return user
 
+
+def create_user_register(email, password, user_name, text_number, communication, contact, zipcode):
+    """Create and return a new user via registration form."""
+
+    # TODO 
+    # 1. make a zipcode function
+    # 2. make a text_number function
+    # 3. make a public or private display feature
+    joined_at = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+    user = User(email=email, password=password, user_name=user_name, joined_at = joined_at, text_number=text_number)
+
+    db.session.add(user)
+    db.session.commit()
+
+    return user
+
 def return_all_users():
     """ Create and return a list of all users"""
     return User.query.all()  
@@ -77,13 +93,23 @@ def create_user_bookshelf( user, nickname):
 
     return user_bookshelf
 
-def return_all_books_on_shelf_by_user(user_id):
-    """ Create and return a list of all books"""
-    return Bookshelf.query.filter(Bookshelf.user_id==user_id).books.all()
+# QUERIES ON BOOKSHELF
 
-def return_all_books_on_shelf_by_name(nickname):
-    """ Create and return a list of all books"""
-    return Bookshelf.query.filter(nickname==nickname).books.all()
+def return_all_books_on_shelf_by_user(user_id):
+    """ Create and return a list of all books on a user shelf by user id"""
+    user_books = Bookshelf.query.filter(Bookshelf.user_id==user_id).all()
+
+    all_user_books = [shelf.books for shelf in user_books ]
+    
+    return(all_user_books)
+
+
+def return_books_on_shelf_by_shelfid(shelf_id, user_id):
+    """ Create and return a list of all books on a user shelf by user id"""
+    id_shelf_books = Bookshelf.query.filter((Bookshelf.shelf_id==shelf_id) & (Bookshelf.user_id==user_id)).first()
+    return(id_shelf_books.books)
+
+
 
 # CRUD FOR A BOOKforaBOOKSELFpsql
 

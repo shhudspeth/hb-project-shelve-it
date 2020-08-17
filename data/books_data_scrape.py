@@ -39,10 +39,16 @@ with open("book_api_data.json", "w") as outfile:
         json.dump(book_json, outfile)
 
 
+
+
 # how to access pertinent info, hopefully
 # ['items'][0]['volumeInfo'], 'link' :page.content.json()['items'][0]['selfLink']
 
 # another scrape:
+
+with open('data/seeding_jsons/better_book_data.json') as f:
+     book_data = json.loads(f.read())
+     
 book_dictionary_again = {}
 for no, book in enumerate(book_data):
     if no >= 30 and no not in [35, 36]:
