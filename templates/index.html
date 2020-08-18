@@ -6,6 +6,7 @@
 
 {% block body %}
   <h2>Welcome to a Virtual Bookshelf Demo Site</h2>
+  
     <div class='form'>
         <form method='POST'>
         <label for="shelfname">Please type in your name or name of bookshelf</label>
@@ -19,19 +20,19 @@
         </form>
     </div>
 
-    <h3> TEXT FROM IMAGE OF BOOKS</h3>
-    <div class="text"></div>
-      {% if response %}
-      <img src= "static/images/{{file}}"> <br>
+  <h3> TEXT FROM IMAGE OF BOOKS</h3>
+  <div class="text"></div>
+    {% if response %}
+    <img src= "static/images/{{file}}"> <br>
 
-      {{response.text_annotations[0].description}}
-      {% endif %}
-      
-    <a href="/">Go Home</a> 
-    <a href="/bookshelf">Your Bookshelf</a> 
-    <a href="/login">Login</a> 
-    <a href="/register">Register</a> 
-    <a href="/upload_books">Upload Books</a>
+    {{response.text_annotations[0].description}}
+    {% endif %}
+    
+  <a href="/">Go Home</a> 
+  <a href="/bookshelf">Your Bookshelf</a> 
+  <a href="/login">Login</a> 
+  <a href="/register">Register</a> 
+  <a href="/upload_books">Upload Books</a>
     
 
 {% endblock %}

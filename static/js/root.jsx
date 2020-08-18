@@ -4,35 +4,111 @@ const Link =  ReactRouterDOM.Link;
 const Prompt =  ReactRouterDOM.Prompt;
 const Switch = ReactRouterDOM.Switch;
 const Redirect = ReactRouterDOM.Redirect;
+const useHistory = ReactRouterDOM.useHistory;
 
 function Homepage() {
     return <div> Welcome to my site </div>
 }
 
-function About() {
-    return <div> A tiny react demo site </div>
+function bookListItem(props) {
+return <li>{props.title} {props.author}</li>
 }
 
-function ShoppingListItem(props) {
-    return <li> {props.item} </li>
+function Bookshelf() {
+  const [bookList, setBookList] = React.useState(["loading..."]);
+
+    React.useEffect(() => {
+      console.log("fetching books...")
+      fetch('/api/bookshelf')
+      .then(response => response.json())
+      .then((data) => {
+        const booktList = []
+        for (const post of data) {
+          console.log(post);
+          bookList.push(<bookListItem title={post.title} author={post.author}/>)
+        }
+        setBookList(bookList)
+      })
+    }, [])
+
+    return (
+      <div>
+        <ul>
+           {bookList}
+        </ul>
+      </div>
+    )
+   
 }
+
+
 
 function Login(props) { 
+  let history = useHistory();
   const [email, setEmail] = React.useState()
+  const [password, setPassword] = React.useState()
+
+  const handleSubmit = (event) => {
+
+    const login_user = 
+      {"email": email, "password": password }
+
+    fetch('/login', {
+      method: 'POST', 
+      body: JSON.stringify(login_user),
+      headers: {
+        'Content-Type': 'application/json'
+      },
+    })
+    .then(response => response.json())
+    .then(data => {
+     
+        alert(`${data.status}`)
+      
+    })
+    console.log(login_user)
+    event.preventDefault();
+    history.push('/')
+    }
+
   // a form with no logic yet
   return (
-    <div>
-      Email:
-      <input type="text"></input>
-      Password:
-      <input type="text"></input>
-      <button> Login </button>
-    </div>
+    <form className="form-signin" onSubmit={handleSubmit}>
+
+        <h2 className="form-signin-heading">Please Sign In</h2>
+
+        <div className="form-group">
+          <label htmlFor="email-field" className="sr-only">Email Address</label>
+          <input type="email"
+                name="email"
+                className="form-control input-lg"
+                onChange={e => setEmail(e.target.value)}
+                placeholder="Email Address"
+                required
+                autoFocus />
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="password-field" className="sr-only">Password</label>
+          <input type="password"
+                name="password"
+                className="form-control input-lg"
+                onChange={e => setPassword(e.target.value)}
+                placeholder="Password"
+                required />
+        </div>
+
+        <button className="btn btn-lg btn-primary btn-block">Sign In
+        </button>
+
+      </form>
   )
 }
 
 function Register() {
   // register a user in React
+
+  let history = useHistory();
 
   const [email, setEmail] = React.useState();
   const [username, setUsername] = React.useState();
@@ -65,8 +141,8 @@ function Register() {
     })
     console.log(register_user)
       
-
       event.preventDefault();
+      history.push('/')
     }
   return (
     <form className="form-register" onSubmit={handleSubmit}>
@@ -276,10 +352,10 @@ function App() {
                 <li>
                     <Link to="/login"> Login </Link>
                 </li>
-                {/* <li> */}
-                    {/* <Link to="/bookshelf"> Your Bookshelf </Link>
+                <li> 
+                    <Link to="/bookshelf"> Your Bookshelf </Link>
                 </li>
-                <li>
+                {/* <li>
                     <Link to="/upload_bookphoto"> Upload Books to Your Bookshelf </Link>
                 </li>
                 <li>
@@ -294,9 +370,9 @@ function App() {
               </ul>
             </nav>
             <Switch>
-            {/* <Route path="/bookshelf">
-                <DisplayBookshelf />
-              </Route> */}
+              <Route path="/bookshelf">
+                <Bookshelf />
+              </Route> 
               <Route path="/register">
                 <Register />
               </Route>

@@ -1,6 +1,7 @@
 from flask import Flask, render_template, jsonify, request, session, redirect, flash
 import crud
 import model
+import json
 
 app = Flask(__name__)
 app.secret_key = 'to-be-determined'
@@ -17,21 +18,25 @@ def process_login():
     Find the user's login credentials located in the 'request.form'
     dictionary, look up the user, and store them in the session.
     """
-
-    user_email = request.get_json()
-    if crud.get_user_by_email(user_email):
-        current_user = crud.get_user_by_email(user_email)
-        print(current_user.email, user_email)
-        if current_user.password == request.form.get('password'):
+    user_login = request.get_json()
+    
+    if crud.get_user_by_email(user_login['email']):
+        current_user = crud.get_user_by_email(user_login['email'])
+       
+        if current_user.password == user_login['password']:
             session['user'] = current_user.user_name
             flash("You've logged in successfully. Welcome to your Shelve-It account.")
             # return redirect('/bookshelf')
+            return(jsonify({'status': "ok. you are logged in!"}))
         else:
             flash('Incorrect Password. Please try again')
-            return redirect('/login')
+            return (jsonify({'status': "incorrect password"}))
     else:
         flash("No account with that email exists. Please create one or try again")
-        return redirect('/register')
+        # return redirect('/register')
+        return(jsonify({'status': "no user with that email"}))
+
+
 
 @app.route('/register', methods=["POST"])
 def register_new_account():
@@ -47,13 +52,45 @@ def register_new_account():
 
     new_user = crud.create_user_register(email, pswd, uname, phnum, email_text, public, zipc)
 
-
     if new_user:
         return (jsonify({'message':'ok'}))
     else:
         return (jsonify({'message':'somethinghappened. user might not have been made'}))
 
 
+
+@app.route('/api/bookshelf')
+def display_bookshelf():
+    print(session['user'])
+    
+    if session['user']:
+        current_user = crud.get_user_by_username(session['user'])
+        user_books = crud.return_all_books_on_shelf_by_user(current_user.user_id)
+    else:
+        flash("please login first!")
+        return(jsonify({"status": "please login first"}))
+    print(user_books)
+    
+    return jsonify(user_books)
+
+
+
+@app.route('/api/bookshelf', methods=["POST"])
+def add_to_bookshelf():
+    if request.method == 'POST':
+        file = request.form['books']
+        response = api.text_from_photo(f"static/images/{file}")
+        # serialized = MessageToJson()
+        session['response'] = response.text_annotations[0].description
+        session['file'] = file
+        # TODO: CRUD ADD BOOKS FROM RESPONSE TO DATABASE 
+
+        return redirect('/bookshelf')
+    
+    #books = crud.
+    else:
+        flash("something went worng. try again")
+        return redirect('/bookshelf')
 
     
 
