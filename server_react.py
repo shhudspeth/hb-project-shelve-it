@@ -75,13 +75,22 @@ def display_bookshelf():
     for book in user_books[0]: 
         serialized_books.append({'book_id': book.book_id, "title":book.title, 
                                 'author': book.author, 'publisher': book.publisher, 
-                                'description':book.description})
+                                'description':book.description, "img":book.cover_img_source})
                                      
     return jsonify(serialized_books)
 
 
 @app.route('/book_info/<book_id>')
 def display_book_info(book_id):
+
+    if session['user']:
+        current_user = crud.get_user_by_username(session['user'])
+        book_info = crud.get_book_by_id(book_id)
+        print("\n\n\n\n", current_user, book_info, "\n\n\n\n")
+        try:
+            shelved_book_info = crud.get_book_by_id(current_user.user_id, book_id)
+        except:
+            flash("book not on shelf, add it?")
     
     #update or create shelvedbooked info
     # create_shelvedbook(shelf, book, reading_status, owned_status)
@@ -90,6 +99,38 @@ def display_book_info(book_id):
                                      
     return jsonify()
 
+
+@app.route('/bookshelf/addbook')
+def get_book_info():
+
+    data = request.get_json()
+    print(data)
+
+    new_book_google_json = api.find_google_book_data(data['entertitle'], data['enterauthor'])
+    new_book_info = parse_response_data_for_info(new_book_google_json)
+     
+    if crud.get_book_by_name(new_book_info['title']):
+        book = crud.get_book_by_name(new_book_info['title'])
+        
+    else:
+        title = new_book_info['title']
+        author = new_book_info['author']  
+        publisher = new_book_info['publisher']  
+        year_published = new_book_info['year_published']
+        isbn =  new_book_info['isbn'] 
+        description = new_book_info['description']  
+        cover_img_source = new_book_info['cover_img_source']
+        book = crud.create_book(title, author, publisher, year_published, isbn, description)
+    
+    return jsonify({'book_id': book.book_id, "title":book.title, 
+                                'author': book.author, 'publisher': book.publisher, 
+                                'description':book.description})
+    #update or create shelvedbooked info
+    # create_shelvedbook(shelf, book, reading_status, owned_status)
+    # TODO 1. display book image, 2. display description, 3. add buttons for all the things
+
+                                     
+    return jsonify()
 
 
 @app.route('/api/bookshelf', methods=["POST"])

@@ -65,7 +65,7 @@ for no, book in enumerate(book_data):
             description= 'unknown'
         # description = book_data[book]['response']['items'][0]['volumeInfo']['description']
         year_published = book_data[book]['response']['items'][0]['volumeInfo']['publishedDate']
-        cover_img_source = book_data[book]['response']['items'][0]['volumeInfo']['imageLinks']
+        cover_img_source = book_data[book]['response']['items'][0]['volumeInfo']['imageLinks']['thumbnail']
         if len(book_data[book]['response']['items'][0]['volumeInfo']['industryIdentifiers']) > 1:
             isbn = book_data[book]['response']['items'][0]['volumeInfo']['industryIdentifiers'][1]['identifier']
         

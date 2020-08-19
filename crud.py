@@ -54,15 +54,15 @@ def get_user_by_username(user_name):
 # CRUD FOR BOOK CLASS
 
 
-def create_book(title, author, publisher, year_published, isbn, description):
+def create_book(title, author, publisher, year_published, isbn, description, cover_img_source):
     """ Create and return a new book"""
     book = Book(title=title, 
                   author=author, 
                   publisher=publisher, 
                   year_published=year_published, 
                   isbn=isbn, 
-                  description=description)
-                  # cover_img_source=cover_img_source)
+                  description=description,
+                  cover_img_source=cover_img_source)
     
     db.session.add(book)
     db.session.commit()
@@ -100,7 +100,7 @@ def create_user_bookshelf( user, nickname):
 # QUERIES ON BOOKSHELF
 
 def return_all_books_on_shelf_by_user(user_id):
-    """ Create and return a list of all books on a user shelf by user id"""
+    """ Return a list of all books on a user shelf by user id"""
     user_books = db.session.query(Bookshelf).filter(Bookshelf.user_id==user_id).all()
 
     all_user_books = [shelf.books for shelf in user_books ]
@@ -109,7 +109,7 @@ def return_all_books_on_shelf_by_user(user_id):
 
 
 def return_books_on_shelf_by_shelfid(shelf_id, user_id):
-    """ Create and return a list of all books on a user shelf by user id"""
+    """ Return a list of all books on a user shelf by user id"""
     id_shelf_books = Bookshelf.query.filter((Bookshelf.shelf_id==shelf_id) & (Bookshelf.user_id==user_id)).first()
     return(id_shelf_books.books)
 
@@ -131,6 +131,23 @@ def create_shelvedbook(shelf, book, reading_status, owned_status):
 
     return shelved_book
 
+def get_shelvedbook(user_id, book_id):
+    """ Return a new shelvedbook (book for a shelf with lots of user preferences"""
+    user_books = db.session.query(Bookshelf).filter(Bookshelf.user_id==user_id).all()
+    shelved_book = ShelvedBook(shelf_id=shelf, 
+                                book_id=book, 
+                                reading_status=reading_status, 
+                                owned_status=owned_status)
+
+    
+    db.session.add(shelved_book)
+    db.session.commit()
+
+    return shelved_book
+
+#getshelvedbook
+#.readingstatus=newstatus
+#commit should save object (check if you have to add to session, )
 
 def create_reading_status(status):
     """ Create a reading status for a given book" """

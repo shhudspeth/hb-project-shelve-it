@@ -7,8 +7,14 @@
     <script src='https://unpkg.com/react-router@5.2.0/umd/react-router.min.js'></script>
     <script src='https://unpkg.com/react-router-dom@5.2.0/umd/react-router-dom.min.js'></script> 
 
-    <div id="root"></div>
-    
+    <div id="root">
+
+    {% with messages = get_flashed_messages() %}
+      {% for message in messages %}
+          <div class="alert alert-warning">{{ message }}</div>
+      {% endfor %}
+    {% endwith %}
+    </div>
     <!-- MY JS SCRIPTS-->
     <script src="/static/js/root.jsx" type="text/jsx"></script>
 
