@@ -2,6 +2,7 @@ from flask import Flask, render_template, jsonify, request, session, redirect, f
 import crud
 import model
 import json
+import api
 
 app = Flask(__name__)
 app.secret_key = 'to-be-determined'
@@ -61,7 +62,7 @@ def register_new_account():
 
 @app.route('/api/bookshelf')
 def display_bookshelf():
-    print(session['user'])
+    print(session['user']+ '\n\n\n\n')
     
     if session['user']:
         current_user = crud.get_user_by_username(session['user'])
@@ -69,29 +70,44 @@ def display_bookshelf():
     else:
         flash("please login first!")
         return(jsonify({"status": "please login first"}))
-    print(user_books)
+    serialized_books = []
+    # user_books is a list of a list!!!
+    for book in user_books[0]: 
+        serialized_books.append({'book_id': book.book_id, "title":book.title, 
+                                'author': book.author, 'publisher': book.publisher, 
+                                'description':book.description})
+                                     
+    return jsonify(serialized_books)
+
+
+@app.route('/book_info/<book_id>')
+def display_book_info(book_id):
     
-    return jsonify(user_books)
+    #update or create shelvedbooked info
+    # create_shelvedbook(shelf, book, reading_status, owned_status)
+    # TODO 1. display book image, 2. display description, 3. add buttons for all the things
+
+                                     
+    return jsonify()
 
 
 
 @app.route('/api/bookshelf', methods=["POST"])
 def add_to_bookshelf():
-    if request.method == 'POST':
-        file = request.form['books']
+
+        info = request.get_json()
+        print(info, "GETTING A POST RESPONSE")
+        file = info['filepath'].split("\\").pop()
+        shelf = info['shelfname']
         response = api.text_from_photo(f"static/images/{file}")
         # serialized = MessageToJson()
         session['response'] = response.text_annotations[0].description
         session['file'] = file
-        # TODO: CRUD ADD BOOKS FROM RESPONSE TO DATABASE 
+        # TODO: CRUD ADD BOOKS FROM RESPONSE TO DATABASE to specific shelf
 
-        return redirect('/bookshelf')
+        return jsonify(response.text_annotations[0].description)
     
     #books = crud.
-    else:
-        flash("something went worng. try again")
-        return redirect('/bookshelf')
-
     
 
 @app.route("/api/top-posts")
@@ -124,10 +140,13 @@ if __name__ == "__main__":
     app.run(debug=True, host="0.0.0.0")
 
 
-# 6 valid data types for JSON
-# strings 
-# arrays 
-# objects 
-# numbers 
-# boolean 
-# null
+# more features TODO for BOOK DETAIL PAGE:
+# 1. sort by liked books
+# 2. sort by want to read books
+# 3. sort by owned books
+# 4. sort by reading_status
+
+
+#otheridea bookstyling by cards, into book like, expansion?
+# add book to shelf not logged in (add to shelflist)
+# search

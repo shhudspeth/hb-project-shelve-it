@@ -6,4 +6,4 @@ notes_to_self/
 __pycache__/
 *.sql
 .DS_Store
-
+.env

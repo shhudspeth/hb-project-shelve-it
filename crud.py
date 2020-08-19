@@ -75,9 +75,13 @@ def return_all_books():
     return Book.query.all()  
 
 
-def get_book_by_id(title):
+def get_book_by_name(title):
     """Return a book by title"""
-    return Book.query.filter(Book.title==title).first()
+    return db.session.query(Book).filter(Book.title==title).first()
+
+def get_book_by_id(book_id):
+    """Return a book by id"""
+    return db.session.query(Book).filter(Book.book_id==book_id).first()
 
 
 # CREATE A BOOKSHELF FOR A USER
@@ -97,7 +101,7 @@ def create_user_bookshelf( user, nickname):
 
 def return_all_books_on_shelf_by_user(user_id):
     """ Create and return a list of all books on a user shelf by user id"""
-    user_books = Bookshelf.query.filter(Bookshelf.user_id==user_id).all()
+    user_books = db.session.query(Bookshelf).filter(Bookshelf.user_id==user_id).all()
 
     all_user_books = [shelf.books for shelf in user_books ]
     

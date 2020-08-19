@@ -5,43 +5,120 @@ const Prompt =  ReactRouterDOM.Prompt;
 const Switch = ReactRouterDOM.Switch;
 const Redirect = ReactRouterDOM.Redirect;
 const useHistory = ReactRouterDOM.useHistory;
+const useParams = ReactRouterDOM.useParams;
 
 function Homepage() {
     return <div> Welcome to my site </div>
 }
 
-function bookListItem(props) {
-return <li>{props.title} {props.author}</li>
+function ShowBookInfo(props) {
+  let { bookId } = useParams();
+  console.log( bookId )
+
+
+  // React.useEffect(() => {
+  //   console.log("fetching books...")
+  //   fetch('/api/book_info/')
+  //   .then(response => response.json())
+  //   .then((data) => {
+  //     const bookList = [];
+  //     for (const post of data) {
+        
+  //       bookList.push(<BookListItem key = {post.book_id} book_id={post.book_id} title={post.title} author={post.author}
+  //                      publisher={post.publisher} description={post.description}/>)
+  //     }
+     
+  //     setBookList(bookList);
+  //   })
+  // }, [])
+  
+
+  return <div> BOOK on a BOOKSHELF details {bookId} </div>
 }
 
-function Bookshelf() {
-  const [bookList, setBookList] = React.useState(["loading..."]);
 
-    React.useEffect(() => {
+// MAKE A BOOKSSHELF BASED ON LOGGED IN USER ID 
+
+function BookListItem(props) {
+return <li> <b>{props.title}</b> 
+            <p>{props.author}</p> 
+            <i>{props.publisher}</i>
+            <p>{props.description}
+            <Link to={`/book_info/${props.bookid}`}> Go to Book Page </Link></p> </li>
+}
+
+function Bookshelf(props) {
+  let history = useHistory();
+  const [bookList, setBookList] = React.useState(["loading..."]);
+  const [newBooks, setNewBooks] = React.useState();
+  const [booksFile, setBooksFile] = React.useState()
+  const [shelfname, setShelfname] = React.useState()
+  
+  React.useEffect(() => {
       console.log("fetching books...")
       fetch('/api/bookshelf')
       .then(response => response.json())
       .then((data) => {
-        const booktList = []
+        const bookList = [];
         for (const post of data) {
-          console.log(post);
-          bookList.push(<bookListItem title={post.title} author={post.author}/>)
+          console.log(post)
+          bookList.push(<BookListItem key={post.book_id} bookid={post.book_id} title={post.title} author={post.author}
+                         publisher={post.publisher} description={post.description}/>)
         }
-        setBookList(bookList)
+       
+        setBookList(bookList);
       })
     }, [])
+    
 
+  const uploadBookPhoto = (event) => {
+    console.log('trying to add books to page')
+  
+      const post = {"filepath": booksFile, "shelfname": shelfname}
+      console.log("POSTING DATA")
+      fetch('/api/bookshelf', {
+        method: 'POST', 
+        body: JSON.stringify(post),
+        headers: {
+          'Content-Type': 'application/json'
+        }}
+      )
+      .then(response => response.json())
+      .then(data => {
+        setNewBooks(data)
+        })
+        event.preventDefault();
+        history.push('/bookshelf')
+      } 
+    
+    
     return (
       <div>
+
+        <form className='form-upload' onSubmit={uploadBookPhoto}> 
+            <label htmlFor="shelfname">Please name or create a bookshelf to add books to </label>
+            <input type="text" name="shelfname" onChange={e => setShelfname(e.target.value)} /> <br />
+
+            <label htmlFor="fileElem">Select an image of a stack of books</label>
+            <input type="file" id="bookstack" name="booksFile" onChange={e => setBooksFile(e.target.value)} accept="image/png, image/jpeg" encType="multipart/form-data" /> <br />
+            <button type="submit"> Click here to upload</button>
+        </form>
+        
+        <ul>
+           {newBooks}
+        </ul>
+
         <ul>
            {bookList}
         </ul>
+
       </div>
     )
    
 }
 
 
+// LOGIN IN FUNCTIONS AND ROUTES
 
 function Login(props) { 
   let history = useHistory();
@@ -71,7 +148,7 @@ function Login(props) {
     history.push('/')
     }
 
-  // a form with no logic yet
+  // a form 
   return (
     <form className="form-signin" onSubmit={handleSubmit}>
 
@@ -104,6 +181,8 @@ function Login(props) {
       </form>
   )
 }
+
+// REGISTER A NEW USER FUNCTIONS 
 
 function Register() {
   // register a user in React
@@ -264,6 +343,10 @@ function Register() {
   )
 }
 
+
+// SAMPLE POST ITEMS 
+
+
 function PostListItem(props) {
   return <li>{props.title}</li>
 }
@@ -337,6 +420,8 @@ function PostList(props) {
 }
 
 
+// MAIN ROUTER AND SWITCH APP
+
 function App() {
     return (
         <Router>
@@ -357,9 +442,6 @@ function App() {
                 </li>
                 {/* <li>
                     <Link to="/upload_bookphoto"> Upload Books to Your Bookshelf </Link>
-                </li>
-                <li>
-                    <Link to="/view_book_info"> View Book Info </Link>
                 </li> */}
                 {/* <li>
                     <Link to="/send_book_info"> Your Bookshelf </Link>
@@ -378,6 +460,9 @@ function App() {
               </Route>
               <Route path="/top-posts">
                 <PostList />
+              </Route>
+              <Route path="/book_info/:bookId">
+                <ShowBookInfo />
               </Route>
               <Route path="/login">
                 <Login />

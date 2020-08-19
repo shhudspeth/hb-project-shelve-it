@@ -156,8 +156,8 @@ class ShelvedBook(db.Model):
    # back references to other models/FK (SINGLE INSTANCES)
     bookshelf = db.relationship('Bookshelf', foreign_keys=[shelf_id])
     book = db.relationship('Book', foreign_keys=[book_id])
-    # reading_statuses = db.relationship('ReadingStatus', foreign_keys=[reading_status])
-    # owned_statuses = db.relationship('OwnedStatus', foreign_keys=[owned_status])
+    reading_statuses = db.relationship('ReadingStatus', foreign_keys=[reading_status])
+    owned_statuses = db.relationship('OwnedStatus', foreign_keys=[owned_status])
   
     user = db.relationship('User', secondary='bookshelves')
     # REPR

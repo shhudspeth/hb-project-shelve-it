@@ -7,6 +7,8 @@ from google.cloud import vision
 from google.cloud.vision import types
 
 
+google_api_key = os.environ.get('key')
+print(google_api_key, "PRINT GOOGLE KEY")
 UPLOAD_FOLDER = '/static/images'
 
 # Instantiates a client
@@ -35,6 +37,19 @@ def text_from_photo(image_file_path):
 # Loads the image into memory
 #filename = secure_filename(file.filename)
 #file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+
+
+def find_book_breaks(response):
+    print(response.text_annotations[0].description.split('\n'))
+
+    return (response.text_annotations[0].description.split('\n'))
+
+def find_google_book_data(book, author):
+    title = data[item][0]
+    author = data[item][1]
+
+    link = f"https://www.googleapis.com/books/v1/volumes?q={title}+inauthor:{author}&key={google_api_key}"
+
 
 
 if __name__ == '__main__':
