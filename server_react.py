@@ -71,11 +71,11 @@ def display_bookshelf():
         flash("please login first!")
         return(jsonify({"status": "please login first"}))
     serialized_books = []
+
     # user_books is a list of a list!!!
     for book in user_books[0]: 
        
         image_url = 'https'+ str(book.cover_img_source)[4:]
-        print(image_url)
         serialized_books.append({'book_id': book.book_id, "title":book.title, 
                                 'author': book.author, 'publisher': book.publisher, 
                                 'description':book.description, "img":image_url})
@@ -101,24 +101,29 @@ def add_to_bookshelf():
     
     #books = crud.
     
-@app.route('/book_info/<book_id>')
+@app.route('/api/book_info/<book_id>')
 def display_book_info(book_id):
-
-    if session['user']:
-        current_user = crud.get_user_by_username(session['user'])
-        book_info = crud.get_book_by_id(book_id)
-        print("\n\n\n\n", current_user, book_info, "\n\n\n\n")
-        try:
-            shelved_book_info = crud.get_book_by_id(current_user.user_id, book_id)
-        except:
-            flash("book not on shelf, add it?")
-    
     #update or create shelvedbooked info
     # create_shelvedbook(shelf, book, reading_status, owned_status)
     # TODO 1. display book image, 2. display description, 3. add buttons for all the things
+    # add function for users that don't have account or are not signed in to save to booklist
+    
+    if session['user']:
+        current_user = crud.get_user_by_username(session['user'])
+        book = crud.get_book_by_id(book_id)
+        # print("\n\n\n\n USER", current_user.user_name, "GETTING",  book.title, "\n\n\n\n")
+        # try:
+        #     shelved_book_info = crud.get_book_by_id(current_user.user_id, book_id)
+        # except:
+        #     flash("book not on shelf, add it?")
 
-                                     
-    return jsonify()
+        image_url = 'https'+ str(book.cover_img_source)[4:]
+        serialized_book = {'book_id': book.book_id, "title":book.title, 
+                                'author': book.author, 'publisher': book.publisher, 
+                                'description':book.description, "img":image_url}
+             
+    return jsonify(serialized_book)
+
 
 
 @app.route('/api/bookshelf/addbook', methods=["POST"])

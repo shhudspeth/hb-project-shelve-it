@@ -8,34 +8,48 @@ const useHistory = ReactRouterDOM.useHistory;
 const useParams = ReactRouterDOM.useParams;
 
 function Homepage() {
-    return <div> Welcome to my site </div>
+    return <div> Welcome to my site 
+      < Login />
+      < Register />
+      < Bookshelf />
+    </div>
 }
+
+function BookDetailItem(props) {
+  return <li> 
+              <img src={props.image} ></img>
+              <b>{props.title}</b> 
+              <p>{props.author}</p> 
+              <i>{props.publisher}</i>
+              <p>{props.description}
+              <Link to={`/bookshelf`}> Go to Bookshelf </Link></p> </li>
+  }
 
 function ShowBookInfo(props) {
   const [bookInfo, setBookInfo] = React.useState();
 
   let { bookId } = useParams();
-  console.log( bookId )
-
+  console.log( bookId );
+  
 
   React.useEffect(() => {
-    console.log("fetching book info...")
+    console.log("fetching book detail info...")
     fetch(`/api/book_info/${bookId}`)
     .then(response => response.json())
     .then((data) => {
-      const bookList = [];
-      for (const post of data) {
-        
-        bookList.push(<BookListItem key = {post.book_id} book_id={post.book_id} title={post.title} author={post.author}
-                       publisher={post.publisher} description={post.description}/>)
-      }
-     
-      setBookList(bookList);
+      const bookstuff = <BookDetailItem key = {data.book_id} book_id={data.book_id} title={data.title} author={data.author}
+                       publisher={data.publisher} description={data.description}/>
+    
+       setBookInfo(bookstuff);
     })
+    
   }, [])
   
+  return <div> 
+            <h2> BOOK info</h2>
+            {bookInfo}
 
-  return <div> BOOK on a BOOKSHELF details {bookId} </div>
+             </div>
 }
 
 
