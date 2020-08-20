@@ -56,7 +56,7 @@ def register_new_account():
     if new_user:
         return (jsonify({'message':'ok'}))
     else:
-        return (jsonify({'message':'somethinghappened. user might not have been made'}))
+        return (jsonify({'message':'something happened. user might not have been made'}))
 
 
 
@@ -129,7 +129,10 @@ def get_book_info():
     
     data = request.get_json()
     print("\n\n\n", 'ADDING A NEW BOOK', data, "\n\n\n")
+    session['shelf'] = data['shelf']
     print ("SESSION", session, "\n\n\n")
+    # TODO add shelf logic to add to shelf AND REFACTOR THIS CODE
+
     new_book_google_json = api.find_google_book_data(data['title'], data['author'])
     new_book_info = api.parse_response_data_for_info(new_book_google_json)
      
