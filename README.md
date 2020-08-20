@@ -6,13 +6,13 @@
             
             - MVP features (1-3):
                    
-                  - Make a unique bookshelf by adding books either with a picture, form entry
+                  - Make a unique bookshelf by adding books either with a picture or via form entry
                   - Send bookshelf to self (email or text) with links to reserve books (library or bookstore)
                   - Save bookshelf
                 
             
             
-            - 2.0 features (1-3; these aren’t set in stone, but include what you’re thinking about):
+            - 2.0 features (1-3):
                   - label books with want to read, read, liked, didn't like
                   - send bookshelf to friends
                   - have a search feature for books to add to bookshelf
