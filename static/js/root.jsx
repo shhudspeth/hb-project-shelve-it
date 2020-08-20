@@ -39,15 +39,20 @@ function ShowBookInfo(props) {
 }
 
 
-// MAKE A BOOKSSHELF BASED ON LOGGED IN USER ID 
+// MAKES A BOOK FOR THE SHELF
 
 function BookListItem(props) {
-return <li> <b>{props.title}</b> 
+return <li> 
+            <img src={props.image} ></img>
+            <b>{props.title}</b> 
             <p>{props.author}</p> 
             <i>{props.publisher}</i>
             <p>{props.description}
             <Link to={`/book_info/${props.bookid}`}> Go to Book Page </Link></p> </li>
 }
+
+// STORES FUNCTIONS TO CREATE AND MODIFY AND DISPLAY A BOOKSHELF
+
 
 function Bookshelf(props) {
   let history = useHistory();
@@ -55,7 +60,11 @@ function Bookshelf(props) {
   const [newBooks, setNewBooks] = React.useState();
   const [booksFile, setBooksFile] = React.useState()
   const [shelfname, setShelfname] = React.useState()
+  const [enteredbook, setEnteredBook] = React.useState()
+  const [enteredauthor, setEnteredAuthor] = React.useState()
+ 
   
+  // Fetches books from database and displays on site
   React.useEffect(() => {
       console.log("fetching books...")
       fetch('/api/bookshelf')
@@ -65,14 +74,14 @@ function Bookshelf(props) {
         for (const post of data) {
           
           bookList.push(<BookListItem key={post.book_id} bookid={post.book_id} title={post.title} author={post.author}
-                         publisher={post.publisher} description={post.description}/>)
+                         publisher={post.publisher} image={data.img} description={post.description}/>)
         }
        
         setBookList(bookList);
       })
     }, [])
     
-
+  // upload a photo and scrape the text off of it
   const uploadBookPhoto = (event) => {
     console.log('trying to add books to page')
   
@@ -90,14 +99,43 @@ function Bookshelf(props) {
         setNewBooks(data)
         })
         event.preventDefault();
+        event.target.reset();
         history.push('/bookshelf')
       } 
-    
-    
+
+
+    // ADD A BOOK VIA FORM TO BOOKSHELF
+      const addNewBooktoShelf = (event) => {
+        console.log('add book to shelf via form')
+      
+          const post = {"title": enteredbook, "author": enteredauthor, "shelf": shelfname}
+          console.log("POSTING DATA")
+          fetch('/api/bookshelf/addbook', {
+            method: 'POST', 
+            body: JSON.stringify(post),
+            headers: {
+              'Content-Type': 'application/json'
+            }}
+          )
+          .then(response => response.json())
+          .then(data => {
+            bookList.push(<BookListItem key={data.book_id} bookid={data.book_id} title={data.title} author={data.author}
+              publisher={data.publisher} description={data.description} img ={data.img} />)
+            
+
+          setBookList(bookList);
+            } )
+            event.preventDefault();
+            event.target.reset();
+            history.push('/bookshelf')
+          } 
+
+
     return (
       <div>
         <div className="row">
           <div className="col">
+          <h2>Add a Book via Photo Upload</h2>
             <form className='form-upload' onSubmit={uploadBookPhoto}> 
                 <label htmlFor="shelfname">Please name or create a bookshelf to add books to </label>
                 <input type="text" name="shelfname" onChange={e => setShelfname(e.target.value)} /> <br />
@@ -107,13 +145,19 @@ function Bookshelf(props) {
                 <button type="submit"> Click here to upload</button>
             </form>
           </div>
+          
+          <div className='col'>
+          <h2>Add a Book via Title and Author</h2>
           <form className='form-add-book' onSubmit={addNewBooktoShelf}> 
 
+                <label htmlFor="shelfname">Please name or create a bookshelf to add books to </label>
+                <input type="text" name="shelfname" onChange={e => setShelfname(e.target.value)} /> <br />
+
                 <label htmlFor="entertitle">Enter a Book Title </label>
-                <input type="text" name="entertitle" onChange={e => setBookTitle(e.target.value)} /> 
+                <input type="text" name="enteredTitle" onChange={e => setEnteredBook(e.target.value)} /> 
 
                 <label htmlFor="enterauthor">Please enter Author name</label>
-                <input type="text"  name="enterauthor" onChange={e => setAuthorName(e.target.value)} />
+                <input type="text"  name="enteredAuthor" onChange={e => setEnteredAuthor(e.target.value)} /> <br />
 
                 <button type="submit"> Click here to add a Book to your shelf</button>
             </form>
@@ -121,10 +165,11 @@ function Bookshelf(props) {
 
         </div>
         
+        <h2>Books to Add</h2>
         <ul>
            {newBooks}
         </ul>
-
+        <h2>Books on Your Shelf</h2>
         <ul>
            {bookList}
         </ul>

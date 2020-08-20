@@ -26,9 +26,9 @@ for item in book_data:
     published_date = book_data[item]['year_published']
     isbn = book_data[item]['isbn']
     description = book_data[item]['description']
-    cover_img_source = book_data[item]['cover_img_source']
+    cover_img_source = book_data[item]['cover_img_source']['thumbnail']
 
-    new_book = crud.create_book(title, author, publisher, published_date, isbn, description)
+    new_book = crud.create_book(title, author, publisher, published_date, isbn, description, cover_img_source)
     print( f"added new book to database : {new_book}")
     book_data_seeding.append(new_book)
 

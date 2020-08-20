@@ -73,13 +73,34 @@ def display_bookshelf():
     serialized_books = []
     # user_books is a list of a list!!!
     for book in user_books[0]: 
+       
+        image_url = 'https'+ str(book.cover_img_source)[4:]
+        print(image_url)
         serialized_books.append({'book_id': book.book_id, "title":book.title, 
                                 'author': book.author, 'publisher': book.publisher, 
-                                'description':book.description, "img":book.cover_img_source})
-                                     
+                                'description':book.description, "img":image_url})
+             
     return jsonify(serialized_books)
 
 
+@app.route('/api/bookshelf', methods=["POST"])
+def add_to_bookshelf():
+
+        info = request.get_json()
+        print(info, "GETTING A POST RESPONSE")
+        file = info['filepath'].split("\\").pop()
+        shelf = info['shelfname']
+        response = api.text_from_photo(f"static/images/{file}")
+        # serialized = MessageToJson()
+        session['response'] = response.text_annotations[0].description
+        session['file'] = file
+        session['shelf'] = shelf
+        # TODO: CRUD ADD BOOKS FROM RESPONSE TO DATABASE to specific shelf
+
+        return jsonify(response.text_annotations[0].description)
+    
+    #books = crud.
+    
 @app.route('/book_info/<book_id>')
 def display_book_info(book_id):
 
@@ -100,17 +121,21 @@ def display_book_info(book_id):
     return jsonify()
 
 
-@app.route('/bookshelf/addbook')
+@app.route('/api/bookshelf/addbook', methods=["POST"])
 def get_book_info():
-
+    if session['user']:
+        current_user = crud.get_user_by_username(session['user'])
+        
+    
     data = request.get_json()
-    print(data)
-
-    new_book_google_json = api.find_google_book_data(data['entertitle'], data['enterauthor'])
-    new_book_info = parse_response_data_for_info(new_book_google_json)
+    print("\n\n\n", 'ADDING A NEW BOOK', data, "\n\n\n")
+    print ("SESSION", session, "\n\n\n")
+    new_book_google_json = api.find_google_book_data(data['title'], data['author'])
+    new_book_info = api.parse_response_data_for_info(new_book_google_json)
      
     if crud.get_book_by_name(new_book_info['title']):
         book = crud.get_book_by_name(new_book_info['title'])
+        print("BOOK IN DB ADDING TO SHELF IF APPROPRIATE")
         
     else:
         title = new_book_info['title']
@@ -120,8 +145,8 @@ def get_book_info():
         isbn =  new_book_info['isbn'] 
         description = new_book_info['description']  
         cover_img_source = new_book_info['cover_img_source']
-        book = crud.create_book(title, author, publisher, year_published, isbn, description)
-    
+        book = crud.create_book(title, author, publisher, year_published, isbn, description, cover_img_source)
+        # shelved = crud.create_shelvedbook(current_user.bookshelvesshelf_id, book, reading_status, owned_status)
     return jsonify({'book_id': book.book_id, "title":book.title, 
                                 'author': book.author, 'publisher': book.publisher, 
                                 'description':book.description})
@@ -130,26 +155,7 @@ def get_book_info():
     # TODO 1. display book image, 2. display description, 3. add buttons for all the things
 
                                      
-    return jsonify()
 
-
-@app.route('/api/bookshelf', methods=["POST"])
-def add_to_bookshelf():
-
-        info = request.get_json()
-        print(info, "GETTING A POST RESPONSE")
-        file = info['filepath'].split("\\").pop()
-        shelf = info['shelfname']
-        response = api.text_from_photo(f"static/images/{file}")
-        # serialized = MessageToJson()
-        session['response'] = response.text_annotations[0].description
-        session['file'] = file
-        # TODO: CRUD ADD BOOKS FROM RESPONSE TO DATABASE to specific shelf
-
-        return jsonify(response.text_annotations[0].description)
-    
-    #books = crud.
-    
 
 @app.route("/api/top-posts")
 def get_top_posts():
