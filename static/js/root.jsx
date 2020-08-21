@@ -7,42 +7,74 @@ const Redirect = ReactRouterDOM.Redirect;
 const useHistory = ReactRouterDOM.useHistory;
 const useParams = ReactRouterDOM.useParams;
 
-function Homepage() {
-    return <div> Welcome to my site 
-      < Login />
-      < Register />
-      < Bookshelf />
-    </div>
+
+
+// function Homepage(props) {
+//   const isLoggededIn = props.isLoggedIn
+//   const isRegistered = props.isRegistered
+ 
+//   return (
+//   <div>
+//     { isLoggedIn && isRegistered ? < Bookshelf /> : <Login /> }
+//     { !isLoggedIn ? < Register /> : < Bookshelf />} 
+    
+//   </div>)
+// }
+
+
+function Homepage(props) {
+  
+ 
+  return (
+  <div>
+     < Bookshelf />
+      <Login />
+    < Register /> 
+    
+  </div>)
 }
 
 function BookDetailItem(props) {
   return <li> 
-              <img src={props.image} ></img>
-              <b>{props.title}</b> 
-              <p>{props.author}</p> 
-              <i>{props.publisher}</i>
-              <p>{props.description}
-              <Link to={`/bookshelf`}> Go to Bookshelf </Link></p> </li>
+            <div className="row">
+              <div className = "col">
+                  <img src={props.image} ></img> 
+                  <div className = "col">
+                    <div className = "row">
+                      <b>{props.title}</b> 
+                      {props.author}
+                      <div className = "row">
+                        <i>{props.publisher}</i>
+                        <div className = "row">
+                          {props.description}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              <Link to={`/bookshelf`}> Go to Bookshelf </Link> 
+            </div>
+           </li>
   }
 
-function ShowBookInfo(props) {
-  const [bookInfo, setBookInfo] = React.useState();
 
+  function ShowBookInfo(props) {
+  const [bookInfo, setBookInfo] = React.useState();
+  
   let { bookId } = useParams();
+  
   console.log( bookId );
   
-
   React.useEffect(() => {
     console.log("fetching book detail info...")
     fetch(`/api/book_info/${bookId}`)
     .then(response => response.json())
     .then((data) => {
       const bookstuff = <BookDetailItem key = {data.book_id} book_id={data.book_id} title={data.title} author={data.author}
-                       publisher={data.publisher} description={data.description}/>
+                       publisher={data.publisher} image = {data.img} description={data.description}/>
     
        setBookInfo(bookstuff);
     })
-    
   }, [])
   
   return <div> 
@@ -56,17 +88,20 @@ function ShowBookInfo(props) {
 // MAKES A BOOK FOR THE SHELF
 
 function BookListItem(props) {
+
 return <li> 
             <img src={props.image} ></img>
             <b>{props.title}</b> 
             <p>{props.author}</p> 
-            <i>{props.publisher}</i>
+            <i>{props.publisher}</i> <br />
+            <b><i>{props.reading_st}</i></b> <br />
+            <b><i>{props.owned_st}</i></b>
             <p>{props.description}
             <Link to={`/book_info/${props.bookid}`}> Go to Book Page </Link></p> </li>
 }
 
-// STORES FUNCTIONS TO CREATE AND MODIFY AND DISPLAY A BOOKSHELF
 
+// STORES FUNCTIONS TO CREATE AND MODIFY AND DISPLAY A BOOKSHELF
 
 function Bookshelf(props) {
   let history = useHistory();
@@ -88,7 +123,8 @@ function Bookshelf(props) {
         for (const post of data) {
           
           bookList.push(<BookListItem key={post.book_id} bookid={post.book_id} title={post.title} author={post.author}
-                         publisher={post.publisher} image={data.img} description={post.description}/>)
+                         publisher={post.publisher} owned_st={post.owned_stat} image={post.img}
+                          reading_st={post.reading_stat} description={post.description}/>)
         }
        
         setBookList(bookList);
@@ -121,6 +157,18 @@ function Bookshelf(props) {
     // ADD A BOOK VIA FORM TO BOOKSHELF
       const addNewBooktoShelf = (event) => {
         console.log('add book to shelf via form')
+        React.useEffect(() => {
+          console.log("fetching status options...")
+          fetch('/api/bookshelf')
+          .then(response => response.json())
+          .then((data) => {
+            const reading_st = data.reading_st;
+            const owned_st = data.owned_st
+            ;
+          })
+        }, [])
+
+
       
           const post = {"title": enteredbook, "author": enteredauthor, "shelf": shelfname}
           console.log("POSTING DATA")
@@ -134,7 +182,8 @@ function Bookshelf(props) {
           .then(response => response.json())
           .then(data => {
             bookList.push(<BookListItem key={data.book_id} bookid={data.book_id} title={data.title} author={data.author}
-              publisher={data.publisher} description={data.description} img ={data.img} />)
+              publisher={data.publisher} owned_st={data.owned__stat} 
+              reading_st={data.reading_stat} description={data.description} img ={data.img} />)
             
 
           setBookList(bookList);
@@ -149,24 +198,20 @@ function Bookshelf(props) {
       <div>
         <div className="row">
           <div className="col">
-          <h2>Add a Book via Photo Upload</h2>
+           <h2>Add a Book via Photo Upload</h2>
             <form className='form-upload' onSubmit={uploadBookPhoto}> 
-                <label htmlFor="shelfname">Please name or create a bookshelf to add books to </label>
-                <input type="text" name="shelfname" onChange={e => setShelfname(e.target.value)} /> <br />
-
-                <label htmlFor="fileElem">Select an image of a stack of books</label>
-                <input type="file" id="bookstack" name="booksFile" onChange={e => setBooksFile(e.target.value)} accept="image/png, image/jpeg" encType="multipart/form-data" /> <br />
-                <button type="submit"> Click here to upload</button>
+              <label htmlFor="shelfname">Please name or create a bookshelf to add books to </label>
+              <input type="text" name="shelfname" onChange={e => setShelfname(e.target.value)} /> <br />
+              <label htmlFor="fileElem">Select an image of a stack of books</label>
+              <input type="file" id="bookstack" name="booksFile" onChange={e => setBooksFile(e.target.value)} accept="image/png, image/jpeg" encType="multipart/form-data" /> <br />
+              <button type="submit"> Click here to upload</button>
             </form>
           </div>
-          
           <div className='col'>
-          <h2>Add a Book via Title and Author</h2>
-          <form className='form-add-book' onSubmit={addNewBooktoShelf}> 
-
+            <h2>Add a Book via Title and Author</h2>
+              <form className='form-add-book' onSubmit={addNewBooktoShelf}> 
                 <label htmlFor="shelfname">Please name or create a bookshelf to add books to </label>
-                <input type="text" name="shelfname" onChange={e => setShelfname(e.target.value)} /> <br />
-
+                  <input type="text" name="shelfname" onChange={e => setShelfname(e.target.value)} /> <br />
                 <label htmlFor="entertitle">Enter a Book Title </label>
                 <input type="text" name="enteredTitle" onChange={e => setEnteredBook(e.target.value)} /> 
 
@@ -200,6 +245,10 @@ function Login(props) {
   let history = useHistory();
   const [email, setEmail] = React.useState()
   const [password, setPassword] = React.useState()
+  const [isLoggedIn, setIsLoggedIn] = React.useState()
+  const [isRegistered, setIsRegistered] =React.useState()
+  
+  
 
   const handleSubmit = (event) => {
 
@@ -216,11 +265,14 @@ function Login(props) {
     .then(response => response.json())
     .then(data => {
      
-        alert(`${data.status}`)
+        alert(`${data.status}`);
+
       
     })
     console.log(login_user)
     event.preventDefault();
+    setIsLoggedIn(true)
+    setIsRegistered(true)
     history.push('/')
     }
 
@@ -260,7 +312,7 @@ function Login(props) {
 
 // REGISTER A NEW USER FUNCTIONS 
 
-function Register() {
+function Register(props) {
   // register a user in React
 
   let history = useHistory();
@@ -292,6 +344,8 @@ function Register() {
     .then(data => {
      
         alert(`${data.message}`)
+        setIsRegistered(true)
+
       
     })
     console.log(register_user)
@@ -499,6 +553,11 @@ function PostList(props) {
 // MAIN ROUTER AND SWITCH APP
 
 function App() {
+  const [isLoggedIn, setIsLoggedIn] = React.useState()
+  const [isRegistered, setIsRegistered] =React.useState()
+  
+ 
+
     return (
         <Router>
           <div>

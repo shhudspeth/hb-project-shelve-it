@@ -62,6 +62,7 @@ def register_new_account():
 
 @app.route('/api/bookshelf')
 def display_bookshelf():
+    print(session)
     print(session['user']+ '\n\n\n\n')
     
     if session['user']:
@@ -74,11 +75,15 @@ def display_bookshelf():
 
     # user_books is a list of a list!!!
     for book in user_books[0]: 
-       
+        shelf_st = crud.get_shelvedbook(current_user.user_id, book.book_id)
+        print(shelf_st.owned_statuses.owned_text)
         image_url = 'https'+ str(book.cover_img_source)[4:]
         serialized_books.append({'book_id': book.book_id, "title":book.title, 
                                 'author': book.author, 'publisher': book.publisher, 
-                                'description':book.description, "img":image_url})
+                                'description':book.description, "img":image_url, 
+                                'reading_stat':shelf_st.reading_statuses.reading_status_name,
+                                'owned_stat':shelf_st.owned_statuses.owned_text
+                                 })
              
     return jsonify(serialized_books)
 
@@ -126,6 +131,17 @@ def display_book_info(book_id):
 
 
 
+@app.route('/api/bookshelf/addbook')
+def send_status():
+    reading_st = crud.return_all_types_reading()
+    owned_st = crud.return_all_types_owned()
+
+    reading_stat = [x.reading_status_name for x in reading_st]
+    owned_stat = [x.owned_status_name for x in owned_st]
+
+
+    return jsonify({'reading_st':reading_stat, 'owned_st': owned_stat})
+
 @app.route('/api/bookshelf/addbook', methods=["POST"])
 def get_book_info():
     if session['user']:
@@ -137,7 +153,9 @@ def get_book_info():
     session['shelf'] = data['shelf']
     print ("SESSION", session, "\n\n\n")
     # TODO add shelf logic to add to shelf AND REFACTOR THIS CODE
+    # reading_status--> crud.return_all_types_reading(), sr[0].reading_status_name
 
+    # owned_status --> crud. eturn_all_types_owned() sr[0].owned_text
     new_book_google_json = api.find_google_book_data(data['title'], data['author'])
     new_book_info = api.parse_response_data_for_info(new_book_google_json)
      
@@ -160,8 +178,7 @@ def get_book_info():
                                 'description':book.description})
     #update or create shelvedbooked info
     # create_shelvedbook(shelf, book, reading_status, owned_status)
-    # TODO 1. display book image, 2. display description, 3. add buttons for all the things
-
+    
                                      
 
 

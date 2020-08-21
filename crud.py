@@ -99,11 +99,18 @@ def create_user_bookshelf( user, nickname):
 
 # QUERIES ON BOOKSHELF
 
+def return_all_shelves_by_user(user_id):
+    """ Return a list of all books on a user shelf by user id"""
+    shelves = db.session.query(Bookshelf).filter(Bookshelf.user_id==user_id).all()
+
+    
+    return(shelves)
+
 def return_all_books_on_shelf_by_user(user_id):
     """ Return a list of all books on a user shelf by user id"""
-    user_books = db.session.query(Bookshelf).filter(Bookshelf.user_id==user_id).all()
+    shelves = db.session.query(Bookshelf).filter(Bookshelf.user_id==user_id).all()
 
-    all_user_books = [shelf.books for shelf in user_books ]
+    all_user_books = [shelf.books for shelf in shelves ]
     
     return(all_user_books)
 
@@ -133,21 +140,16 @@ def create_shelvedbook(shelf, book, reading_status, owned_status):
 
 def get_shelvedbook(user_id, book_id):
     """ Return a new shelvedbook (book for a shelf with lots of user preferences"""
-    user_books = db.session.query(Bookshelf).filter(Bookshelf.user_id==user_id).all()
-    shelved_book = ShelvedBook(shelf_id=shelf, 
-                                book_id=book, 
-                                reading_status=reading_status, 
-                                owned_status=owned_status)
+    shelved_book = db.session.query(ShelvedBook).filter(Bookshelf.user_id==user_id and Book.book_id==book_id).first()
 
-    
-    db.session.add(shelved_book)
-    db.session.commit()
 
     return shelved_book
 
 #getshelvedbook
 #.readingstatus=newstatus
 #commit should save object (check if you have to add to session, )
+
+# READING STATUS CRUD OPERATIONS
 
 def create_reading_status(status):
     """ Create a reading status for a given book" """
@@ -159,6 +161,9 @@ def create_reading_status(status):
 
     return reading_status
 
+def return_all_types_reading():
+
+    return db.session.query(ReadingStatus).all()
 
 def create_owned_status(owned_status):
     """ Create an owned status for a given book" """
@@ -170,7 +175,9 @@ def create_owned_status(owned_status):
 
     return owned_status
 
+def return_all_types_owned():
 
+    return db.session.query(OwnedStatus).all()
 
 
 if __name__ == '__main__':
