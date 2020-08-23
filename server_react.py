@@ -37,6 +37,25 @@ def process_login():
         # return redirect('/register')
         return(jsonify({'status': "no user with that email"}))
 
+@app.route("/logout")
+def process_logout():
+    """Log user out of site.
+
+    Find the user's login credentials located in the 'request.form'
+    dictionary, look up the user, and store them in the session.
+    """
+    if session['user']:
+        session.pop('user')
+   
+        flash("You've logged out successfully")
+        # return redirect('/bookshelf')
+        return(jsonify({'status': "ok. you are logged out. Login to see shelf!"}))
+      
+    else:
+        flash("You are not logged in. Please log in to log out")
+        # return redirect('/register')
+        return(jsonify({'status': "no logout possible"}))
+
 
 
 @app.route('/register', methods=["POST"])
@@ -62,21 +81,39 @@ def register_new_account():
 
 @app.route('/api/bookshelf')
 def display_bookshelf():
-    print(session)
-    print(session['user']+ '\n\n\n\n')
+    # print(session)
+    # print(session['user']+ '\n\n\n\n')
     
     if session['user']:
         current_user = crud.get_user_by_username(session['user'])
         user_books = crud.return_all_books_on_shelf_by_user(current_user.user_id)
+        user_shelves = crud.return_all_shelves_by_user(current_user.user_id)
+        reading_stats = crud.return_all_types_reading()
+        owned_stats = crud.return_all_types_owned()
     else:
         flash("please login first!")
         return(jsonify({"status": "please login first"}))
-    serialized_books = []
+    
+    # print(f"\n\n\n {current_user} \n {user_shelves} \n {reading_stats} \n {owned_stats}")
+    
+    serial_shelves = []
+    for shelf in user_shelves:
+        serial_shelves.append({'shelf_id': shelf.shelf_id, 'name': shelf.nickname})
+    
+    serialized_reading_statuses = []
+    for stat in reading_stats:
+        serialized_reading_statuses.append({'reading_status_id': stat.reading_status_id, 'reading_status': stat.reading_status_name})
 
+    serialized_owned_statuses = []
+    for stat in owned_stats:
+        serialized_owned_statuses.append({'owned_id': stat.owned_id, 'owned_status': stat.owned_text})
+
+    
+    serialized_books = []
     # user_books is a list of a list!!!
     for book in user_books[0]: 
         shelf_st = crud.get_shelvedbook(current_user.user_id, book.book_id)
-        print(shelf_st.owned_statuses.owned_text)
+        # print(shelf_st.owned_statuses.owned_text)
         image_url = 'https'+ str(book.cover_img_source)[4:]
         serialized_books.append({'book_id': book.book_id, "title":book.title, 
                                 'author': book.author, 'publisher': book.publisher, 
@@ -85,7 +122,10 @@ def display_bookshelf():
                                 'owned_stat':shelf_st.owned_statuses.owned_text
                                  })
              
-    return jsonify(serialized_books)
+    return jsonify({"books":serialized_books, 
+                    "shelves": serial_shelves, 
+                    "reading_st_list": serialized_reading_statuses, 
+                    "owned_st_list": serialized_owned_statuses })
 
 
 @app.route('/api/bookshelf', methods=["POST"])
@@ -173,6 +213,7 @@ def get_book_info():
         cover_img_source = new_book_info['cover_img_source']
         book = crud.create_book(title, author, publisher, year_published, isbn, description, cover_img_source)
         # shelved = crud.create_shelvedbook(current_user.bookshelvesshelf_id, book, reading_status, owned_status)
+    
     return jsonify({'book_id': book.book_id, "title":book.title, 
                                 'author': book.author, 'publisher': book.publisher, 
                                 'description':book.description})

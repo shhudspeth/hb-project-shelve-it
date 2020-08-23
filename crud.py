@@ -84,6 +84,7 @@ def get_book_by_id(book_id):
     return db.session.query(Book).filter(Book.book_id==book_id).first()
 
 
+# QUERIES ON BOOKSHELF
 # CREATE A BOOKSHELF FOR A USER
 def create_user_bookshelf( user, nickname):
     """ Create and return a new user bookshelf"""
@@ -97,13 +98,20 @@ def create_user_bookshelf( user, nickname):
 
     return user_bookshelf
 
-# QUERIES ON BOOKSHELF
+
+def return_shelf_by_user_and_name(user_id, nick_name):
+    """ Return a shelf object by user_id and nickname"""
+    shelf = db.session.query(Bookshelf).filter((Bookshelf.user_id==user_id) and (Bookshelf.nickname==nick_name)).first()
+
+    return shelf
+
+
 
 def return_all_shelves_by_user(user_id):
+    # TODO: make into a drop menu
     """ Return a list of all books on a user shelf by user id"""
     shelves = db.session.query(Bookshelf).filter(Bookshelf.user_id==user_id).all()
 
-    
     return(shelves)
 
 def return_all_books_on_shelf_by_user(user_id):
@@ -120,7 +128,10 @@ def return_books_on_shelf_by_shelfid(shelf_id, user_id):
     id_shelf_books = Bookshelf.query.filter((Bookshelf.shelf_id==shelf_id) & (Bookshelf.user_id==user_id)).first()
     return(id_shelf_books.books)
 
-
+def return_books_on_shelf_by_nickname(nickname, user_id):
+    """ Return a list of all books on a user shelf by user id"""
+    id_shelf_books = Bookshelf.query.filter((Bookshelf.nickname==nickname) & (Bookshelf.user_id==user_id)).first()
+    return(id_shelf_books.books)
 
 # CRUD FOR A BOOKforaBOOKSELFpsql
 
@@ -145,6 +156,8 @@ def get_shelvedbook(user_id, book_id):
 
     return shelved_book
 
+
+
 #getshelvedbook
 #.readingstatus=newstatus
 #commit should save object (check if you have to add to session, )
@@ -162,8 +175,12 @@ def create_reading_status(status):
     return reading_status
 
 def return_all_types_reading():
+    """ RETURNS ALL THE DIFFERENT OPTIONS FOR READING STATUS"""
 
     return db.session.query(ReadingStatus).all()
+
+
+# OWNED STATUS CRUD OPERATIONS
 
 def create_owned_status(owned_status):
     """ Create an owned status for a given book" """
@@ -176,6 +193,7 @@ def create_owned_status(owned_status):
     return owned_status
 
 def return_all_types_owned():
+    """ RETURNS ALL THE DIFFERENT OPTIONS FOR OWNED STATUS"""
 
     return db.session.query(OwnedStatus).all()
 

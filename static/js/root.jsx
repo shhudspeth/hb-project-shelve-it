@@ -157,19 +157,17 @@ function Bookshelf(props) {
     // ADD A BOOK VIA FORM TO BOOKSHELF
       const addNewBooktoShelf = (event) => {
         console.log('add book to shelf via form')
-        React.useEffect(() => {
-          console.log("fetching status options...")
-          fetch('/api/bookshelf')
-          .then(response => response.json())
-          .then((data) => {
-            const reading_st = data.reading_st;
-            const owned_st = data.owned_st
-            ;
-          })
-        }, [])
+        // React.useEffect(() => {
+        //   console.log("fetching status options...")
+        //   fetch('/api/bookshelf')
+        //   .then(response => response.json())
+        //   .then((data) => {
+        //     const reading_st = data.reading_st;
+        //     const owned_st = data.owned_st
+        //     ;
+        //   })
+        // }, [])
 
-
-      
           const post = {"title": enteredbook, "author": enteredauthor, "shelf": shelfname}
           console.log("POSTING DATA")
           fetch('/api/bookshelf/addbook', {
@@ -181,16 +179,20 @@ function Bookshelf(props) {
           )
           .then(response => response.json())
           .then(data => {
+            console.log("NEW BOOK DATA", data)
             bookList.push(<BookListItem key={data.book_id} bookid={data.book_id} title={data.title} author={data.author}
               publisher={data.publisher} owned_st={data.owned__stat} 
               reading_st={data.reading_stat} description={data.description} img ={data.img} />)
             
+              console.log(bookList)
 
-          setBookList(bookList);
+            setBookList(bookList);
+          
             } )
-            event.preventDefault();
-            event.target.reset();
-            history.push('/bookshelf')
+          event.preventDefault();
+          console.log("NEW BOOK SHOULD SHOW UP");
+          event.target.reset();
+            // history.push('/bookshelf')
           } 
 
 

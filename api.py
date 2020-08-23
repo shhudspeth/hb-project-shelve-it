@@ -68,7 +68,6 @@ def parse_response_data_for_info(book_data):
     else:
         description= 'unknown'
    
-    description = book_data['response']['items'][0]['volumeInfo']['description']
     year_published = book_data['response']['items'][0]['volumeInfo']['publishedDate']
     cover_img_source = book_data['response']['items'][0]['volumeInfo']['imageLinks']['thumbnail']
 

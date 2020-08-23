@@ -83,7 +83,7 @@ class Book(db.Model):
 # Table bookshelf (links shelved books aka books ona shelf to a user)
 class Bookshelf(db.Model):
     """ Data Model for a Bookshelf """ 
-
+    
     __tablename__ = "bookshelves"
     
     # Definition of Columns and relationships
@@ -170,7 +170,7 @@ class ShelvedBook(db.Model):
 
     # nickname = db.Column(db.String(30))
     # share_link = db.Column(db.String(100))
-    # public_display = db.Column(db.Boolean)
+    # public_display = db.Column(db.Boolean)sr[0]
     # want_to_read  = db.Column(db.Boolean)
     # have_already_read = db.Column(db.Boolean)
     # ordered = db.Column(db.Boolean)
@@ -178,7 +178,7 @@ class ShelvedBook(db.Model):
     # didnot_like = db.Column(db.Boolean)
     # removed_from_shelf boolean = db.Column(db.Boolean)
 
-def connect_to_db(flask_app, db_uri='postgresql:///shelve_it', echo=True):
+def connect_to_db(flask_app, db_uri='postgresql:///shelve_it', echo=False):
     flask_app.config['SQLALCHEMY_DATABASE_URI'] = db_uri
     flask_app.config['SQLALCHEMY_ECHO'] = echo
     flask_app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
