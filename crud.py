@@ -135,13 +135,13 @@ def return_books_on_shelf_by_nickname(nickname, user_id):
 
 # CRUD FOR A BOOKforaBOOKSELFpsql
 
-def create_shelvedbook(shelf, book, reading_status, owned_status):
+def create_shelvedbook(shelf_id, book_id, reading_status_id, owned_status_id):
     """ Create and return a new shelvedbook (book for a shelf with lots of user preferences"""
     
-    shelved_book = ShelvedBook(shelf_id=shelf, 
-                                book_id=book, 
-                                reading_status=reading_status, 
-                                owned_status=owned_status)
+    shelved_book = ShelvedBook(shelf_id=shelf_id, 
+                                book_id=book_id, 
+                                reading_status=reading_status_id, 
+                                owned_status=owned_status_id)
 
     
     db.session.add(shelved_book)
@@ -150,8 +150,9 @@ def create_shelvedbook(shelf, book, reading_status, owned_status):
     return shelved_book
 
 def get_shelvedbook(user_id, book_id):
-    """ Return a new shelvedbook (book for a shelf with lots of user preferences"""
-    shelved_book = db.session.query(ShelvedBook).filter(Bookshelf.user_id==user_id and Book.book_id==book_id).first()
+    """ Return a  shelvedbook (book for a shelf with lots of user preferences"""
+    shelved_book = db.session.query(ShelvedBook).filter((User.user_id==user_id) and (Book.book_id == book_id)).first()
+    
 
 
     return shelved_book

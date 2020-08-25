@@ -83,7 +83,7 @@ class Book(db.Model):
 # Table bookshelf (links shelved books aka books ona shelf to a user)
 class Bookshelf(db.Model):
     """ Data Model for a Bookshelf """ 
-    
+
     __tablename__ = "bookshelves"
     
     # Definition of Columns and relationships

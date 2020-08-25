@@ -27,12 +27,14 @@ function Homepage(props) {
  
   return (
   <div>
-     < Bookshelf />
-      <Login />
+    <Bookshelf />
+    <Login />
     < Register /> 
     
   </div>)
 }
+
+
 
 function BookDetailItem(props) {
   return <li> 
@@ -101,6 +103,9 @@ return <li>
 }
 
 
+function NewBookNeedLabels(props){
+  return <div>Please label and these books</div>
+}
 // STORES FUNCTIONS TO CREATE AND MODIFY AND DISPLAY A BOOKSHELF
 
 function Bookshelf(props) {
@@ -184,7 +189,7 @@ function Bookshelf(props) {
               publisher={data.publisher} owned_st={data.owned__stat} 
               reading_st={data.reading_stat} description={data.description} img ={data.img} />)
             
-              console.log(bookList)
+            
 
             setBookList(bookList);
           

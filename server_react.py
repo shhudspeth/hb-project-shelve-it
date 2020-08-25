@@ -45,7 +45,9 @@ def process_logout():
     dictionary, look up the user, and store them in the session.
     """
     if session['user']:
+        print(session, "USER LOGGED IN")
         session.pop('user')
+        print(session, "USER LOGGED OUT")
    
         flash("You've logged out successfully")
         # return redirect('/bookshelf')
@@ -78,18 +80,19 @@ def register_new_account():
         return (jsonify({'message':'something happened. user might not have been made'}))
 
 
-
 @app.route('/api/bookshelf')
 def display_bookshelf():
     # print(session)
     # print(session['user']+ '\n\n\n\n')
     
     if session['user']:
+        print(session['user'])
         current_user = crud.get_user_by_username(session['user'])
         user_books = crud.return_all_books_on_shelf_by_user(current_user.user_id)
         user_shelves = crud.return_all_shelves_by_user(current_user.user_id)
         reading_stats = crud.return_all_types_reading()
         owned_stats = crud.return_all_types_owned()
+    
     else:
         flash("please login first!")
         return(jsonify({"status": "please login first"}))
@@ -112,17 +115,22 @@ def display_bookshelf():
     serialized_books = []
     # user_books is a list of a list!!!
     for book in user_books[0]: 
+        #get sheleved book info : shelf id, bookid, reading and owned statuses
         shelf_st = crud.get_shelvedbook(current_user.user_id, book.book_id)
         # print(shelf_st.owned_statuses.owned_text)
-        image_url = 'https'+ str(book.cover_img_source)[4:]
+        if book.cover_img_source.startswith('http'):
+            image_url = 'https'+ str(book.cover_img_source)[4:]
+        
         serialized_books.append({'book_id': book.book_id, "title":book.title, 
                                 'author': book.author, 'publisher': book.publisher, 
                                 'description':book.description, "img":image_url, 
+                                'shelf_name': shelf_st.bookshelf.nickname,
                                 'reading_stat':shelf_st.reading_statuses.reading_status_name,
                                 'owned_stat':shelf_st.owned_statuses.owned_text
                                  })
              
-    return jsonify({"books":serialized_books, 
+    return jsonify({"user": session['user'],
+                    "books":serialized_books, 
                     "shelves": serial_shelves, 
                     "reading_st_list": serialized_reading_statuses, 
                     "owned_st_list": serialized_owned_statuses })
@@ -160,12 +168,12 @@ def display_book_info(book_id):
         # try:
         #     shelved_book_info = crud.get_book_by_id(current_user.user_id, book_id)
         # except:
-        #     flash("book not on shelf, add it?")
+     
 
         image_url = 'https'+ str(book.cover_img_source)[4:]
         serialized_book = {'book_id': book.book_id, "title":book.title, 
                                 'author': book.author, 'publisher': book.publisher, 
-                                'description':book.description, "img":image_url}
+                                'description':book.description, "img":image_url, }
              
     return jsonify(serialized_book)
 
@@ -198,55 +206,54 @@ def get_book_info():
     # owned_status --> crud. eturn_all_types_owned() sr[0].owned_text
     new_book_google_json = api.find_google_book_data(data['title'], data['author'])
     new_book_info = api.parse_response_data_for_info(new_book_google_json)
-     
+    print("\n\n\nAUTHOR DEBUG", new_book_info['author'], "\n\n\n")
+    cover_img_source = 'static/images/generic-book-cover.jpg'
     if crud.get_book_by_name(new_book_info['title']):
         book = crud.get_book_by_name(new_book_info['title'])
         print("BOOK IN DB ADDING TO SHELF IF APPROPRIATE")
         
+    
+    # TODO be able to handle books with mutliple authors
     else:
         title = new_book_info['title']
-        author = new_book_info['author']  
+        author = new_book_info['author'][0]
         publisher = new_book_info['publisher']  
         year_published = new_book_info['year_published']
         isbn =  new_book_info['isbn'] 
-        description = new_book_info['description']  
-        cover_img_source = new_book_info['cover_img_source']
+        description = new_book_info['description']
+        
+        if new_book_info['cover_img_source']:
+            cover_img_source = new_book_info['cover_img_source']
+        
+            
+        print(cover_img_source)
+
+
         book = crud.create_book(title, author, publisher, year_published, isbn, description, cover_img_source)
-        # shelved = crud.create_shelvedbook(current_user.bookshelvesshelf_id, book, reading_status, owned_status)
-    
+          # MAKE A SHELVED BOOK
+        if crud.return_shelf_by_user_and_name(current_user.user_id, data['shelf']):
+            #add a shelvedbook
+            shelf = crud.return_shelf_by_user_and_name(current_user.user_id, data['shelf'])
+            shelved = crud.create_shelvedbook(shelf.shelf_id, book.book_id, 5, 4)
+
+        else:
+            shelf = crud.create_user_bookshelf( current_user, data.shelf)
+            shelved = crud.create_shelvedbook(shelf.shelf_id, book.book_id, 5, 4)
+
+        print("shelvedbook, try to refreshshelf", shelf, shelved)
+
     return jsonify({'book_id': book.book_id, "title":book.title, 
                                 'author': book.author, 'publisher': book.publisher, 
-                                'description':book.description})
+                                'description':book.description, 'img':cover_img_source})
+    
     #update or create shelvedbooked info
     # create_shelvedbook(shelf, book, reading_status, owned_status)
     
-                                     
+    # create_book
+    # return_shelf_by_user_and_name
+    # create_shelvedbook
+    # return_all_books_on_shelf_by_user                         
 
-
-@app.route("/api/top-posts")
-def get_top_posts():
-    # get top posts from the DB 
-    # package them up nicely into a list of dicts
-    
-    top_posts = [
-    {"id": 93, "title": "why kiwis are the best fruit, part 9", "body": " body text for p1"},
-    {"id": 783, "title": "typsetting in the 19th century", "body": " body text for p2"},
-    {"id": 1383, "title": "debugging, a lifes tale", "body": " body text for p3"}
-    ]
-    
-    return jsonify(top_posts)
-
-@app.route("/api/post", methods=["POST"])
-def post():
-    
-    # im expecting this kind of object as JSON in the request
-    # {"post_title": "post 1", "post_body": "stuf stuf stuf"}
-
-    data = request.get_json()
-    post_title = data.post_title
-    post_body = data.post_body
-
-    # do stuff to create that post in the DB
 
 if __name__ == "__main__":
     model.connect_to_db(app)
