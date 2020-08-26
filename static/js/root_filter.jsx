@@ -516,27 +516,24 @@ function Logout(props) {
   
       const logout_user = {"logout": true}
   
-      fetch('/logout', {
-        body: JSON.stringify(login_user),
-        headers: {
-          'Content-Type': 'application/json'
-        },
-      })
+      fetch('/logout')
       .then(response => response.json())
       .then(data => {
        
           alert(`${data.status}`);
-          setIsLoggedIn(false)
+        
         
         })
-        console.log(logout_user)
+        console.log( "LOGGING OUT", logout_user)
         event.preventDefault();
+        props.handleLogin(false);
         
         
         //   setIsRegistered(true)
-        history.push('/')
+        
       }
-  
+      history.push('/')
+      console.log("LOGGEDOUT", props.isLoggedIn)
     // a form 
     return (
       <form className="form-signout" onSubmit={handleSubmit}>
@@ -578,16 +575,14 @@ function Login(props) {
           props.handleLogin(true);
         }
       )
-        
+    
+      
       
       console.log("LOGIN USER", login_user);
       event.preventDefault();
-    
-    //   setIsLoggedIn(true)
-    //   setIsRegistered(true)
-      history.push('/')
+
       }
-  
+      history.push('/')
     // a form 
     return (
       <form className="form-signin" onSubmit={handleSubmit}>
@@ -627,8 +622,10 @@ function Login(props) {
 function Homepage(props) {
   
     // Sets some state Variables and props variables
-    const [isLoggedIn, setIsLoggedIn] = React.useState();
-   
+    const [isLoggedIn, setIsLoggedIn] = React.useState(false);
+
+    let cookieValue = document.cookie
+    console.log(cookieValue);
 
     let history = useHistory();
     const [bookList, setBookList] = React.useState(["loading..."]);
@@ -650,6 +647,10 @@ function Homepage(props) {
         fetch('/api/bookshelf')
         .then(response => response.json())
         .then((data) => {
+            if (data.user) {
+                setIsLoggedIn(true)
+                console.log(data.user)
+            }
             
             // going to be a prop... not need to update
             for (const stat of data.reading_st_list) {
@@ -688,8 +689,9 @@ function Homepage(props) {
     <div>
         <h1>Welcome to Shelve-It</h1>
         <h2> a place to keep track of your reading needs </h2>
-            {!isLoggedIn && <Login loggedIn={isLoggedIn} handleLogin={handleLogin} /> }
+            {!isLoggedIn && <Login loggedIn={isLoggedIn} handleLogin={() =>handleLogin} /> }
             {!isLoggedIn && <Register /> }
+            {isLoggedIn && <Logout loggedIn={isLoggedIn} handleLogin={() =>handleLogin} /> }
             <UploadAPhoto />
             <AddaBook reading={reading_stats} owned={owned_stats} shelves={shelvesList} />
             <FilterableBookshelfTable books={bookList} bookTabs={bookTable} reading={reading_stats} owned={owned_stats} shelves={shelvesList}/>
