@@ -1,0 +1,73 @@
+example_data()
+
+0 <Book id =11. The title is The Odyssey and the author is Homer>
+1 <Book id =10. The title is The Catcher in the Rye and the author is J. D. Salinger>
+2 <Book id =1. The title is In Search of Lost Time  and the author is Marcel Proust>
+3 <Book id =2. The title is Ulysses and the author is James Joyce>
+4 <Book id =3. The title is Don Quixote and the author is Miguel de Cervantes>
+5 <Book id =4. The title is The Great Gatsby  and the author is F. Scott Fitzgerald>
+6 <Book id =5. The title is One Hundred Years of Solitude  and the author is Gabriel Garcia Marquez>
+7 <Book id =6. The title is Moby Dick and the author is Herman Melville>
+8 <Book id =7. The title is War and Peace and the author is Leo Tolstoy>
+9 <Book id =8. The title is Lolita  and the author is Vladimir Nabokov>
+10 <Book id =9. The title is Hamlet and the author is William Shakespeare>
+u1bookshelf1 1
+u1bookshelf2 2
+u2bookshelf1 3
+u2bookshelf2 4
+u2bookshelf3 5
+u3bookshelf1 6
+.Connected to the db!
+0 <Book id =11. The title is The Odyssey and the author is Homer>
+1 <Book id =10. The title is The Catcher in the Rye and the author is J. D. Salinger>
+2 <Book id =1. The title is In Search of Lost Time  and the author is Marcel Proust>
+3 <Book id =2. The title is Ulysses and the author is James Joyce>
+4 <Book id =3. The title is Don Quixote and the author is Miguel de Cervantes>
+5 <Book id =4. The title is The Great Gatsby  and the author is F. Scott Fitzgerald>
+6 <Book id =5. The title is One Hundred Years of Solitude  and the author is Gabriel Garcia Marquez>
+7 <Book id =6. The title is Moby Dick and the author is Herman Melville>
+8 <Book id =7. The title is War and Peace and the author is Leo Tolstoy>
+9 <Book id =8. The title is Lolita  and the author is Vladimir Nabokov>
+10 <Book id =9. The title is Hamlet and the author is William Shakespeare>
+u1bookshelf1 1
+u1bookshelf2 2
+u2bookshelf1 3
+u2bookshelf2 4
+u2bookshelf3 5
+u3bookshelf1 6
+.Connected to the db!
+0 <Book id =11. The title is The Odyssey and the author is Homer>
+1 <Book id =10. The title is The Catcher in the Rye and the author is J. D. Salinger>
+2 <Book id =1. The title is In Search of Lost Time  and the author is Marcel Proust>
+3 <Book id =2. The title is Ulysses and the author is James Joyce>
+4 <Book id =3. The title is Don Quixote and the author is Miguel de Cervantes>
+5 <Book id =4. The title is The Great Gatsby  and the author is F. Scott Fitzgerald>
+6 <Book id =5. The title is One Hundred Years of Solitude  and the author is Gabriel Garcia Marquez>
+7 <Book id =6. The title is Moby Dick and the author is Herman Melville>
+8 <Book id =7. The title is War and Peace and the author is Leo Tolstoy>
+9 <Book id =8. The title is Lolita  and the author is Vladimir Nabokov>
+10 <Book id =9. The title is Hamlet and the author is William Shakespeare>
+u1bookshelf1 1
+u1bookshelf2 2
+u2bookshelf1 3
+u2bookshelf2 4
+u2bookshelf3 5
+u3bookshelf1 6
+.Connected to the db!
+0 <Book id =11. The title is The Odyssey and the author is Homer>
+1 <Book id =10. The title is The Catcher in the Rye and the author is J. D. Salinger>
+2 <Book id =1. The title is In Search of Lost Time  and the author is Marcel Proust>
+3 <Book id =2. The title is Ulysses and the author is James Joyce>
+4 <Book id =3. The title is Don Quixote and the author is Miguel de Cervantes>
+5 <Book id =4. The title is The Great Gatsby  and the author is F. Scott Fitzgerald>
+6 <Book id =5. The title is One Hundred Years of Solitude  and the author is Gabriel Garcia Marquez>
+7 <Book id =6. The title is Moby Dick and the author is Herman Melville>
+8 <Book id =7. The title is War and Peace and the author is Leo Tolstoy>
+9 <Book id =8. The title is Lolita  and the author is Vladimir Nabokov>
+10 <Book id =9. The title is Hamlet and the author is William Shakespeare>
+u1bookshelf1 1
+u1bookshelf2 2
+u2bookshelf1 3
+u2bookshelf2 4
+u2bookshelf3 5
+u3bookshelf1 6

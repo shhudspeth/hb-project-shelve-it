@@ -30,7 +30,7 @@ class User(db.Model):
     
     # Definition of Columns and relationships
     user_id = db.Column(db.Integer, primary_key=True, nullable=False, autoincrement=True)
-    user_name = db.Column(db.String(30))
+    user_name = db.Column(db.String(30), unique=True)
     email = db.Column(db.String(30), nullable=False, unique=True)
     password = db.Column(db.String(30), nullable=False)
     joined_at = db.Column(db.DateTime)
@@ -178,7 +178,7 @@ class ShelvedBook(db.Model):
     # didnot_like = db.Column(db.Boolean)
     # removed_from_shelf boolean = db.Column(db.Boolean)
 
-def connect_to_db(flask_app, db_uri='postgresql:///shelve_it', echo=False):
+def connect_to_db(flask_app, db_uri, echo=False):
     flask_app.config['SQLALCHEMY_DATABASE_URI'] = db_uri
     flask_app.config['SQLALCHEMY_ECHO'] = echo
     flask_app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -196,4 +196,4 @@ if __name__ == '__main__':
     # Call connect_to_db(app, echo=False) if your program output gets
     # too annoying; this will tell SQLAlchemy not to print out every
     # query it executes.
-    connect_to_db(app)
+    connect_to_db(app,db_uri='postgresql:///shelve_it')

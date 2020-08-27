@@ -72,7 +72,7 @@ def create_book(title, author, publisher, year_published, isbn, description, cov
 
 def return_all_books():
     """ Create and return a list of all books"""
-    return Book.query.all()  
+    return db.session.query(Book).all()  
 
 
 def get_book_by_name(title):
@@ -86,11 +86,11 @@ def get_book_by_id(book_id):
 
 # QUERIES ON BOOKSHELF
 # CREATE A BOOKSHELF FOR A USER
-# TODO STANDARDIZED SENDING OBJECTS OR IDS
+# TODO STANDARDIZED SENDING OBJECTS OR IDS--> SHOULD BE ALL IDS
 
-def create_user_bookshelf( user, nickname):
+def create_user_bookshelf(user_id, nickname):
     """ Create and return a new user bookshelf"""
-    user_bookshelf = Bookshelf(user_id=user.user_id, 
+    user_bookshelf = Bookshelf(user_id=user_id, 
                   nickname=nickname, 
                   sent_to_user=False, 
                   public_display=False)
@@ -105,10 +105,7 @@ def create_user_bookshelf( user, nickname):
 def return_user_bookshelf_by_name(user_id, nickname):
     """ Return a shelf object by user_id and nickname"""
     shelf = db.session.query(Bookshelf).filter(Bookshelf.user_id==user_id, Bookshelf.nickname==nickname).first()
-
     return shelf
-
-
 
 def return_all_shelves_by_user(user_id):
     # TODO: make into a drop menu
@@ -117,7 +114,7 @@ def return_all_shelves_by_user(user_id):
 
     return(shelves)
 
-def return_all_books_on_shelf_by_user(user_id):
+def return_all_books_on_shelves_by_user(user_id):
     """ Return a list of all books on a user shelf by user id"""
     shelves = db.session.query(Bookshelf).filter(Bookshelf.user_id==user_id).all()
     all_user_books =[]
