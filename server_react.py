@@ -87,6 +87,7 @@ def display_bookshelf():
         current_user = crud.get_user_by_username(session['user'])
         print("\n\n\n CHECK USER", current_user, current_user.user_id)
         user_books = crud.return_all_books_on_shelf_by_user(current_user.user_id)
+    
         print("CHECK BOOKS", user_books, "\n\n\n")
         user_shelves = crud.return_all_shelves_by_user(current_user.user_id)
     
@@ -97,7 +98,7 @@ def display_bookshelf():
         flash("please login first!")
         return(jsonify({"status": "please login first"}))
     
-    # print(f"\n\n\n {current_user} \n {user_shelves} \n {reading_stats} \n {owned_stats}")
+    print(f"\n\n\n {current_user} \n {user_shelves} \n {reading_stats} \n {owned_stats}")
     
     serial_shelves = []
     for shelf in user_shelves:
@@ -115,14 +116,15 @@ def display_bookshelf():
     
     serialized_books = []
     # user_books is a list of a list!!!
-    for book in user_books[0]: 
+    for book in user_books: 
         #get sheleved book info : shelf id, bookid, reading and owned statuses
         #print("SHEVLEDBOOK ID",current_user, current_user.user_id, book.book_id)
         shelf_st = crud.get_shelvedbook(current_user.user_id, book.book_id)
+        print("SHELF", shelf_st, shelf_st.bookshelf.nickname)
         own_st = crud.get_owned_status(shelf_st.owned_status)
         reading_st = crud.get_reading_status(shelf_st.reading_status)
-        print("TRYING TO GET SHELF NAME", book, book.book_id, shelf_st, shelf_st.bookshelf.nickname, shelf_st.owned_status, shelf_st.reading_status)
-        print(reading_st, own_st)
+        # print("TRYING TO GET SHELF NAME", book, book.book_id, shelf_st, shelf_st.bookshelf.nickname, shelf_st.owned_status, shelf_st.reading_status)
+        # print(reading_st, own_st)
         if book.cover_img_source.startswith('http'):
             image_url = 'https'+ str(book.cover_img_source)[4:]
 
@@ -135,9 +137,9 @@ def display_bookshelf():
                                 'reading_stat':reading_st,
                                 'owned_stat':own_st
                                  })
-        # print("WHY ARE ALL SHELVES BOOKWORMMAY", serialized_books)
+    # print("WHY ARE ALL SHELVES BOOKWORMMAY", serialized_books)
     return jsonify({"user": session['user'],
-                    "books":serialized_books, 
+                    "books": serialized_books, 
                     "shelves": serial_shelves, 
                     "reading_st_list": serialized_reading_statuses, 
                     "owned_st_list": serialized_owned_statuses })
@@ -211,6 +213,7 @@ def get_book_info():
     session['shelf'] = data['shelf']
     print ("SESSION", session, "\n\n\n")
     # TODO add shelf logic to add to shelf AND REFACTOR THIS CODE
+    # 1. POP UP FORM IF THE SPELLING OF BOOKS IS INCORRECT
     # reading_status--> crud.return_all_types_reading(), sr[0].reading_status_name
 
     # owned_status --> crud. eturn_all_types_owned() sr[0].owned_text
@@ -218,10 +221,24 @@ def get_book_info():
     new_book_info = api.parse_response_data_for_info(new_book_google_json)
     print("\n\n\nAUTHOR DEBUG", new_book_info['author'], "\n\n\n")
     cover_img_source = 'static/images/generic-book-cover.jpg'
+
+    # FIND BOOKSHELF
+    if crud.return_user_bookshelf_by_name(current_user.user_id, data['shelf']):
+        #add a shelvedbook
+        print("found shelf")
+        shelf = crud.return_user_bookshelf_by_name(current_user.user_id, data['shelf'])
+    # CREATE SHELF IF NECESSARY
+    else:
+        print("creating shelf")
+        shelf = crud.create_user_bookshelf(current_user, data['shelf'])[0]
+    
+    print("\n\nSHELF ", shelf, "\n\n")
+
+
+    # FIND BOOK IN DATABASE
     if crud.get_book_by_name(new_book_info['title']):
         book = crud.get_book_by_name(new_book_info['title'])
         print("BOOK IN DB ADDING TO SHELF IF APPROPRIATE")
-        
     
     # TODO be able to handle books with mutliple authors
     else:
@@ -234,23 +251,15 @@ def get_book_info():
         
         if new_book_info['cover_img_source']:
             cover_img_source = new_book_info['cover_img_source']
-        
-            
+          
         print(cover_img_source)
-
-
+        #MAKE A NEW BOOK ADD TO DB
         book = crud.create_book(title, author, publisher, year_published, isbn, description, cover_img_source)
-          # MAKE A SHELVED BOOK
-        if crud.return_shelf_by_user_and_name(current_user.user_id, data['shelf']):
-            #add a shelvedbook
-            shelf = crud.return_shelf_by_user_and_name(current_user.user_id, data['shelf'])
-            shelved = crud.create_shelvedbook(shelf.shelf_id, book.book_id, 5, 4)
+        
+    # MAKE A SHELVED BOOK
+    shelved = crud.create_shelvedbook(shelf.shelf_id, book.book_id, 5, 4)
 
-        else:
-            shelf = crud.create_user_bookshelf( current_user, data.shelf)
-            shelved = crud.create_shelvedbook(shelf.shelf_id, book.book_id, 5, 4)
-
-        print("shelvedbook, try to refreshshelf", shelf, shelved)
+    print("shelvedbook, try to refreshshelf", shelf, shelved)
 
     return jsonify({'book_id': book.book_id, "title":book.title, 
                                 'author': book.author, 'publisher': book.publisher, 

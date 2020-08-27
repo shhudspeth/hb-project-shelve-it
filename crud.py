@@ -86,6 +86,8 @@ def get_book_by_id(book_id):
 
 # QUERIES ON BOOKSHELF
 # CREATE A BOOKSHELF FOR A USER
+# TODO STANDARDIZED SENDING OBJECTS OR IDS
+
 def create_user_bookshelf( user, nickname):
     """ Create and return a new user bookshelf"""
     user_bookshelf = Bookshelf(user_id=user.user_id, 
@@ -98,10 +100,11 @@ def create_user_bookshelf( user, nickname):
 
     return user_bookshelf
 
+# FIX BOOKSHELVES HERE
 
-def return_shelf_by_user_and_name(user_id, nick_name):
+def return_user_bookshelf_by_name(user_id, nickname):
     """ Return a shelf object by user_id and nickname"""
-    shelf = db.session.query(Bookshelf).filter((Bookshelf.user_id==user_id) and (Bookshelf.nickname==nick_name)).first()
+    shelf = db.session.query(Bookshelf).filter(Bookshelf.user_id==user_id, Bookshelf.nickname==nickname).first()
 
     return shelf
 
@@ -117,12 +120,14 @@ def return_all_shelves_by_user(user_id):
 def return_all_books_on_shelf_by_user(user_id):
     """ Return a list of all books on a user shelf by user id"""
     shelves = db.session.query(Bookshelf).filter(Bookshelf.user_id==user_id).all()
-    all_user_books = []
-    all_user_books.extend([shelf.books for shelf in shelves ])
+    all_user_books =[]
+    books = [shelf.books for shelf in shelves ]
+    for books_ in books:
+        all_user_books += books_
     
     return(all_user_books)
 
-
+# FIX 
 def return_books_on_shelf_by_shelfid(shelf_id, user_id):
     """ Return a list of all books on a user shelf by user id"""
     id_shelf_books = Bookshelf.query.filter((Bookshelf.shelf_id==shelf_id) & (Bookshelf.user_id==user_id)).first()
@@ -152,8 +157,7 @@ def create_shelvedbook(shelf_id, book_id, reading_status_id, owned_status_id):
 def get_shelvedbook(user_id, book_id):
     """ Return a  shelvedbook (book for a shelf with lots of user preferences"""
     user_sb = User.query.get(user_id)
-    shelved_books = db.session.query(ShelvedBook).filter(ShelvedBook.book_id == book_id).all()
-    shelved_book = db.session.query(ShelvedBook).filter(ShelvedBook.user.contains(user_sb)).first()
+    shelved_book = db.session.query(ShelvedBook).filter(ShelvedBook.book_id == book_id, ShelvedBook.user.contains(user_sb)).first()
 
     return shelved_book
 

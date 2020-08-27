@@ -3,8 +3,9 @@ secrets.sh
 .pyc
 virtualbookshelf*.json
 notes_to_self/
-__pycache__
+*.pyc
 *.sql
 .DS_Store
 .env
 shelve_it.sql
+.vscode
