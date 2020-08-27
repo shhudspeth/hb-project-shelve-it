@@ -24,17 +24,7 @@ function AddaBook(props) {
     const addNewBooktoShelf = (event) => {
         
         console.log('add book to shelf via form')
-        // React.useEffect(() => {
-        //   console.log("fetching status options...")
-        //   fetch('/api/bookshelf')
-        //   .then(response => response.json())
-        //   .then((data) => {
-        //     const reading_st = data.reading_st;
-        //     const owned_st = data.owned_st
-        //     ;
-        //   })
-        // }, [])
-
+     
         const post = {"title": enteredbook, "author": enteredauthor, "shelf": shelfname}
         console.log("POSTING DATA")
         fetch('/api/bookshelf/addbook', {
@@ -60,9 +50,9 @@ function AddaBook(props) {
         event.preventDefault();
         console.log("NEW BOOK SHOULD SHOW UP", bookDetail);
         event.target.reset();
-        history.push('/')
+        
           } 
-
+          history.push('/')
     return (<div>
             <form className='form-add-book' onSubmit={addNewBooktoShelf}> 
                 <h2>Add a Book via Title and Author</h2>
@@ -90,7 +80,7 @@ function UploadAPhoto(props){
     const [booksFile, setBooksFile] = React.useState("");
     const [newBooks, setNewBooks] = React.useState();
     
-     const uploadBookPhoto = (event) => {
+    const uploadBookPhoto = (event) => {
     console.log('trying to add books to page')
   
       const post = {"filepath": booksFile, "shelfname": shelfname}
@@ -108,10 +98,10 @@ function UploadAPhoto(props){
         })
         event.preventDefault();
         event.target.reset();
-        history.push('/')
+        
         console.log("NEW BOOKS", newBooks)
       } 
-
+      history.push('/')
       return (
       <div>
           <div className="row">
@@ -379,12 +369,10 @@ function Register(props) {
   
         
       })
-      console.log(register_user)
-
-        
+      console.log(register_user)   
         event.preventDefault();
-        history.push('/')
       }
+      history.push('/')
     return (
       <form className="form-register" onSubmit={handleSubmit}>
   
@@ -571,8 +559,13 @@ function Login(props) {
       .then(data => {
        
           alert(`${data.status}`);
+          if (data.status.startsWith('ok')) {
+            props.handleLogin(true);
+          }
+          else {
+              history.push('/')
+          }
 
-          props.handleLogin(true);
         }
       )
     
@@ -580,9 +573,10 @@ function Login(props) {
       
       console.log("LOGIN USER", login_user);
       event.preventDefault();
+      history.push('/bookshelf')
 
       }
-      history.push('/')
+      
     // a form 
     return (
       <form className="form-signin" onSubmit={handleSubmit}>
@@ -622,12 +616,35 @@ function Login(props) {
 function Homepage(props) {
   
     // Sets some state Variables and props variables
+    console.log(props.loggedIn, "checking rendering value")
+    
+    return (
+    <div>
+        <h1>Welcome to Shelve-It</h1>
+        <h2> a place to keep track of your reading needs </h2>
+            {!props.loggedIn && <Login loggedIn={props.loggedIn} handleLogin={() =>props.handleLogin} /> }
+            {!props.loggedIn && <Register /> }
+            {props.loggedIn && <Logout loggedIn={props.loggedIn} handleLogin={() =>props.handleLogin} /> }
+            <UploadAPhoto />
+            <AddaBook reading={props.reading} owned={props.owned} shelves={props.shelves} />
+            <FilterableBookshelfTable books={props.books} bookTabs={props.bookTabs} 
+                                        reading={props.reading} owned={props.owned} 
+                                        shelves={props.shelves}/>
+         
+      
+    </div>)
+  }
+ 
+
+// MAIN ROUTER AND SWITCH APP
+
+function App(props) {
     const [isLoggedIn, setIsLoggedIn] = React.useState(false);
 
     let cookieValue = document.cookie
     console.log(cookieValue);
 
-    let history = useHistory();
+    
     const [bookList, setBookList] = React.useState(["loading..."]);
     const [shelvesList, setShelvesList] = React.useState([]);
     const [reading_stats, setReadingStats] = React.useState([]);
@@ -665,11 +682,11 @@ function Homepage(props) {
             setOwnedStats(owned_stats)
 
              // going to be a State should be able to update
-            const shelves = [];
+            const shelvesList = [];
             for (const shelf of data.shelves) {
-                shelves.push(shelf.name)
+                shelvesList.push(shelf.name)
             };
-            setShelvesList(shelves)
+            setShelvesList(shelvesList)
             
             //get book data
             const bookTable= [];
@@ -683,27 +700,7 @@ function Homepage(props) {
         })
         
         }, []);
-        history.push('/')
-    
-    return (
-    <div>
-        <h1>Welcome to Shelve-It</h1>
-        <h2> a place to keep track of your reading needs </h2>
-            {!isLoggedIn && <Login loggedIn={isLoggedIn} handleLogin={() =>handleLogin} /> }
-            {!isLoggedIn && <Register /> }
-            {isLoggedIn && <Logout loggedIn={isLoggedIn} handleLogin={() =>handleLogin} /> }
-            <UploadAPhoto />
-            <AddaBook reading={reading_stats} owned={owned_stats} shelves={shelvesList} />
-            <FilterableBookshelfTable books={bookList} bookTabs={bookTable} reading={reading_stats} owned={owned_stats} shelves={shelvesList}/>
-         
-      
-    </div>)
-  }
- 
-
-// MAIN ROUTER AND SWITCH APP
-
-function App(props) {
+        
   
    
     return (
@@ -720,9 +717,7 @@ function App(props) {
                         <li>
                             <Link to="/upload-bookphoto"> Upload Books to Your Bookshelf </Link>
                         </li> 
-                        <li> 
-                            <Link to="/logout"> Logout </Link>
-                        </li>
+                        
                     </ul>
                 </nav>
                 <Switch>
@@ -732,11 +727,11 @@ function App(props) {
                     </Route>
                     
                     <Route path="/login">
-                        <Login />
+                        <Login loggedIn={isLoggedIn} handleLogin={() =>handleLogin} />
                     </Route>
 
                     <Route path="/logout">
-                        <Logout />
+                        <Logout loggedIn={isLoggedIn} handleLogin={() =>handleLogin} />
                     </Route>
             
                     <Route path="/upload-book-photo">
@@ -744,7 +739,7 @@ function App(props) {
                     </Route>
                     
                     <Route path="/bookshelf">
-                        <FilterableBookshelfTable />
+                        <FilterableBookshelfTable loggedIn={isLoggedIn} handleLogin={() =>handleLogin} books={bookList} bookTabs={bookTable} reading={reading_stats} owned={owned_stats} shelves={shelvesList} />
                     </Route> 
 
                     <Route path="/book-info/:bookId">
@@ -752,7 +747,7 @@ function App(props) {
                     </Route>
         
                     <Route path="/">
-                        <Homepage />
+                        <Homepage loggedIn={isLoggedIn} handleLogin={() =>handleLogin} books={bookList} bookTabs={bookTable} reading={reading_stats} owned={owned_stats} shelves={shelvesList} />
                     </Route>
                  </Switch>
             </div>

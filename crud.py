@@ -117,8 +117,8 @@ def return_all_shelves_by_user(user_id):
 def return_all_books_on_shelf_by_user(user_id):
     """ Return a list of all books on a user shelf by user id"""
     shelves = db.session.query(Bookshelf).filter(Bookshelf.user_id==user_id).all()
-
-    all_user_books = [shelf.books for shelf in shelves ]
+    all_user_books = []
+    all_user_books.extend([shelf.books for shelf in shelves ])
     
     return(all_user_books)
 
@@ -151,9 +151,9 @@ def create_shelvedbook(shelf_id, book_id, reading_status_id, owned_status_id):
 
 def get_shelvedbook(user_id, book_id):
     """ Return a  shelvedbook (book for a shelf with lots of user preferences"""
-    shelved_book = db.session.query(ShelvedBook).filter((User.user_id==user_id) and (Book.book_id == book_id)).first()
-    
-
+    user_sb = User.query.get(user_id)
+    shelved_books = db.session.query(ShelvedBook).filter(ShelvedBook.book_id == book_id).all()
+    shelved_book = db.session.query(ShelvedBook).filter(ShelvedBook.user.contains(user_sb)).first()
 
     return shelved_book
 
@@ -180,6 +180,8 @@ def return_all_types_reading():
 
     return db.session.query(ReadingStatus).all()
 
+def get_reading_status(status_id):
+    return db.session.query(ReadingStatus).filter(ReadingStatus.reading_status_id==status_id).first().reading_status_name
 
 # OWNED STATUS CRUD OPERATIONS
 
@@ -197,6 +199,10 @@ def return_all_types_owned():
     """ RETURNS ALL THE DIFFERENT OPTIONS FOR OWNED STATUS"""
 
     return db.session.query(OwnedStatus).all()
+
+
+def get_owned_status(status_id):
+    return db.session.query(OwnedStatus).filter(OwnedStatus.owned_id==status_id).first().owned_text
 
 
 if __name__ == '__main__':

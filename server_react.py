@@ -30,9 +30,10 @@ def process_login():
             # return redirect('/bookshelf')
             return(jsonify({'status': "ok. you are logged in!"}))
         else:
-            flash('Incorrect Password. Please try again')
+            session['user'] = 'unknown'
             return (jsonify({'status': "incorrect password"}))
     else:
+        session['user'] = 'needs_to_register'
         flash("No account with that email exists. Please create one or try again")
         # return redirect('/register')
         return(jsonify({'status': "no user with that email"}))
@@ -45,9 +46,7 @@ def process_logout():
     dictionary, look up the user, and store them in the session.
     """
     if session['user']:
-        print(session, "USER LOGGED IN")
-        session.pop('user')
-        print(session, "USER LOGGED OUT")
+        [session.pop(key) for key in list(session.keys())]
    
         flash("You've logged out successfully")
         # return redirect('/bookshelf')
@@ -82,14 +81,15 @@ def register_new_account():
 
 @app.route('/api/bookshelf')
 def display_bookshelf():
-    # print(session)
-    # print(session['user']+ '\n\n\n\n')
-    
+ 
     if session['user']:
         print(session['user'])
         current_user = crud.get_user_by_username(session['user'])
+        print("\n\n\n CHECK USER", current_user, current_user.user_id)
         user_books = crud.return_all_books_on_shelf_by_user(current_user.user_id)
+        print("CHECK BOOKS", user_books, "\n\n\n")
         user_shelves = crud.return_all_shelves_by_user(current_user.user_id)
+    
         reading_stats = crud.return_all_types_reading()
         owned_stats = crud.return_all_types_owned()
     
@@ -102,6 +102,7 @@ def display_bookshelf():
     serial_shelves = []
     for shelf in user_shelves:
         serial_shelves.append({'shelf_id': shelf.shelf_id, 'name': shelf.nickname})
+    
     
     serialized_reading_statuses = []
     for stat in reading_stats:
@@ -116,19 +117,25 @@ def display_bookshelf():
     # user_books is a list of a list!!!
     for book in user_books[0]: 
         #get sheleved book info : shelf id, bookid, reading and owned statuses
+        #print("SHEVLEDBOOK ID",current_user, current_user.user_id, book.book_id)
         shelf_st = crud.get_shelvedbook(current_user.user_id, book.book_id)
-        # print(shelf_st.owned_statuses.owned_text)
+        own_st = crud.get_owned_status(shelf_st.owned_status)
+        reading_st = crud.get_reading_status(shelf_st.reading_status)
+        print("TRYING TO GET SHELF NAME", book, book.book_id, shelf_st, shelf_st.bookshelf.nickname, shelf_st.owned_status, shelf_st.reading_status)
+        print(reading_st, own_st)
         if book.cover_img_source.startswith('http'):
             image_url = 'https'+ str(book.cover_img_source)[4:]
+
+        
         
         serialized_books.append({'book_id': book.book_id, "title":book.title, 
                                 'author': book.author, 'publisher': book.publisher, 
                                 'description':book.description, "img":image_url, 
                                 'shelf_name': shelf_st.bookshelf.nickname,
-                                'reading_stat':shelf_st.reading_statuses.reading_status_name,
-                                'owned_stat':shelf_st.owned_statuses.owned_text
+                                'reading_stat':reading_st,
+                                'owned_stat':own_st
                                  })
-             
+        # print("WHY ARE ALL SHELVES BOOKWORMMAY", serialized_books)
     return jsonify({"user": session['user'],
                     "books":serialized_books, 
                     "shelves": serial_shelves, 
@@ -193,8 +200,11 @@ def send_status():
 @app.route('/api/bookshelf/addbook', methods=["POST"])
 def get_book_info():
     if session['user']:
-        current_user = crud.get_user_by_username(session['user'])
-        
+        try:
+            current_user = crud.get_user_by_username(session['user'])
+        except:
+            current_user = crud.create_user(session['email'], session['password'], session['user'])
+            print("ADDED NEW USER TO DB", current_user)
     
     data = request.get_json()
     print("\n\n\n", 'ADDING A NEW BOOK', data, "\n\n\n")
