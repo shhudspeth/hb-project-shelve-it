@@ -86,7 +86,7 @@ def display_bookshelf():
         print(session['user'])
         current_user = crud.get_user_by_username(session['user'])
         print("\n\n\n CHECK USER", current_user, current_user.user_id)
-        user_books = crud.return_all_books_on_shelf_by_user(current_user.user_id)
+        user_books = crud.return_all_books_on_shelves_by_user(current_user.user_id)
     
         print("CHECK BOOKS", user_books, "\n\n\n")
         user_shelves = crud.return_all_shelves_by_user(current_user.user_id)
@@ -230,7 +230,7 @@ def get_book_info():
     # CREATE SHELF IF NECESSARY
     else:
         print("creating shelf")
-        shelf = crud.create_user_bookshelf(current_user, data['shelf'])[0]
+        shelf = crud.create_user_bookshelf.user_id, data['shelf'])[0]
     
     print("\n\nSHELF ", shelf, "\n\n")
 

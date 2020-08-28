@@ -168,12 +168,13 @@ def find_google_book_data_onetitle(title):
 
     link = f"https://www.googleapis.com/books/v1/volumes?q={title}&key={google_api_key}"
     response = requests.get(link).json()
-    if response['items'][0]['volumeInfo']:
+    if 'items' in response:
         book_json = {'title': response['items'][0]['volumeInfo']['title'], 'response': response}
         print("CAPTURED", book_json['title'], "\n\n")
         return(book_json)
     else:
         print("ERROR", response)
+        return(None)
 
 def parse_response_data_for_info(book_data):
 
@@ -221,9 +222,19 @@ def parse_response_data_for_info(book_data):
             'cover_img_source' : cover_img_source
             })
 
-if __name__ == '__main__':
-    
 
+
+def get_text_from_list_of_photos(photos):
+    text_of_photos = []
+    for photo in new_photos:
+        print(photo)
+        text = get_googlevision_response(photo)
+        text = text.replace('\n', ' ')
+        print(text)
+        text_of_photos.append(text)
+    return text_of_photos
+
+if __name__ == '__main__':
 
     # parser = argparse.ArgumentParser()
     # parser.add_argument('image_file', help='The image you\'d like to crop.')
@@ -239,18 +250,6 @@ if __name__ == '__main__':
     # elif args.mode == 'draw':
     #     draw_hint(f"static/images/{args.image_file}")
 
-    def get_text_from_list_of_photos(photos):
-        text_of_photos = []
-        for photo in new_photos:
-            print(photo)
-            text = get_googlevision_response(photo)
-            text = text.replace('\n', ' ')
-            print(text)
-            text_of_photos.append(text)
-        return text_of_photos
-
-
-
 
     if len(sys.argv) > 1:
         file = sys.argv[1]
@@ -259,8 +258,9 @@ if __name__ == '__main__':
         book_dictions = {}
         for book in book_titles:
             got_book =  find_google_book_data_onetitle(book)
-            book_dictions[got_book['title']] = parse_response_data_for_info(got_book)
-            print(got_book['title'])
+            if got_book:
+                book_dictions[got_book['title']] = parse_response_data_for_info(got_book)
+                print("GOOD BOOK API CALL FOR:", book_dictions[got_book['title']])
 
 
 

@@ -76,7 +76,7 @@ for status in owned_data:
     
 # BOOKSHELF AND BOOKS ON BOOKSHELF TO DATA BASE
 for n_user in user_data_seeding:
-    new_bookshelf = crud.create_user_bookshelf(user=n_user, nickname=f"Shelf_{n_user.user_name}")
+    new_bookshelf = crud.create_user_bookshelf(user_id=n_user.user_id, nickname=f"Shelf_{n_user.user_name}")
     print(f"added new bookshelf to database : {new_bookshelf}")
 
 
