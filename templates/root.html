@@ -6,29 +6,16 @@
     <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
     <script src='https://unpkg.com/react-router@5.2.0/umd/react-router.min.js'></script>
     <script src='https://unpkg.com/react-router-dom@5.2.0/umd/react-router-dom.min.js'></script> 
+    <script src="https://unpkg.com/react-bootstrap@next/dist/react-bootstrap.js" crossorigin></script>
 
     <div id="root">
 
-    {% with messages = get_flashed_messages() %}
-      {% for message in messages %}
-          <div class="alert alert-warning">{{ message }}</div>
-      {% endfor %}
-    {% endwith %}
     </div>
     <!-- MY JS SCRIPTS-->
+    <script src="/static/js/book_detail.jsx" type="text/jsx"></script>
+    <script src="/static/js/add_books.jsx" type="text/jsx"></script>
+    <script src="/static/js/register_login_logout.jsx" type="text/jsx"></script>
     <script src="/static/js/root_filter.jsx" type="text/jsx"></script>
-    <!-- <script>
-    // Construct URL along with required ISBNs
-    var isbns = ["0596000278", "00-no-isbn", "ISBN0765304368", "0439554934"];
-    // Note: server name should be replaced with prod server.
-    var api_url ="https://books.google.com/books?jscmd=viewapi&bibkeys=" +
-    isbns.join(",");
-
-    // Talk to the server synchronously and get _GBSBookInfo object
-    document.write(unescape("%3Cscript src=" + api_url +
-      " type='text/javascript'%3E%3C/script%3E"));
-    </script>
-    <script src="https://books.google.com/books?jscmd=viewapi&amp;bibkeys=0596000278,00-no-isbn,ISBN0765304368,0439554934" type="text/javascript"></script> -->
-
+   
   
 </htmL>

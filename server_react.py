@@ -134,6 +134,7 @@ def display_bookshelf():
                                 'author': book.author, 'publisher': book.publisher, 
                                 'description':book.description, "img":image_url, 
                                 'shelf_name': shelf_st.bookshelf.nickname,
+                                'shelf_id':shelf_st.bookshelf.shelf_id,
                                 'reading_stat':reading_st,
                                 'owned_stat':own_st
                                  })
@@ -230,7 +231,7 @@ def get_book_info():
     # CREATE SHELF IF NECESSARY
     else:
         print("creating shelf")
-        shelf = crud.create_user_bookshelf.user_id, data['shelf'])[0]
+        shelf = crud.create_user_bookshelf(user_id, data['shelf'])
     
     print("\n\nSHELF ", shelf, "\n\n")
 
@@ -275,7 +276,7 @@ def get_book_info():
 
 
 if __name__ == "__main__":
-    model.connect_to_db(app)
+    model.connect_to_db(app, db_uri='postgresql:///shelve_it')
     app.run(debug=True, host="0.0.0.0")
 
 
