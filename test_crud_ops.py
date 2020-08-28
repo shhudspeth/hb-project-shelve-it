@@ -388,6 +388,11 @@ class TestCrudBookshelf(unittest.TestCase):
         self.assertEqual(len(result), 2)
    
 
+    def test_return_books_on_shelf_by_nickname(self):
+        nickname = "u2bookshelf3"
+        user_id = 2
+        result = crud.return_books_on_shelf_by_nickname(nickname, user_id)
+        self.assertEqual(len(result), 2)
 
 
 
