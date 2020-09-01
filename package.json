@@ -1,0 +1,30 @@
+{
+  "name": "shelve-it",
+  "version": "1.0.0",
+  "description": "A virtual bookshelf that helps you organize your reading list",
+  "main": "root.js",
+  "dependencies": {
+    "@sendgrid/mail": "^7.2.4"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shhudspeth/hb-project-shelve-it.git"
+  },
+  "keywords": [
+    "books",
+    "photos",
+    "bookshelf",
+    "reading",
+    "list"
+  ],
+  "author": "Sarah Hudspeth",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/shhudspeth/hb-project-shelve-it/issues"
+  },
+  "homepage": "https://github.com/shhudspeth/hb-project-shelve-it#readme"
+}

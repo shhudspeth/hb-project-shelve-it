@@ -158,8 +158,18 @@ def get_shelvedbook(user_id, book_id):
 
     return shelved_book
 
+def get_reading_status_id(status_text):
+    return db.session.query(ReadingStatus).filter(ReadingStatus.reading_status_name==status_text).first().reading_status_id
 
 
+def update_shelvedbook_reading_st(user_id, book_id, status):
+    
+    shelved_book = get_shelvedbook(user_id=user_id, book_id=book_id)
+    status_id = get_reading_status_id(status)
+    shelved_book.reading_status = status_id
+    db.session.commit()
+    
+    return shelved_book
 #getshelvedbook
 #.readingstatus=newstatus
 #commit should save object (check if you have to add to session, )
@@ -184,17 +194,31 @@ def return_all_types_reading():
 def get_reading_status(status_id):
     return db.session.query(ReadingStatus).filter(ReadingStatus.reading_status_id==status_id).first().reading_status_name
 
+
+
 # OWNED STATUS CRUD OPERATIONS
 
 def create_owned_status(owned_status):
     """ Create an owned status for a given book" """
 
     owned_status = OwnedStatus(owned_text = owned_status)
-    
     db.session.add(owned_status)
     db.session.commit()
 
     return owned_status
+
+
+def get_owned_status_id(owned_text):
+    return db.session.query(OwnedStatus).filter(OwnedStatus.owned_text==owned_text).first().owned_id
+
+
+def update_shelvedbook_owned_st(user_id, book_id, status):
+    shelved_book = get_shelvedbook(user_id=user_id, book_id=book_id)
+    status_id = get_owned_status_id(status)
+    shelved_book.owned_status = status_id
+    db.session.commit()
+    return shelved_book
+
 
 def return_all_types_owned():
     """ RETURNS ALL THE DIFFERENT OPTIONS FOR OWNED STATUS"""
@@ -209,4 +233,4 @@ def get_owned_status(status_id):
 if __name__ == '__main__':
     from server import app
     
-    connect_to_db(app)
+    connect_to_db(app, db_uri='postgresql:///shelve_it')

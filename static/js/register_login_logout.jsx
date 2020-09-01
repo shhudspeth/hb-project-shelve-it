@@ -42,13 +42,6 @@ function Register(props) {
       .then(data => {
        
           alert(`${data.message}`)
-         
-      function handleRegister(event) {
-        // Here, we invoke the callback with the new value
-        props.onRegister(event.target.value);
-    }
-  
-  
         
       })
       console.log(register_user)   
@@ -206,13 +199,15 @@ function Logout(props) {
       console.log("LOGGEDOUT", props.isLoggedIn)
     // a form 
     return (
-      <form className="form-signout" onSubmit={handleSubmit}>
+        
+                <form className="form-signout" onSubmit={handleSubmit}>
   
-          <h2 className="form-signout-heading">Logout</h2>
+                <h2 className="form-signout-heading">Logout</h2>
   
-          <button className="btn btn-lg btn-primary btn-block">Log out</button>
+                <button>Log out</button>
   
-        </form>
+                </form>
+        
     )
   }
   

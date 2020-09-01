@@ -9,3 +9,4 @@ notes_to_self/
 .env
 shelve_it.sql
 .vscode
+sendgrid.env

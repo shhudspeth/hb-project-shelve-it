@@ -3,6 +3,9 @@ import crud
 import model
 import json
 import api
+import os
+from sendgrid import SendGridAPIClient
+from sendgrid.helpers.mail import Mail
 
 app = Flask(__name__)
 app.secret_key = 'to-be-determined'
@@ -10,6 +13,47 @@ app.secret_key = 'to-be-determined'
 @app.route("/")
 def root():
     return render_template("root.html")
+
+@app.route("/sendemail")
+def send_email():
+    # using SendGrid's Python Library
+# https://github.com/sendgrid/sendgrid-python
+
+    message = Mail(
+        from_email='from_email@example.com',
+        to_emails='to@example.com',
+        subject='Sending with Twilio SendGrid is Fun',
+        html_content='<strong>and easy to do anywhere, even with Python</strong>')
+    try:
+        sg = SendGridAPIClient(os.environ.get('SENDGRID_API_KEY'))
+        response = sg.send(message)
+        print(response.status_code)
+        print(response.body)
+        print(response.headers)
+    except Exception as e:
+        print(e.message)
+    
+
+
+@app.route("/update_status", methods=["POST"])
+def update_book_statuses():
+    status_dict = request.get_json()
+    print("\n\n\n STATUS DICTIONARY FROM ADD A BOOK", status_dict)
+
+    if session['user']:
+        print(session['user'])
+        current_user = crud.get_user_by_username(session['user'])
+        
+        # update book reading status
+        shelved_book = crud.update_shelvedbook_reading_st(current_user.user_id, \
+                            status_dict['book_id'], status_dict['reading_status'])
+        # update book owned status
+        shelved_book = crud.update_shelvedbook_owned_st(current_user.user_id, \
+                            status_dict['book_id'], status_dict['owned_status'])
+        print("IS IT SAVING TE RIGHT STATUS", shelved_book, shelved_book.reading_status, shelved_book.owned_status )
+        return(jsonify({"shelved_book": shelved_book.book.title }))
+    
+
 
 
 @app.route("/login", methods=["POST"])
@@ -138,7 +182,7 @@ def display_bookshelf():
                                 'reading_stat':reading_st,
                                 'owned_stat':own_st
                                  })
-    # print("WHY ARE ALL SHELVES BOOKWORMMAY", serialized_books)
+    print("WHY ARE ALL SHELVES BOOKWORMMAY", serialized_books)
     return jsonify({"user": session['user'],
                     "books": serialized_books, 
                     "shelves": serial_shelves, 
@@ -153,14 +197,24 @@ def add_to_bookshelf():
         print(info, "GETTING A POST RESPONSE")
         file = info['filepath'].split("\\").pop()
         shelf = info['shelfname']
-        response = api.text_from_photo(f"static/images/{file}")
+        new_photos = api.localize_objects_with_crop(f"static/images/{file}")
+        print(new_photos)
+        book_titles = api.get_text_from_list_of_photos(new_photos)
+        book_dictions = []
+        for book in book_titles:
+            got_book =  api.find_google_book_data_onetitle(book)
+            if got_book:
+                book_dictions.append(api.parse_response_data_for_info(got_book))
+                print("GOOD BOOK API CALL FOR:", got_book['title'])
+
         # serialized = MessageToJson()
-        session['response'] = response.text_annotations[0].description
+        session['response'] = book_titles
         session['file'] = file
         session['shelf'] = shelf
         # TODO: CRUD ADD BOOKS FROM RESPONSE TO DATABASE to specific shelf
-
-        return jsonify(response.text_annotations[0].description)
+        print(book_dictions, book_titles)
+        # TO DO ADD TO BOOK DATABASE --> MAKE A FUNCTION!?
+        return jsonify(book_dictions)
     
     #books = crud.
     
@@ -231,7 +285,7 @@ def get_book_info():
     # CREATE SHELF IF NECESSARY
     else:
         print("creating shelf")
-        shelf = crud.create_user_bookshelf(user_id, data['shelf'])
+        shelf = crud.create_user_bookshelf(current_user.user_id, data['shelf'])
     
     print("\n\nSHELF ", shelf, "\n\n")
 

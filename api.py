@@ -226,7 +226,7 @@ def parse_response_data_for_info(book_data):
 
 def get_text_from_list_of_photos(photos):
     text_of_photos = []
-    for photo in new_photos:
+    for photo in photos:
         print(photo)
         text = get_googlevision_response(photo)
         text = text.replace('\n', ' ')
