@@ -71,21 +71,21 @@ function ShowBookInfo(props) {
 //   function ConfirmUploadTextsModal(props){
 
 
-//     return(<div class="modal" tabindex="-1" role="dialog">
-//     <div class="modal-dialog" role="document">
-//       <div class="modal-content">
-//         <div class="modal-header">
-//           <h5 class="modal-title">Modal title</h5>
-//           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+//     return(<div className="modal" tabindex="-1" role="dialog">
+//     <div className="modal-dialog" role="document">
+//       <div className="modal-content">
+//         <div className="modal-header">
+//           <h5 className="modal-title">Modal title</h5>
+//           <button type="button" className="close" data-dismiss="modal" aria-label="Close">
 //             <span aria-hidden="true">&times;</span>
 //           </button>
 //         </div>
-//         <div class="modal-body">
+//         <div className="modal-body">
 //           <p>Modal body text goes here.</p>
 //         </div>
-//         <div class="modal-footer">
-//           <button type="button" class="btn btn-primary">Save changes</button>
-//           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+//         <div className="modal-footer">
+//           <button type="button" className="btn btn-primary">Save changes</button>
+//           <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
 //         </div>
 //       </div>
 //     </div>
@@ -104,7 +104,7 @@ function UploadAPhoto(props){
    const [newBooks, setNewBooks] = React.useState();
    const [bookDetail, setBookDetail] = React.useState([]);
 
-   console.log("UPLOAD BOOK< SHELVES", props.shelves)
+   console.log("UPLOAD BOOK< SHELVES", props.shelves, props.reading, props.owned)
 
    function handleChange(newValue) {
     setShelfname(newValue);
@@ -116,7 +116,7 @@ function UploadAPhoto(props){
  
      const post = {"filepath": booksFile, "shelfname": shelfname}
      console.log("POSTING DATA")
-     fetch('/api/bookshelf', {
+     fetch('/api/bookshelf/upload', {
        method: 'POST', 
        body: JSON.stringify(post),
        headers: {
@@ -127,12 +127,12 @@ function UploadAPhoto(props){
      .then(data => {
     
         for (const post of data) {
-
+            console.log("CHECKING SHELFNAME", shelfname)
             bookDetail.push(<AddBookDetailItem  key = {post.book_id} book_id={post.book_id} 
                                                 title={post.title} author={post.author}
                                                 publisher={post.publisher} image = {post.img} 
-                                                description={post.description} shelf={shelfname} 
-                                                reading={props.reading} owned={props.owned}/> )}
+                                                description={post.description} shelfname={shelfname} 
+                                                reading={props.reading} owned={props.owned} /> )}
 
         
         console.log("PRINTING FROM FETCH PUSH", bookDetail)
@@ -145,9 +145,10 @@ function UploadAPhoto(props){
        event.preventDefault();
        event.target.reset();
        
-       console.log("NEW BOOKS", newBooks)
+       console.log("NEW BOOKS logged?? ", newBooks)
      } 
      history.push('/')
+
      return (
             <React.Fragment>
             
@@ -170,13 +171,42 @@ function UploadAPhoto(props){
                                 <button type="submit"> Click here to upload</button>
                             </div>
                         </form>
-                </div>
+               
 
-                <table>
-                <tbody>
-                    {newBooks && bookDetail }
-                </tbody>
-                </table>
+                    {/* Button trigger modal*/}
+                    <button type="button" className="btn btn-primary" data-toggle="modal" data-target="#uploadModal">
+                    Confirm Books to add to shelf here
+                    </button>
+
+                    {/* Modal */}
+                    <div className="modal fade upload-modal-lg" id="uploadModal" tabIndex="-1" role="dialog" aria-labelledby="myLargeUploadModal" aria-hidden="true">
+                        <div className="modal-dialog modal-lg" role="form">
+                            <div className="modal-content">
+                                <div className="modal-header">
+                                    <h5 className="modal-title" id="exampleModalLabel">Books to upload</h5><br></br>
+                                        
+                                    
+                                    <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div className="modal-body">
+                                    Please edit typos or delete books you do not want. 
+                                    <table>
+                                        <tbody>
+                                        {bookDetail}
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div className="modal-footer">
+                                    <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button type="button" className="btn btn-primary">Save changes</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+                
 
             </React.Fragment>
            
@@ -283,12 +313,12 @@ function AddaBook(props) {
 function AddBookDetailItem(props) {
     let history = useHistory(); 
     const reading_st = props.reading
-    const book_id = props.book_id
+    
 
     const [readingStatus, setReadingStatus] = React.useState();
     const [ownedStatus, setOwnedStatus] = React.useState();
 
-    console.log("IN BOOKDETAILITEM", reading_st, props.shelfname,  props.owned)
+    console.log("IN ADDBOOKDETAILITEM", reading_st, props.shelfname,  props.owned)
 
     // function handleReading(newValue) {
     //     setReadingStatus(newValue);
@@ -320,7 +350,7 @@ function AddBookDetailItem(props) {
           event.preventDefault();
           console.log("sent to server??", statuses_update)
         }
-        history.push('/bookshelf')
+        history.push('/')
 
     return <React.Fragment>
                 <tr>
@@ -328,12 +358,16 @@ function AddBookDetailItem(props) {
                     <td>{props.title}</td>
                     <td>{props.author}</td>
                     <td>{props.publisher}</td>
+                </tr>
+                <tr>
                     <td>{props.shelf}</td>
                     <td><label htmlFor="reading-menu" className="dropbtn">Reading Status</label>
                           <select name="reading-menu" onChange={e => setReadingStatus(e.target.value)} className="dropdown-content">
                                   {props.reading.map((status, index) =>
                                       <option key={index} value={status}>{status}</option>)}
                           </select></td>
+                </tr>
+                <tr>
                     <td><label htmlFor="book-menu" className="dropbtn">Book Status</label>
                           <select name="book-menu" onChange={e => setOwnedStatus(e.target.value)} className="dropdown-content">
                               {props.owned.map((name, index) =>

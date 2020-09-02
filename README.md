@@ -11,6 +11,9 @@
               - View Bookshelf with books
               - View Individual Books with more details
               - Label books with want to read, read, liked, didn't like
+
+              1.5 
+              -  - add a book via form entry and by uploading a photo
              
             
         
@@ -18,11 +21,12 @@
         - 2.0 features (1-3; these aren’t set in stone, but include what you’re thinking about):
               NEW:
               -- populate a text or json of book data to be emailed* or texted
-              -- add a library feature
-              -- add an indie bookstore feature
-              -- use selenium to open a webbrowswer for user to reserve books
+              -- sort by shelves and send by shelves
+              -- remove or move books from shelves
+              
               -- add a unique url generator of bookshelf to send to friends (friends like books)
-              -- add comments features on books on a bookshelf(add, remove,)
+
+              -- add comments features on books on a book
               -- search books in database by __ filter to add
 
             OLD:
@@ -30,7 +34,6 @@
               - friends feature? guest feature?
               - bookclub!! discussion threads (Reviews, leave comments, posts questions)
               - have a search feature for books to add to bookshelf
-              - add a book via form entry
               - color features (organizes)
               - Send bookshelf via email or text with links to reserve books (library or bookstore)
         
@@ -42,6 +45,9 @@
               -  include a recommender system for book recs based on bookself
             NEW:
               - sort bookshelves by reading, owned, liked, did not like statuses
+              -- add a library feature
+              -- add an indie bookstore feature
+              -- use selenium to open a webbrowswer for user to reserve books
 
         
         - API’s you’re planning to use:

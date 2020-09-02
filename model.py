@@ -59,14 +59,14 @@ class Book(db.Model):
     
     # Definition of Columns and relationships
     book_id = db.Column(db.Integer, primary_key=True, nullable=False, autoincrement=True)
-    isbn = db.Column(db.String(30), unique=True)
-    title = db.Column(db.String(50), nullable=False, unique=True)
-    author= db.Column(db.String(30), nullable=False)
-    publisher= db.Column(db.String(50) )
-    year_published = db.Column(db.String(30))
-    cover_img_source = db.Column(db.String(200))
+    isbn = db.Column(db.String(), unique=True)
+    title = db.Column(db.String(), nullable=False, unique=True)
+    author= db.Column(db.String(), nullable=False)
+    publisher= db.Column(db.String() )
+    year_published = db.Column(db.String())
+    cover_img_source = db.Column(db.String())
     description = db.Column(db.String())
-    spine_img_source = db.Column(db.String(200))
+    spine_img_source = db.Column(db.String())
     
     # back references to other models/FK
     shelvedbooks = db.relationship('ShelvedBook')

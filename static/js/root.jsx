@@ -226,7 +226,7 @@ function Homepage(props) {
             <p></p>
             <div className="container">
                 <div className="row justify-content-md-center">
-                    <UploadAPhoto shelves={props.shelves}/>
+                    <UploadAPhoto shelves={props.shelves}reading={props.reading} owned={props.owned}  />
                     <AddaBook reading={props.reading} owned={props.owned} shelves={props.shelves} />
                 </div>
             </div>
@@ -340,7 +340,7 @@ function App(props) {
                     </Route>
             
                     <Route path="/upload-book-photo">
-                        <UploadAPhoto shelves={shelvesList} />
+                        <UploadAPhoto shelves={shelvesList} reading={reading_stats} owned={owned_stats} />
                     </Route>
                     
                     <Route path="/bookshelf">

@@ -1,5 +1,5 @@
 from flask import Flask, render_template, jsonify, request, session, redirect, flash
-import crud
+import crud, more_crud
 import model
 import json
 import api
@@ -33,6 +33,45 @@ def send_email():
     except Exception as e:
         print(e.message)
     
+@app.route("/api/display-shelf/<shelf>")
+def display_by_shelf(shelf):
+    if session['user']:
+        print(session['user'])
+        current_user = crud.get_user_by_username(session['user'])
+        
+        books_on_shelf = crud.return_books_on_shelf_by_nickname(shelf, current_user.user_id)
+
+    
+    else:
+        flash("please login first!")
+        return(jsonify({"status": "please login first"}))
+    
+    serialized_books = []
+    # user_books is a list of a list!!!
+    for book in books_on_shelf: 
+        #get sheleved book info : shelf id, bookid, reading and owned statuses
+        #print("SHEVLEDBOOK ID",current_user, current_user.user_id, book.book_id)
+        shelf_st = crud.get_shelvedbook(current_user.user_id, book.book_id)
+        print("SHELF", shelf_st, shelf_st.bookshelf.nickname)
+        own_st = crud.get_owned_status(shelf_st.owned_status)
+        reading_st = crud.get_reading_status(shelf_st.reading_status)
+        # print("TRYING TO GET SHELF NAME", book, book.book_id, shelf_st, shelf_st.bookshelf.nickname, shelf_st.owned_status, shelf_st.reading_status)
+        # print(reading_st, own_st)
+        if book.cover_img_source.startswith('http'):
+            image_url = 'https'+ str(book.cover_img_source)[4:]
+        
+        serialized_books.append({'book_id': book.book_id, "title":book.title, 
+                                'author': book.author, 'publisher': book.publisher, 
+                                'description':book.description, "img":image_url, 
+                                'shelf_name': shelf_st.bookshelf.nickname,
+                                'shelf_id':shelf_st.bookshelf.shelf_id,
+                                'reading_stat':reading_st,
+                                'owned_stat':own_st
+                                 })
+    print("DID ALL THE BOOKS SERIALIZE? ", serialized_books)
+    return jsonify({"user": session['user'],
+                    "books": serialized_books, 
+                    "shelf" : shelf})
 
 
 @app.route("/update_status", methods=["POST"])
@@ -82,6 +121,7 @@ def process_login():
         # return redirect('/register')
         return(jsonify({'status': "no user with that email"}))
 
+
 @app.route("/logout")
 def process_logout():
     """Log user out of site.
@@ -121,6 +161,7 @@ def register_new_account():
         return (jsonify({'message':'ok'}))
     else:
         return (jsonify({'message':'something happened. user might not have been made'}))
+
 
 
 @app.route('/api/bookshelf')
@@ -182,7 +223,7 @@ def display_bookshelf():
                                 'reading_stat':reading_st,
                                 'owned_stat':own_st
                                  })
-    print("WHY ARE ALL SHELVES BOOKWORMMAY", serialized_books)
+    print("WHY ARE ALL SHELVES BOOKWORMMArY", serialized_books)
     return jsonify({"user": session['user'],
                     "books": serialized_books, 
                     "shelves": serial_shelves, 
@@ -190,29 +231,38 @@ def display_bookshelf():
                     "owned_st_list": serialized_owned_statuses })
 
 
-@app.route('/api/bookshelf', methods=["POST"])
+# UPLOAD A PHOTO
+@app.route('/api/bookshelf/upload', methods=["POST"])
 def add_to_bookshelf():
+        # def add_book_to_db(new_book_info, user, shelfname)
 
         info = request.get_json()
-        print(info, "GETTING A POST RESPONSE")
+        print("AT UPLOAD< SENT THIS INFO", info)
+        # print(info, "GETTING A POST RESPONSE")
         file = info['filepath'].split("\\").pop()
         shelf = info['shelfname']
+        current_user = crud.get_user_by_username(session['user'])
         new_photos = api.localize_objects_with_crop(f"static/images/{file}")
-        print(new_photos)
+        # print(new_photos)
         book_titles = api.get_text_from_list_of_photos(new_photos)
+        print('HERE ARE TE BOOK TITLES', book_titles)
+        
         book_dictions = []
         for book in book_titles:
             got_book =  api.find_google_book_data_onetitle(book)
+            print(got_book, "PRINTING FIND GOOGLE BOOK DATA")
             if got_book:
-                book_dictions.append(api.parse_response_data_for_info(got_book))
-                print("GOOD BOOK API CALL FOR:", got_book['title'])
+                got_book = api.parse_response_data_for_info(got_book)
+                new_book = more_crud.add_book_to_db(got_book, current_user, shelf)
+                book_dictions.append(new_book)
+                print("GOOD BOOK API CALL FOR:", new_book)
 
         # serialized = MessageToJson()
         session['response'] = book_titles
         session['file'] = file
         session['shelf'] = shelf
         # TODO: CRUD ADD BOOKS FROM RESPONSE TO DATABASE to specific shelf
-        print(book_dictions, book_titles)
+        print(book_dictions, session)
         # TO DO ADD TO BOOK DATABASE --> MAKE A FUNCTION!?
         return jsonify(book_dictions)
     
@@ -320,18 +370,13 @@ def get_book_info():
                                 'author': book.author, 'publisher': book.publisher, 
                                 'description':book.description, 'img':cover_img_source})
     
-    #update or create shelvedbooked info
-    # create_shelvedbook(shelf, book, reading_status, owned_status)
-    
-    # create_book
-    # return_shelf_by_user_and_name
-    # create_shelvedbook
-    # return_all_books_on_shelf_by_user                         
+                      
 
 
 if __name__ == "__main__":
     model.connect_to_db(app, db_uri='postgresql:///shelve_it')
     app.run(debug=True, host="0.0.0.0")
+
 
 
 # more features TODO for BOOK DETAIL PAGE:
