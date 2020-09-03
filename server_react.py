@@ -22,7 +22,7 @@ def send_email():
     message = Mail(
         from_email='from_email@example.com',
         to_emails='to@example.com',
-        subject='Sending with Twilio SendGrid is Fun',
+        subject='Your Shelve-It Book List',
         html_content='<strong>and easy to do anywhere, even with Python</strong>')
     try:
         sg = SendGridAPIClient(os.environ.get('SENDGRID_API_KEY'))
@@ -33,6 +33,41 @@ def send_email():
     except Exception as e:
         print(e.message)
     
+
+@app.route("/api/make-booklist/<shelf>", methods=["POST"])
+def generate_text(shelf):
+    # if session['user']:
+    #     print(session['user'])
+    #     current_user = crud.get_user_by_username(session['user'])
+        
+    #     books_on_shelf = crud.return_books_on_shelf_by_nickname(shelf, current_user.user_id)
+
+    #     print("RETREIVED BOOKS ON SEHFL", books_on_shelf)
+    # else:
+    #     flash("please login first!")
+    #     return(jsonify({"status": "please login first"}))
+
+    shelf_info = request.get_json()
+    print("SENDING EMAIL TEST", shelf_info)
+    message = Mail(
+        from_email='from_email@example.com',
+        to_emails='to@example.com',
+        subject='Your Shelve-It Book List',
+        #html_content= shelf_info['html']
+        html_content='<strong>and easy to do anywhere, even with Python</strong>'
+        )
+
+    try:
+        sg = SendGridAPIClient(os.environ.get('SENDGRID_API_KEY'))
+        response = sg.send(message)
+        print(response.status_code)
+        print(response.body)
+        print(response.headers)
+    except Exception as e:
+        print(e.message)
+
+
+
 @app.route("/api/display-shelf/<shelf>")
 def display_by_shelf(shelf):
     if session['user']:
@@ -40,14 +75,15 @@ def display_by_shelf(shelf):
         current_user = crud.get_user_by_username(session['user'])
         
         books_on_shelf = crud.return_books_on_shelf_by_nickname(shelf, current_user.user_id)
+        
 
-    
+        print("RETREIVED BOOKS ON SEHFL", books_on_shelf)
     else:
         flash("please login first!")
         return(jsonify({"status": "please login first"}))
     
     serialized_books = []
-    # user_books is a list of a list!!!
+    
     for book in books_on_shelf: 
         #get sheleved book info : shelf id, bookid, reading and owned statuses
         #print("SHEVLEDBOOK ID",current_user, current_user.user_id, book.book_id)
@@ -173,7 +209,7 @@ def display_bookshelf():
         print("\n\n\n CHECK USER", current_user, current_user.user_id)
         user_books = crud.return_all_books_on_shelves_by_user(current_user.user_id)
     
-        print("CHECK BOOKS", user_books, "\n\n\n")
+        # print("CHECK BOOKS", user_books, "\n\n\n")
         user_shelves = crud.return_all_shelves_by_user(current_user.user_id)
     
         reading_stats = crud.return_all_types_reading()
@@ -183,7 +219,7 @@ def display_bookshelf():
         flash("please login first!")
         return(jsonify({"status": "please login first"}))
     
-    print(f"\n\n\n {current_user} \n {user_shelves} \n {reading_stats} \n {owned_stats}")
+    # print(f"\n\n\n {current_user} \n {user_shelves} \n {reading_stats} \n {owned_stats}")
     
     serial_shelves = []
     for shelf in user_shelves:
@@ -205,7 +241,7 @@ def display_bookshelf():
         #get sheleved book info : shelf id, bookid, reading and owned statuses
         #print("SHEVLEDBOOK ID",current_user, current_user.user_id, book.book_id)
         shelf_st = crud.get_shelvedbook(current_user.user_id, book.book_id)
-        print("SHELF", shelf_st, shelf_st.bookshelf.nickname)
+        # print("SHELF", shelf_st, shelf_st.bookshelf.nickname)
         own_st = crud.get_owned_status(shelf_st.owned_status)
         reading_st = crud.get_reading_status(shelf_st.reading_status)
         # print("TRYING TO GET SHELF NAME", book, book.book_id, shelf_st, shelf_st.bookshelf.nickname, shelf_st.owned_status, shelf_st.reading_status)
@@ -223,7 +259,7 @@ def display_bookshelf():
                                 'reading_stat':reading_st,
                                 'owned_stat':own_st
                                  })
-    print("WHY ARE ALL SHELVES BOOKWORMMArY", serialized_books)
+    # print("WHY ARE ALL SHELVES BOOKWORMMArY", serialized_books)
     return jsonify({"user": session['user'],
                     "books": serialized_books, 
                     "shelves": serial_shelves, 
@@ -237,7 +273,7 @@ def add_to_bookshelf():
         # def add_book_to_db(new_book_info, user, shelfname)
 
         info = request.get_json()
-        print("AT UPLOAD< SENT THIS INFO", info)
+        print("AT UPLOAD PHOTO SENT THIS INFO", info)
         # print(info, "GETTING A POST RESPONSE")
         file = info['filepath'].split("\\").pop()
         shelf = info['shelfname']

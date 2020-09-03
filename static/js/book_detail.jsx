@@ -8,7 +8,74 @@ const useHistory = ReactRouterDOM.useHistory;
 const useParams = ReactRouterDOM.useParams;
 const { Modal } = ReactBootstrap;
 
+/* 
+function SendBooklistEmail(props){
+        console.log("AT SENDLISTEMAIL", props)
 
+        const sendBookEmail = (event) => {
+                 
+        console.log("SET TEXT SHELF", newValue, "SHELF TO BE PASSED", props.textShelf)
+
+        const text = {"title": enteredbook, "author": enteredauthor, "shelf": props.textShelf}
+        
+        fetch(`/api/make-booklist/${textShelf}`, {
+            method: 'POST', 
+            body: JSON.stringify(text),
+            headers: {
+              'Content-Type': 'application/json'
+            }}
+          )
+          .then(response => response.json())
+          .then(data => {
+            alert(`Thanks. Just sent you an email! ${data}`)
+            } )
+           
+        
+        event.preventDefault();
+        event.target.reset();
+          } 
+
+          return( 
+                <React.Fragment>
+                           <h1>EMAIL WAS SENT WE THINK</h1>
+                </React.Fragment>
+          )} */
+
+ 
+function DisplayShelf(props){
+    let history = useHistory()
+    const [booksonShelfTable, setBooksonShelfTable] = React.useState([]);
+    // Fetches books from database and displays on site
+    console.log(props.shelf, "IN DISPLAYSHELF", booksonShelfTable)
+
+    React.useEffect(() => {
+
+        console.log("fetching books, shelves, reading statuses, owned statuses...")
+        fetch(`/api/display-shelf/${props.shelf}`)
+        .then(response => response.json())
+        .then((data) => {
+            
+            //get book data
+            const bookTable= [];
+            for (const post of data.books) {
+            
+                bookTable.push(post)
+                };
+        
+            setBooksonShelfTable(bookTable);
+        
+        })
+        
+        }, [props.shelf]);
+        history.push('/')
+        
+        return(<FilterableBookshelfTable  bookTabs={booksonShelfTable} 
+            reading={props.reading} owned={props.owned} 
+            shelves={props.shelves}/>
+
+        )
+
+}
 
   
 function BookDetailItem(props) {

@@ -8,6 +8,26 @@ from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Mail
 
 
+def make_email():
+    message = Mail(
+        from_email='from_email@example.com',
+        to_emails='to@example.com',
+        subject='Your Shelve-It Book List',
+        #html_content= shelf_info['html']
+        html_content='<strong>and easy to do anywhere, even with Python</strong>'
+        )
+
+    try:
+        sg = SendGridAPIClient(os.environ.get('SENDGRID_API_KEY'))
+        response = sg.send(message)
+        print(response.status_code)
+        print(response.body)
+        print(response.headers)
+    except Exception as err:
+        print(err)
+    return("sent an email!!!!!")
+
+
 def add_book_to_db(new_book_info, user, shelfname):
     
     cover_img_source = 'static/images/generic-book-cover.jpg'

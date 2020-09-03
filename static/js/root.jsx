@@ -185,9 +185,60 @@ function FilterableBookshelfTable (props) {
 //---------------------HOMEPAGE--------------------//
 
 function Homepage(props) {
-  
+    
     // Sets some state Variables and props variables
+    const [allShelves, setAllShelves] = React.useState(true);
+    const [showSpecificShelf, setShowSpecificShelf] = React.useState(false);
+    const [displayShelf, setDisplayShelf] = React.useState("");
+    const [textShelf, setTextShelf] = React.useState("");
+    const [popupEmailModal, setPopupEmailModal] = React.useState(false)
+
+
+    function handleAllShelves(newValue) {
+        setAllShelves(newValue)
+    }
+
+    function handleTextShelf(newValue) {
+        setTextShelf(newValue)
+        setPopupEmailModal(true)
+        console.log("IS MODAL WORKING", popupEmailModal, textShelf)
+    }
+   
+    function handleDisplayShelfname(newValue){
+        setDisplayShelf(newValue)
+        setAllShelves(false)
+        setShowSpecificShelf(true)
+    }
+
+        
+        const sendBookEmail = (event) => {
+                 
+        console.log("SET TEXT SHELF", "SHELF TO BE PASSED", props.textShelf)
+
+            const text = {"email": email, "message": message, "shelf": props.textShelf}
+            
+            
+            fetch(`/api/make-booklist/${textShelf}`, {
+                method: 'POST', 
+                body: JSON.stringify(text),
+                headers: {
+                'Content-Type': 'application/json'
+                }}
+            )
+            .then(response => response.json())
+            .then(data => {
+                alert(`Thanks. Just sent you an email! ${data}`)
+                } )
+            
+            
+            event.preventDefault();
+            event.target.reset();
+
+          } 
+
+    
     console.log(props.loggedIn, "checking rendering value")
+    console.log(displayShelf, showSpecificShelf, allShelves, "TRYING TO MAKE SURE VLAUES CHANGE DISPLAYSHELF")
     
     return (
     <div>
@@ -203,21 +254,51 @@ function Homepage(props) {
                         Display Selected Shelf
                     </button>
                     <div className="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                        <a className="dropdown-item" href="#">All Shelves</a>
+                        <a className="dropdown-item" onClick={()=> handleAllShelves(true)}>All Shelves</a>
                             {props.shelves.map((name, index) =>
-                                 <a className="dropdown-item" key={index} href="#">{name}</a>)}
+                                 <a className="dropdown-item" key={index} onClick={()=> handleDisplayShelfname(name)}>{name}</a>)}
                     </div>
                 </div>
+                
                 <div className="btn-group" role="group">
                     <button id="btnGroupDrop1" type="button" className="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Email books from Selected Shelf
                     </button>
                     <div className="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                        <a className="dropdown-item" href="#">All Shelves</a>
+                        <a className="dropdown-item" data-toggle="modal" data-target="#shelf-modal" onClick={()=> handleTextShelf("all")}>All Shelves</a>
                             {props.shelves.map((name, index) =>
-                                 <a className="dropdown-item" key={index} href="#">{name}</a>)}
+                                 <a className="dropdown-item" key={index} data-toggle="modal" data-target="#shelf-modal" onClick= {()=> handleTextShelf(name)}>{name}</a>)}
+                    </div>
+                    <div className="modal fade" id="shelf-modal" tabIndex="-1" role="dialog" aria-labelledby="shelf-modal1-label" aria-hidden="true">
+                        <div className="modal-dialog" role="document">
+                            <div className="modal-content">
+                                <div className="modal-header">
+                                    <h5 className="modal-title" id="SendEmailModal">Send an Email With the following Books</h5>
+                                        <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                </div>
+                                <div className="modal-body">
+                                    <form>
+                                        <div className="form-group">
+                                            <label htmlFor="recipient-name" className="col-form-label">Email:</label>
+                                                <input type="text" className="form-control" name="email" id="recipient-email" />
+                                        </div>
+                                        <div className="form-group">
+                                            <label htmlFor="message-text" className="col-form-label">Message:</label>
+                                                <textarea className="form-control" message="message" id="message-text"></textarea>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div className="modal-footer">
+                                    <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button type="submit" className="btn btn-primary" onClick={sendBookEmail}> Send email</button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
+            
                 <button type="button" className="btn btn-secondary">Log out</button>
 
             </div>
@@ -231,9 +312,14 @@ function Homepage(props) {
                 </div>
             </div>
             <p></p>
-            <FilterableBookshelfTable books={props.books} bookTabs={props.bookTabs} 
+            {/* && <SendBooklistEmail textShelf={textShelf} /> */}
+            {popupEmailModal}
+
+            {showSpecificShelf && <DisplayShelf reading={props.reading} owned={props.owned} 
+                                        shelves={props.shelves} shelf={displayShelf}/> }
+            {allShelves && <FilterableBookshelfTable books={props.books} bookTabs={props.bookTabs} 
                                         reading={props.reading} owned={props.owned} 
-                                        shelves={props.shelves}/>
+                                        shelves={props.shelves}/> }
             {props.loggedIn && <Logout loggedIn={props.loggedIn} handleLogin={() =>props.handleLogin} /> }
          
       
