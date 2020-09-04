@@ -43,43 +43,37 @@ function SendBooklistEmail(props){
 
  
 function DisplayShelf(props){
-    let history = useHistory()
-    let { shelfName } = useParams();
+    let history = useHistory();
+    // let { shelfName } = useParams();
 
-    // Fetches books from database and displays on site
-    console.log(props.shelf, "IN DISPLAYSHELF", booksonShelfTable)
-    const [selectShelf, setSelectShelf] = React.useState();
-
-    if(shelfName) {
-        setSelectShelf(shelfName);
-    }
-    else{
-        setSelectShelf(props.shelf);
-    }
-    
     const [booksonShelfTable, setBooksonShelfTable] = React.useState([]);
-    React.useEffect(() => {
+    console.log(props.shelf, "IN DISPLAYSHELF",  booksonShelfTable)
 
-        console.log("fetching books, shelves, reading statuses, owned statuses...")
-        fetch(`/api/display-shelf/${selectShelf}`)
+
+    
+    React.useEffect(() => {
+        
+        console.log("fetching books from one shelf.")
+        fetch(`/api/display-shelf/${props.shelf}`)
         .then(response => response.json())
         .then((data) => {
             
             //get book data
-            const bookTable= [];
+            const shelfTable= [];
             for (const post of data.books) {
-            
-                bookTable.push(post)
+                console.log(post);
+                shelfTable.push(post);
                 };
         
-            setBooksonShelfTable(bookTable);
+            setBooksonShelfTable(shelfTable);
+            console.log('ADD BOOKS FROM A SPECIFIC SHELF', booksonShelfTable);
         
         })
         
         }, [props.shelf]);
-        history.push(`/bookshelf/${shelfName}`)
+        history.push(`/displaybookshelf/${props.shelf}`)
         
-        return(<FilterableBookshelfTable  bookTabs={booksonShelfTable} 
+        return(<FilterableBookshelfTable  bookTabs={booksonShelfTable} shelf={props.shelf}
             reading={props.reading} owned={props.owned} 
             shelves={props.shelves}/>
 

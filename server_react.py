@@ -79,21 +79,22 @@ def generate_text(shelf):
 
 @app.route("/api/display-shelf/<shelf>")
 def display_by_shelf(shelf):
+    print("IN DISPLAY BY SELF", shelf)
     if session['user']:
         print(session['user'])
         current_user = crud.get_user_by_username(session['user'])
         
-        books_on_shelf = crud.return_books_on_shelf_by_nickname(shelf, current_user.user_id)
+        books_on_selected_shelf = crud.return_books_on_shelf_by_nickname(shelf, current_user.user_id)
         
 
-        print("RETREIVED BOOKS ON SEHFL", books_on_shelf)
+        print("RETREIVED BOOKS ON SEHFL", books_on_selected_shelf, len(books_on_selected_shelf))
     else:
         flash("please login first!")
         return(jsonify({"status": "please login first"}))
     
-    serialized_books = []
     
-    for book in books_on_shelf: 
+    shelf_books = []
+    for book in books_on_selected_shelf: 
         #get sheleved book info : shelf id, bookid, reading and owned statuses
         #print("SHEVLEDBOOK ID",current_user, current_user.user_id, book.book_id)
         shelf_st = crud.get_shelvedbook(current_user.user_id, book.book_id)
@@ -105,7 +106,7 @@ def display_by_shelf(shelf):
         if book.cover_img_source.startswith('http'):
             image_url = 'https'+ str(book.cover_img_source)[4:]
         
-        serialized_books.append({'book_id': book.book_id, "title":book.title, 
+        shelf_books.append({'book_id': book.book_id, "title":book.title, 
                                 'author': book.author, 'publisher': book.publisher, 
                                 'description':book.description, "img":image_url, 
                                 'shelf_name': shelf_st.bookshelf.nickname,
@@ -113,9 +114,9 @@ def display_by_shelf(shelf):
                                 'reading_stat':reading_st,
                                 'owned_stat':own_st
                                  })
-    print("DID ALL THE BOOKS SERIALIZE? ", serialized_books)
+    print("DID ALL THE BOOKS SERIALIZE? ", len(shelf_books))
     return jsonify({"user": session['user'],
-                    "books": serialized_books, 
+                    "books": shelf_books, 
                     "shelf" : shelf})
 
 
@@ -152,11 +153,11 @@ def process_login():
     
     if crud.get_user_by_email(user_login['email']):
         current_user = crud.get_user_by_email(user_login['email'])
-       
+        print(current_user)
         if current_user.password == user_login['password']:
             session['user'] = current_user.user_name
             flash("You've logged in successfully. Welcome to your Shelve-It account.")
-            return(jsonify({'status': "ok. you are logged in!"}))
+            return(jsonify({'status': "ok. you are logged in!", "user" : current_user.user_name}))
 
         else:
             session['user'] = 'unknown'
@@ -205,9 +206,9 @@ def register_new_account():
 
 
 
-@app.route('/api/bookshelf')
-def display_bookshelf():
- 
+@app.route('/api/bookshelf/<username>')
+def display_bookshelf(username):
+    print(username, session['user'])
     if session['user']:
         print(session['user'])
         current_user = crud.get_user_by_username(session['user'])

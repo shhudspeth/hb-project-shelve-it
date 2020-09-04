@@ -49,7 +49,7 @@ function Register(props) {
       console.log(register_user)   
         event.preventDefault();
       }
-      history.push('/bookshelf')
+      history.push(`/bookshelf/${username}`)
     return (
       <form className="form-register" onSubmit={handleSubmit}>
   
@@ -217,9 +217,9 @@ function Logout(props) {
 
 function Login(props) { 
     let history = useHistory();
-    const [email, setEmail] = React.useState()
-    const [password, setPassword] = React.useState()
-     
+    const [email, setEmail] = React.useState();
+    const [password, setPassword] = React.useState();
+    const [user, setUser] =React.useState("");
   
     const handleSubmit = (event) => {
 
@@ -236,10 +236,12 @@ function Login(props) {
       })
       .then(response => response.json())
       .then(data => {
-       
+          console.log('DID LOGIN ROUTE SEND CORRECT DATA', data)
           alert(`${data.status}`);
           if (data.status.startsWith('ok')) {
             props.handleLogin(true);
+          setUser(data.user);
+          console.log(data.user, "IS THIS PRINTING!?")
           }
           else {
               history.push('/')
@@ -250,9 +252,9 @@ function Login(props) {
     
       
       
-      console.log("LOGIN USER", login_user);
+      console.log("LOGIN USER", login_user, user, props.handleLogin(true));
       event.preventDefault();
-      history.push('/bookshelf')
+      history.push(`/`)
 
       }
       

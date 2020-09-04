@@ -93,6 +93,7 @@ for n_user in user_data_seeding:
 
 for book in book_data_seeding:
      n_user = choice(user_data_seeding)
+     print(n_user, book)
      comment = choice( ['Life-changing. I absolutely recommend reading this book', "Boring. Couldn't get into it", 
                          "I really wanted to like it, but the plot was kind of stale and the narrator's voice irked me. ",
                          " i love this book. the characters, the settings, so vivid and detailed. so much energy. great great read.",

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<h2> Thank you for using Shelve-It!</h2>
+
+Here are the books you put on your shelf <b> {{shelfname}} </b>.
+
+<table>
+    <tbody>
+        <tr>
+            <th>Title</th>
+            <th>Author</th>
+            <th>Publisher</th>
+        </tr>
+        {% for book in books %}
+        <tr>
+            <td>{book.title}</td>
+            <td>{book.author}</td>
+            <td>{book.publisher}</td>
+        </tr>
+    </tbody>
+</table>
+
+<table>
+    <tbody>
+        <tr>
+            <th>Library</th>
+            <th>Address</th>
+            <th>Google Website</th>
+        </tr>
+        {% for library in libraries %}
+        <tr>
+            <td>{library.name}</td>
+            <td>{library.formatted_address}</td>
+            <td>{library.url}</td>
+        </tr>
+    </tbody>
+</table>
+
+<table>
+    <tbody>
+        <tr>
+            <th>Bookstore</th>
+            <th>Address</th>
+            <th>Google Website</th>
+        </tr>
+        {% for bookstore in bookstores %}
+        <tr>
+            <td>{bookstore.name}</td>
+            <td>{bookstore.formatted_address}</td>
+            <td>{bookstore.url}</td>
+        </tr>
+    </tbody>
+</table>
+
+</html>
