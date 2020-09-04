@@ -10,7 +10,7 @@ import server
 os.system('dropdb shelve_it')
 os.system('createdb shelve_it')
 
-model.connect_to_db(server.app)
+model.connect_to_db(server.app,db_uri='postgresql:///shelve_it')
 model.db.create_all()
 
 # load data from json file and creates Book objects for database
@@ -91,3 +91,15 @@ for n_user in user_data_seeding:
 
 
 
+for book in book_data_seeding:
+     n_user = choice(user_data_seeding)
+     comment = choice( ['Life-changing. I absolutely recommend reading this book', "Boring. Couldn't get into it", 
+                         "I really wanted to like it, but the plot was kind of stale and the narrator's voice irked me. ",
+                         " i love this book. the characters, the settings, so vivid and detailed. so much energy. great great read.",
+                         "really well written. you can't do better in the english language for show of mastery of prose.",
+                         "spoiler: the character's unbridled enthuasism led to the character's downfall."])
+     new_comment = crud.create_comment(user_id=n_user.user_id, book_id = book.book_id, comment_text= comment)
+     print(f"added new comment to database : {new_comment}")
+
+
+    

@@ -244,7 +244,7 @@ function Homepage(props) {
     <div>
         
             {!props.loggedIn && <Login loggedIn={props.loggedIn} handleLogin={() =>props.handleLogin} /> }
-            {!props.loggedIn && <Register /> }
+            {!props.loggedIn && <Register loggedIn={props.loggedIn} handleLogin={() =>props.handleLogin} /> }
             <div className="btn-group" role="group" aria-label="Button group with nested dropdown">
                 <button type="button" className="btn btn-secondary">Upload Books Via Photo</button>
                 <button type="button" className="btn btn-secondary">Add a Book</button>
@@ -390,7 +390,7 @@ function App(props) {
         
         })
         
-        }, []);
+        }, ["loading"]);
         
   
    
@@ -431,6 +431,10 @@ function App(props) {
                     
                     <Route path="/bookshelf">
                         <FilterableBookshelfTable loggedIn={isLoggedIn} handleLogin={() =>handleLogin} books={bookList} bookTabs={bookTable} reading={reading_stats} owned={owned_stats} shelves={shelvesList} />
+                    </Route> 
+
+                    <Route path="/bookshelf/:shelfName">
+                        <DisplayShelf />
                     </Route> 
 
                     <Route path="/book-info/:bookId">

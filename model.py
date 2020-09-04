@@ -38,7 +38,7 @@ class User(db.Model):
     text_number = db.Column(db.String(100))
     contact_by_email = db.Column(db.Boolean)
     contact_by_text = db.Column(db.Boolean)
-    share_link = db.Column(db.String(100))
+    share_link = db.Column(db.String())
     lat = db.Column(db.Float)
     long = db.Column(db.Float)
 
@@ -140,7 +140,7 @@ class OwnedStatus(db.Model):
             return f"< Owned_status = '{self.owned_text}' >"
 
 
-# Table shelvedBook (book<>BookShelf) many to many table to like books to a shelf to a user
+# Table shelvedBook (book<>BookShelf) many to many table to link books to a shelf to a user
 class ShelvedBook(db.Model):
     """ Data Model for a book that is on a shelf """ 
 
@@ -167,6 +167,33 @@ class ShelvedBook(db.Model):
             return f"<shelvedBook_id = {self.bookshelfbook_id}  bookshelves = '{self.shelf_id}'>"
 
 
+# Table Comments (book<>Comments<> User) many to many table, linking user and books with comments
+
+class Comment(db.Model):
+    """ Data Model for  comments on a particular book""" 
+
+    __tablename__ = "comments"
+    
+    # Definition of Columns and relationships
+    comment_id = db.Column(db.Integer, primary_key=True, nullable=False, autoincrement=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
+    book_id = db.Column(db.Integer, db.ForeignKey('books.book_id'))
+    comment_text = db.Column(db.String(300))
+    date_written = db.Column(db.DateTime)
+    like_count = db.Column(db.Integer)
+    flag = db.Column(db.Integer)
+    
+   # back references to other models/FK (SINGLE INSTANCES)
+    
+    book = db.relationship('Book', foreign_keys=[book_id])
+    user = db.relationship('User', foreign_keys=[user_id])
+   
+  
+    # REPR
+    def __repr__(self):
+            """Return a human-readable representation of a Book."""
+            # TODO figure out later how to add name = '{self..user_id.user_nbookshelvesame}'
+            return f"<comment_id = {self.comment_id}  book = '{self.book} user ='{self.user}'>"
 
     # nickname = db.Column(db.String(30))
     # share_link = db.Column(db.String(100))

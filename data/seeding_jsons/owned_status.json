@@ -1,14 +1,17 @@
 [
     {
-    "owned_status" : "ordered"
+    "owned_status" : "to order from store"
 }, 
 {
-    "owned_status": "borrowed"
+    "owned_status": "to borrow from Library"
 }, 
 {
-    "owned_status": "own"
+    "owned_status": "own it"
     }, 
 {
-    "owned_status": "loaned out"
+    "owned_status": "loaned out to friend"
+},
+{
+    "owned_status": "lost"
 }
 ]

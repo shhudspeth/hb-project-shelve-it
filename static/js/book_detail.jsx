@@ -44,14 +44,24 @@ function SendBooklistEmail(props){
  
 function DisplayShelf(props){
     let history = useHistory()
-    const [booksonShelfTable, setBooksonShelfTable] = React.useState([]);
+    let { shelfName } = useParams();
+
     // Fetches books from database and displays on site
     console.log(props.shelf, "IN DISPLAYSHELF", booksonShelfTable)
+    const [selectShelf, setSelectShelf] = React.useState();
 
+    if(shelfName) {
+        setSelectShelf(shelfName);
+    }
+    else{
+        setSelectShelf(props.shelf);
+    }
+    
+    const [booksonShelfTable, setBooksonShelfTable] = React.useState([]);
     React.useEffect(() => {
 
         console.log("fetching books, shelves, reading statuses, owned statuses...")
-        fetch(`/api/display-shelf/${props.shelf}`)
+        fetch(`/api/display-shelf/${selectShelf}`)
         .then(response => response.json())
         .then((data) => {
             
@@ -67,7 +77,7 @@ function DisplayShelf(props){
         })
         
         }, [props.shelf]);
-        history.push('/')
+        history.push(`/bookshelf/${shelfName}`)
         
         return(<FilterableBookshelfTable  bookTabs={booksonShelfTable} 
             reading={props.reading} owned={props.owned} 
@@ -89,6 +99,7 @@ function BookDetailItem(props) {
                         <th>Title</th>
                         <th>Author</th>
                         <th>Publisher</th>
+                        <th>Description</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -98,8 +109,7 @@ function BookDetailItem(props) {
                         <td>{props.title}</td>
                         <td>{props.author}</td>
                         <td>{props.publisher}</td>
-                
-                        {props.description}
+                        <td>{props.description}</td>
                 
                         <td><button>Edit Book</button></td>
                         <td><Link to={`/bookshelf`}> Go to BookShelf </Link></td>

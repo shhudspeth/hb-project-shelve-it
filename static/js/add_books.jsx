@@ -30,6 +30,13 @@ function BookDetailItem(props) {
                         <td>{props.publisher}</td>
                     </tr>
                     <tr><td>{props.description}</td></tr>
+                    <tr><span><b>COMMENTS</b></span></tr>
+                    
+                        {props.comments.map((name,index) =>
+                        <tr>{name.user},
+                        {name.post_date}, 
+                        {name.text}</tr>)}
+                    
                     <tr>
                         <td><button>Edit Book</button></td>
                         <td><Link to={`/bookshelf`}>Go to BookShelf</Link></td>
@@ -54,7 +61,7 @@ function ShowBookInfo(props) {
         const bookstuff = <BookDetailItem key = {data.book_id} book_id={data.book_id} 
                                         title={data.title} author={data.author}
                                         publisher={data.publisher} image = {data.img} 
-                                        description={data.description}/>
+                                        description={data.description} comments={data.comments}/>
       
          setBookInfo(bookstuff);
       })
@@ -320,14 +327,6 @@ function AddBookDetailItem(props) {
 
     console.log("IN ADDBOOKDETAILITEM", reading_st, props.shelfname,  props.owned)
 
-    // function handleReading(newValue) {
-    //     setReadingStatus(newValue);
-    //   }
-
-    // function handleOwned(newValue) {
-    //     setOwnedStatus(newValue);
-    //     console.log("HANDLEOWNED", ownedStatus)
-    //   }
       const changeStatus = (event) => {
           
         const statuses_update = 
@@ -358,16 +357,12 @@ function AddBookDetailItem(props) {
                     <td>{props.title}</td>
                     <td>{props.author}</td>
                     <td>{props.publisher}</td>
-                </tr>
-                <tr>
                     <td>{props.shelf}</td>
                     <td><label htmlFor="reading-menu" className="dropbtn">Reading Status</label>
                           <select name="reading-menu" onChange={e => setReadingStatus(e.target.value)} className="dropdown-content">
                                   {props.reading.map((status, index) =>
                                       <option key={index} value={status}>{status}</option>)}
                           </select></td>
-                </tr>
-                <tr>
                     <td><label htmlFor="book-menu" className="dropbtn">Book Status</label>
                           <select name="book-menu" onChange={e => setOwnedStatus(e.target.value)} className="dropdown-content">
                               {props.owned.map((name, index) =>

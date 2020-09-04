@@ -1,8 +1,34 @@
-from model import db, User, Book, connect_to_db, Bookshelf, ShelvedBook, OwnedStatus, ReadingStatus
+from model import db, User, Book, connect_to_db, Bookshelf, ShelvedBook, OwnedStatus, ReadingStatus, Comment
 from datetime import datetime
 
+import more_crud
 
 
+
+# CRUD FUNCTIONS FOR COMMENTS
+def create_comment(user_id, book_id, comment_text):
+    created_at = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+    comment = Comment(user_id=user_id, book_id=book_id, comment_text=comment_text, date_written=created_at, like_count=0, flag=0)
+    db.session.add(comment)
+    db.session.commit()
+    return comment
+
+def increase_like_count(comment_id):
+    # get current like count, increase by 1
+    #like_count
+    pass
+
+def increase_flag_comment(comment_id):
+    """ increase the number of flags for comment """
+
+    # flag_as_inappropriate 
+    pass
+
+def get_comments_by_book_id(book_id):
+    comments = db.session.query(Comment).filter(Comment.book_id==book_id).all()
+    return comments
+
+  
 # CRUD FUNCTIONS for USER CLASS
 
 def create_user(email, password, user_name):
@@ -15,17 +41,24 @@ def create_user(email, password, user_name):
 
     return user
 
+def return_user_lat_long(user_id):
+    user = User.query.get(user_id)
+    return((user.lat, user.long))
+
 
 def create_user_register(email, password, user_name, text_number, communication, contact, zipcode):
     """Create and return a new user via registration form."""
 
     # TODO 
-    # 1. make a zipcode function
+    # 1. make a zipcode function DONE
     # 2. make a text_number function
     # 3. make a public or private display feature
-    joined_at = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-    user = User(email=email, password=password, user_name=user_name, joined_at = joined_at, text_number=text_number)
+    latlng = more_crud.get_latln_from_zip(zipcode)
 
+    joined_at = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+    user = User(email=email, password=password, user_name=user_name, 
+                joined_at = joined_at, text_number=text_number, lat=latlng[0], long=latlng[1])
+    
     db.session.add(user)
     db.session.commit()
 

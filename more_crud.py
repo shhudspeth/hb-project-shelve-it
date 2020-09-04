@@ -4,17 +4,73 @@ import model
 import json
 import api
 import os
+import requests
+import time
+import geocoder
 from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Mail
 
+key = os.environ['key']
+def get_latln_from_zip(zipcode):
+    g = geocoder.google('postal_code:'+str(zipcode), key=key)
+    if g.ok:
+        # crud.update_latlng(g.latlng)
+        return g.latlng
+    else:
+        return False
 
-def make_email():
+    # <[OK] Google - Geocode [Petaluma, CA 94954, USA]>
+    # >>> g.latlng
+    # [38.2473117, -122.5712101]
+
+def library_urls(lat, long):
+
+    url2 = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location="+str(lat)+','+str(long)+"&radius=14000&type=library&keyword=public&key="+key
+    r2 = requests.get(url2)
+    place_ids = []
+    for result in r2.json()['results']:
+        place_ids.append(result['place_id'])
+
+    websites_libs = {}
+    for place_id in place_ids:
+        
+        find_urls = "https://maps.googleapis.com/maps/api/place/details/json?place_id="+place_id+"&fields=name,business_status,url,formatted_address&key="+key
+        print(find_urls)
+        result = requests.get(find_urls)
+       
+        websites_libs[place_id] = result.json()
+
+    return websites_libs
+
+
+def bookstore_urls(lat, long):
+
+    url2 = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location="+str(lat)+','+str(long)+"&radius=14000&type=book_store&key="+key
+    r2 = requests.get(url2)
+    place_ids = []
+    for result in r2.json()['results']:
+        place_ids.append(result['place_id'])
+
+    websites_libs = {}
+    for place_id in place_ids:
+        
+        find_urls = "https://maps.googleapis.com/maps/api/place/details/json?place_id="+place_id+"&fields=name,business_status,url,formatted_address&key="+key
+        print(find_urls)
+        result = requests.get(find_urls)
+       
+        websites_libs[place_id] = result.json()
+
+    return websites_libs
+
+
+
+def make_email(to_email, shelfname, content_in_html):
     message = Mail(
-        from_email='from_email@example.com',
-        to_emails='to@example.com',
-        subject='Your Shelve-It Book List',
+        from_email='shhudspeth@gmail.com',
+        to_emails=to_email,
+        subject='Your Shelve-It Book List: ' +str(shelfname),
         #html_content= shelf_info['html']
-        html_content='<strong>and easy to do anywhere, even with Python</strong>'
+        html_content=content_in_html
         )
 
     try:

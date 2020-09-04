@@ -18,20 +18,29 @@ def root():
 def send_email():
     # using SendGrid's Python Library
 # https://github.com/sendgrid/sendgrid-python
+    content = {"user" : session['user'], "shelfname": shelf, 
+                "books":books_json, libraries: libraries_json, "bookstores" :bookstores_json}
 
     message = Mail(
-        from_email='from_email@example.com',
-        to_emails='to@example.com',
+        from_email='shhudspeth@gmail.com',
+        to_emails='shhudspeth@gmail.com',
         subject='Your Shelve-It Book List',
-        html_content='<strong>and easy to do anywhere, even with Python</strong>')
+        html_content=  render_template("email.html", **content))
+    
     try:
         sg = SendGridAPIClient(os.environ.get('SENDGRID_API_KEY'))
         response = sg.send(message)
         print(response.status_code)
         print(response.body)
         print(response.headers)
+        status_message = "ok"
+    
     except Exception as e:
         print(e.message)
+        status_message = e.message
+        
+
+    return(jsonify({'status': status_message}))
     
 
 @app.route("/api/make-booklist/<shelf>", methods=["POST"])
@@ -110,6 +119,7 @@ def display_by_shelf(shelf):
                     "shelf" : shelf})
 
 
+
 @app.route("/update_status", methods=["POST"])
 def update_book_statuses():
     status_dict = request.get_json()
@@ -135,8 +145,8 @@ def update_book_statuses():
 def process_login():
     """Log user into site.
 
-    Find the user's login credentials located in the 'request.form'
-    dictionary, look up the user, and store them in the session.
+    Find the user's login credentials located in the 'request', 
+    look up the user, and store them in the session.
     """
     user_login = request.get_json()
     
@@ -146,35 +156,28 @@ def process_login():
         if current_user.password == user_login['password']:
             session['user'] = current_user.user_name
             flash("You've logged in successfully. Welcome to your Shelve-It account.")
-            # return redirect('/bookshelf')
             return(jsonify({'status': "ok. you are logged in!"}))
+
         else:
             session['user'] = 'unknown'
             return (jsonify({'status': "incorrect password"}))
     else:
         session['user'] = 'needs_to_register'
         flash("No account with that email exists. Please create one or try again")
-        # return redirect('/register')
         return(jsonify({'status': "no user with that email"}))
 
 
 @app.route("/logout")
 def process_logout():
     """Log user out of site.
-
-    Find the user's login credentials located in the 'request.form'
-    dictionary, look up the user, and store them in the session.
     """
     if session['user']:
         [session.pop(key) for key in list(session.keys())]
-   
         flash("You've logged out successfully")
-        # return redirect('/bookshelf')
         return(jsonify({'status': "ok. you are logged out. Login to see shelf!"}))
       
     else:
         flash("You are not logged in. Please log in to log out")
-        # return redirect('/register')
         return(jsonify({'status': "no logout possible"}))
 
 
@@ -194,6 +197,8 @@ def register_new_account():
     new_user = crud.create_user_register(email, pswd, uname, phnum, email_text, public, zipc)
 
     if new_user:
+        print(new_user)
+        session['user'] = new_user.user_name
         return (jsonify({'message':'ok'}))
     else:
         return (jsonify({'message':'something happened. user might not have been made'}))
@@ -206,7 +211,7 @@ def display_bookshelf():
     if session['user']:
         print(session['user'])
         current_user = crud.get_user_by_username(session['user'])
-        print("\n\n\n CHECK USER", current_user, current_user.user_id)
+        print("\n\n\n CHECK USER", current_user)
         user_books = crud.return_all_books_on_shelves_by_user(current_user.user_id)
     
         # print("CHECK BOOKS", user_books, "\n\n\n")
@@ -273,7 +278,7 @@ def add_to_bookshelf():
         # def add_book_to_db(new_book_info, user, shelfname)
 
         info = request.get_json()
-        print("AT UPLOAD PHOTO SENT THIS INFO", info)
+        # print("AT UPLOAD PHOTO SENT THIS INFO", info)
         # print(info, "GETTING A POST RESPONSE")
         file = info['filepath'].split("\\").pop()
         shelf = info['shelfname']
@@ -314,16 +319,17 @@ def display_book_info(book_id):
     if session['user']:
         current_user = crud.get_user_by_username(session['user'])
         book = crud.get_book_by_id(book_id)
-        # print("\n\n\n\n USER", current_user.user_name, "GETTING",  book.title, "\n\n\n\n")
-        # try:
-        #     shelved_book_info = crud.get_book_by_id(current_user.user_id, book_id)
-        # except:
+        comments = crud.get_comments_by_book_id(book_id)
+        print(comments, book, "COMMENTS")
+       
+        comment_list = []
+        for comment in comments:
+           comment_list.append({"text":comment.comment_text, "user": comment.user.user_name, "likes": comment.like_count, "post_date": comment.date_written})
      
-
         image_url = 'https'+ str(book.cover_img_source)[4:]
         serialized_book = {'book_id': book.book_id, "title":book.title, 
                                 'author': book.author, 'publisher': book.publisher, 
-                                'description':book.description, "img":image_url, }
+                                'description':book.description, "img":image_url,"comments": comment_list}
              
     return jsonify(serialized_book)
 

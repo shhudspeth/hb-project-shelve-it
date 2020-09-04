@@ -41,13 +41,15 @@ function Register(props) {
       .then(response => response.json())
       .then(data => {
        
-          alert(`${data.message}`)
+          alert(`${data.message}`);
+          props.handleLogin(true);
+          
         
       })
       console.log(register_user)   
         event.preventDefault();
       }
-      history.push('/')
+      history.push('/bookshelf')
     return (
       <form className="form-register" onSubmit={handleSubmit}>
   

@@ -1,0 +1,83 @@
+green
+HTML/HEX code:	#54c25e	
+RGB code:	rgb(84, 194, 94)	
+Hsl code:	hsl(125, 47%, 55%)	
+Hwb code:	hwb(125, 33%, 24%)	
+Cmyk code:	cmyk(57%, 0%, 52%, 24%)	
+Ncol code:	G9, 33%, 24%
+
+or 
+
+HTML/HEX code:	#54c045	
+RGB code:	rgb(84, 192, 69)	
+Hsl code:	hsl(113, 49%, 51%)	
+Hwb code:	hwb(113, 27%, 25%)	
+Cmyk code:	cmyk(56%, 0%, 64%, 25%)	
+Ncol code:	Y88, 27%, 25%
+
+
+darkergreen
+HTML/HEX code:	#3b7b70	
+RGB code:	rgb(59, 123, 112)	
+Hsl code:	hsl(170, 35%, 36%)	
+Hwb code:	hwb(170, 23%, 52%)	
+Cmyk code:	cmyk(52%, 0%, 9%, 52%)	
+Ncol code:	G83, 23%, 52%	
+
+
+blue 
+HTML/HEX code:	#345bad	
+RGB code:	rgb(52, 91, 173)	
+Hsl code:	hsl(221, 54%, 44%)	
+Hwb code:	hwb(221, 20%, 32%)	
+Cmyk code:	cmyk(70%, 47%, 0%, 32%)	
+Ncol code:	C68, 20%, 32%
+or
+
+HTML/HEX code:	#3b64ab	
+RGB code:	rgb(59, 100, 171)	
+Hsl code:	hsl(218, 49%, 45%)	
+Hwb code:	hwb(218, 23%, 33%)	
+Cmyk code:	cmyk(65%, 42%, 0%, 33%)	
+Ncol code:	C63, 23%, 33%
+
+purple
+HTML/HEX code:	#612b5e	
+RGB code:	rgb(97, 43, 94)	
+Hsl code:	hsl(303, 39%, 27%)	
+Hwb code:	hwb(303, 17%, 62%)	
+Cmyk code:	cmyk(0%, 56%, 3%, 62%)	
+Ncol code:	M6, 17%, 62%
+or
+HTML/HEX code:	#513260	
+RGB code:	rgb(81, 50, 96)	
+Hsl code:	hsl(280, 32%, 29%)	
+Hwb code:	hwb(280, 20%, 62%)	
+Cmyk code:	cmyk(16%, 48%, 0%, 62%)	
+Ncol code:	B67, 20%, 62%
+
+seablue
+HTML/HEX code:	#69c3be	
+RGB code:	rgb(105, 195, 190)	
+Hsl code:	hsl(177, 43%, 59%)	
+Hwb code:	hwb(177, 41%, 24%)	
+Cmyk code:	cmyk(46%, 0%, 3%, 24%)	
+Ncol code:	G94, 41%, 24%
+
+or 
+
+HTML/HEX code:	#52c39f	
+RGB code:	rgb(82, 195, 159)	
+Hsl code:	hsl(161, 48%, 54%)	
+Hwb code:	hwb(161, 32%, 24%)	
+Cmyk code:	cmyk(58%, 0%, 18%, 24%)	
+Ncol code:	G68, 32%, 24%
+
+or 
+
+HTML/HEX code:	#65c5cd	
+RGB code:	rgb(101, 197, 205)	
+Hsl code:	hsl(185, 51%, 60%)	
+Hwb code:	hwb(185, 40%, 20%)	
+Cmyk code:	cmyk(51%, 4%, 0%, 20%)	
+Ncol code:	C8, 40%, 20%

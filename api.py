@@ -62,7 +62,7 @@ def localize_objects_with_crop(path):
     objects = client.object_localization(
         image=image).localized_object_annotations
     new_crops_of_books = []
-    print('Number of objects found: {}'.format(len(objects)))
+    # print('Number of objects found: {}'.format(len(objects)))
     for num, object_ in enumerate(objects):
         # print('\n{} (confidence: {})'.format(object_.name, object_.score))
         # print('Normalized bounding polygon vertices: ')
@@ -73,13 +73,13 @@ def localize_objects_with_crop(path):
         # print("PRINTING", vertices)
         
         im = Image.open(path)
-        print(im.tile)
+        # print(im.tile)
         width = im.width
         height = im.height
         # print((vertices[0].x, vertices[1].y, vertices[2].x, vertices[2].y))
 
         im2 = im.crop(box = (vertices[0].x*width, vertices[0].y*height, vertices[1].x*width, vertices[2].y*height))
-        print(im2.size)
+        # print(im2.size)
         
         new_crop_object = object_.name+ str(num)
         new_file_name = 'static/images/' + new_crop_object+'.png'
@@ -125,7 +125,7 @@ def draw_hint(image_file):
         vects[2].x, vects[2].y,
         vects[3].x, vects[3].y], None, 'red')
     im.save('static/images/output-hint.png', 'PNG')
-    print('Saved new image to output-hint.png')
+    # print('Saved new image to output-hint.png')
     return('output-crop.png')
 
 
@@ -137,13 +137,13 @@ def crop_to_hint(image_file):
     im2 = im.crop([vects[0].x, vects[0].y,
                   vects[2].x - 1, vects[2].y - 1])
     im2.save('output-crop.png', 'PNG')
-    print('Saved new image to output-crop.png')
+    # print('Saved new image to output-crop.png')
     return('output-crop.png')
 
 
 def find_book_boundaries(response):
-    print("LENGTH oF IMAGE PROP :", response.image_properties_annotation)
-    print("LENG OF OBJECT PROP:" , len(response.localized_object_annotations))
+    # print("LENGTH oF IMAGE PROP :", response.image_properties_annotation)
+    # print("LENG OF OBJECT PROP:" , len(response.localized_object_annotations))
     print("LENGTH OF CROP HINTS:", len(response.crop_hints_annotation))
 
 # TO FIGURE OUT STORAGE FOR LATER 
@@ -170,7 +170,7 @@ def find_google_book_data_onetitle(title):
     response = requests.get(link).json()
     if 'items' in response:
         book_json = {'title': response['items'][0]['volumeInfo']['title'], 'response': response}
-        print("CAPTURED", book_json['title'], "\n\n")
+        # print("CAPTURED", book_json['title'], "\n\n")
         return(book_json)
     else:
         print("ERROR", response)
@@ -227,10 +227,10 @@ def parse_response_data_for_info(book_data):
 def get_text_from_list_of_photos(photos):
     text_of_photos = []
     for photo in photos:
-        print(photo)
+        # print(photo)
         text = get_googlevision_response(photo)
         text = text.replace('\n', ' ')
-        print(text)
+        # print(text)
         text_of_photos.append(text)
     return text_of_photos
 
