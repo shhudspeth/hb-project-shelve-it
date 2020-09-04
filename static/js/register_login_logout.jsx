@@ -214,12 +214,11 @@ function Logout(props) {
   }
   
 
-
-function Login(props) { 
+  function Login(props) { 
     let history = useHistory();
-    const [email, setEmail] = React.useState();
-    const [password, setPassword] = React.useState();
-    const [user, setUser] =React.useState("");
+    const [email, setEmail] = React.useState()
+    const [password, setPassword] = React.useState()
+     
   
     const handleSubmit = (event) => {
 
@@ -236,12 +235,10 @@ function Login(props) {
       })
       .then(response => response.json())
       .then(data => {
-          console.log('DID LOGIN ROUTE SEND CORRECT DATA', data)
+       
           alert(`${data.status}`);
           if (data.status.startsWith('ok')) {
             props.handleLogin(true);
-          setUser(data.user);
-          console.log(data.user, "IS THIS PRINTING!?")
           }
           else {
               history.push('/')
@@ -252,9 +249,9 @@ function Login(props) {
     
       
       
-      console.log("LOGIN USER", login_user, user, props.handleLogin(true));
+      console.log("LOGIN USER", login_user);
       event.preventDefault();
-      history.push(`/`)
+      history.push('/bookshelf')
 
       }
       

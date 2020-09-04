@@ -190,12 +190,11 @@ function FilterableBookshelfTable (props) {
 function Homepage(props) {
     
     // Sets some state Variables and props variables
-    let history = useHistory();
     const [allShelves, setAllShelves] = React.useState(true);
+    const [showSpecificShelf, setShowSpecificShelf] = React.useState(false);
     const [displayShelf, setDisplayShelf] = React.useState("");
     const [textShelf, setTextShelf] = React.useState("");
-    const [popupEmailModal, setPopupEmailModal] = React.useState(false);
-    
+    const [popupEmailModal, setPopupEmailModal] = React.useState(false)
 
 
     function handleAllShelves(newValue) {
@@ -211,7 +210,7 @@ function Homepage(props) {
     function handleDisplayShelfname(newValue){
         setDisplayShelf(newValue)
         setAllShelves(false)
-       
+        setShowSpecificShelf(true)
     }
 
         
@@ -239,10 +238,10 @@ function Homepage(props) {
             event.target.reset();
 
           } 
-          history.push("/")
+
     
     console.log(props.loggedIn, "checking rendering value")
-    console.log(displayShelf,  allShelves, "TRYING TO MAKE SURE VLAUES CHANGE DISPLAYSHELF")
+    console.log(displayShelf, showSpecificShelf, allShelves, "TRYING TO MAKE SURE VLAUES CHANGE DISPLAYSHELF")
     
     return (
     <div>
@@ -329,7 +328,6 @@ function Homepage(props) {
       
     </div>)
   }
- 
 
 // MAIN ROUTER AND SWITCH APP
 
@@ -345,7 +343,6 @@ function App(props) {
     const [reading_stats, setReadingStats] = React.useState([]);
     const [owned_stats,setOwnedStats] = React.useState([]);
     const [bookTable, setBookTable] = React.useState([]);
-    const [username, setUsername] = React.useState("");
     // Fetches books from database and displays on site
 
 
@@ -353,18 +350,16 @@ function App(props) {
         setIsLoggedIn(newValue);
       }
     
-    console.log("LOGGED IN", isLoggedIn, username)
-    
+    console.log("LOGGED IN", isLoggedIn)
+
     React.useEffect(() => {
-        console.log("LOGGED IN", isLoggedIn, username)
-        console.log("fetching books, shelves, reading statuses, owned statuses ON APP...")
-        fetch(`/api/bookshelf/${username}`)
+        console.log("fetching books, shelves, reading statuses, owned statuses...")
+        fetch('/api/bookshelf')
         .then(response => response.json())
         .then((data) => {
             if (data.user) {
                 setIsLoggedIn(true)
-                console.log(data.user, "SETTING USERNAME")
-                setUsername(data.user)
+                console.log(data.user)
             }
             
             // going to be a prop... not need to update
@@ -397,8 +392,8 @@ function App(props) {
         
         })
         
-        }, [isLoggedIn]);
-    
+        }, ["loading"]);
+        
   
    
     return (
@@ -410,7 +405,7 @@ function App(props) {
                             <Link to="/"> Home </Link>
                         </li>
                         <li> 
-                            <Link to="/bookshelf/:username"> Your Bookshelf </Link>
+                            <Link to="/bookshelf/"> Your Bookshelf </Link>
                         </li>
                         
                     </ul>
@@ -434,7 +429,7 @@ function App(props) {
                     </Route>
 
 
-                    <Route path="/bookshelf/:username">
+                    <Route path="/bookshelf">
                         <FilterableBookshelfTable loggedIn={isLoggedIn} handleLogin={() =>handleLogin} books={bookList} bookTabs={bookTable} reading={reading_stats} owned={owned_stats} shelves={shelvesList} />
                     </Route> 
                     
