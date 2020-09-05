@@ -1,12 +1,18 @@
-import crud
-from model import db, User, Book, connect_to_db, Bookshelf, ShelvedBook, OwnedStatus, ReadingStatus
-from datetime import datetime
 import json
 import unittest
 from unittest import TestCase
 from flask import session
-from server import app
 import os
+
+import importlib
+crud  = importlib.load_module('../crud.py')
+model = importlib.load_module('../model.py')
+server = importlib.load_module('../server.py')
+
+from server import app
+#import crud
+from model import db, User, Book, connect_to_db, Bookshelf, ShelvedBook, OwnedStatus, ReadingStatus
+from datetime import datetime
 
 def make_book_info(num):
     with open('data/seeding_jsons/better_book_data.json') as f:

@@ -206,9 +206,9 @@ def register_new_account():
 
 
 
-@app.route('/api/bookshelf/<username>')
-def display_bookshelf(username):
-    print(username, session['user'])
+@app.route('/api/bookshelf')
+def display_bookshelf():
+    
     if session['user']:
         print(session['user'])
         current_user = crud.get_user_by_username(session['user'])
@@ -325,7 +325,8 @@ def display_book_info(book_id):
        
         comment_list = []
         for comment in comments:
-           comment_list.append({"text":comment.comment_text, "user": comment.user.user_name, "likes": comment.like_count, "post_date": comment.date_written})
+            print(comment.comment_text)
+            comment_list.append({"text":comment.comment_text, "user": comment.user.user_name, "likes": comment.like_count, "post_date": comment.date_written})
      
         image_url = 'https'+ str(book.cover_img_source)[4:]
         serialized_book = {'book_id': book.book_id, "title":book.title, 

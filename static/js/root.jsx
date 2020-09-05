@@ -405,7 +405,7 @@ function App(props) {
                             <Link to="/"> Home </Link>
                         </li>
                         <li> 
-                            <Link to="/bookshelf/"> Your Bookshelf </Link>
+                            <Link to="/bookshelf"> Your Bookshelf </Link>
                         </li>
                         
                     </ul>

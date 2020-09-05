@@ -9,7 +9,14 @@ const useParams = ReactRouterDOM.useParams;
 
 
 function BookDetailItem(props) {
-        
+    console.log("WHERE ARE THE COMMENTS", props.comments);
+        for (const comment of props.comments){
+            console.log(comment.text, comment.user, "HERE ARE TE COMMENT TEXT");
+        }
+
+        const handleSubmit = (event) => {
+            console.log(event)}
+
     return <React.Fragment>
 
             <table>
@@ -30,19 +37,47 @@ function BookDetailItem(props) {
                         <td>{props.publisher}</td>
                     </tr>
                     <tr><td>{props.description}</td></tr>
-                    <tr><span><b>COMMENTS</b></span></tr>
-                    
-                        {props.comments.map((name,index) =>
-                        <tr>{name.user},
-                        {name.post_date}, 
-                        {name.text}</tr>)}
-                    
-                    <tr>
-                        <td><button>Edit Book</button></td>
-                        <td><Link to={`/bookshelf`}>Go to BookShelf</Link></td>
-                    </tr>
-                </tbody>
+                    </tbody>
             </table>
+                    <b>COMMENTS</b>
+                    <div className='container'>
+                        <div className='row' id="comments-header">
+                            <div className='col'>User </div> 
+                            <div className='col'>Post Date</div> 
+                            <div className='col'>Comment </div> 
+
+                        </div>
+                        
+                   
+                            {props.comments.map((comment,index) => { 
+                                return  (
+                                        <div  className='row' key={index}> 
+                                            <div className='col'>{comment.user} </div> 
+                                            <div className='col'>{comment.post_date}</div> 
+                                            <div className='col'>{comment.text}</div>
+                                        </div>
+                                            ) }
+                        
+                            )}    
+
+                        <div className='row' id="add_comment">
+                            <form id="bookcomment">
+                            <div className='col'> <label htmlFor='comment'>Comment Here!</label></div>
+                            <textarea name="comment" form="bookcomment"> this book... </textarea>
+                            <button onClick={handleSubmit}> Submit Comment</button>
+                            </form>
+                        </div>
+                    </div>
+
+
+                   
+                    <div className='container'>
+                        <div  className='row'>
+                            <div className='col'><button>Edit Book</button></div>
+                            <div className='col'> <Link to={`/bookshelf`}>Go to BookShelf</Link></div>
+                        </div>
+                    </div>
+              
             </React.Fragment>
 }
 
@@ -349,7 +384,7 @@ function AddBookDetailItem(props) {
           event.preventDefault();
           console.log("sent to server??", statuses_update)
         }
-        history.push('/')
+        history.push('/bookshelf')
 
     return <React.Fragment>
                 <tr>
