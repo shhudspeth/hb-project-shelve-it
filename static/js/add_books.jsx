@@ -189,7 +189,7 @@ function UploadAPhoto(props){
        
        console.log("NEW BOOKS logged?? ", newBooks)
      } 
-     history.push('/')
+     history.push("/")
 
      return (
             <React.Fragment>
@@ -297,9 +297,10 @@ function AddaBook(props) {
                             publisher={data.publisher} image = {data.img} description={data.description} 
                             shelfname={shelfname} reading={props.reading} owned={props.owned}/> )
             
-              console.log("PRINTING FROM FETCH PUSH", bookDetail)
+              console.log("PRINTING FROM FETCH PUSH ADD BOOK", bookDetail)
               setBookonShelf(true)
             setBookDetail(bookDetail);
+            
           
             } )
            
@@ -307,7 +308,8 @@ function AddaBook(props) {
         event.preventDefault();
         console.log("NEW BOOK SHOULD SHOW UP", bookDetail);
         event.target.reset();
-        
+        props.handleAddaBook(false)
+        console.log("IS TIS CHANGING HANDLEADDABOOK TO FALSE?", props.handleAddaBook(false))
           } 
           history.push('/')
     return ( <React.Fragment>
@@ -359,11 +361,12 @@ function AddBookDetailItem(props) {
 
     const [readingStatus, setReadingStatus] = React.useState();
     const [ownedStatus, setOwnedStatus] = React.useState();
+    const[resetBookDetail, setResetBookDetail]= React.useState(false);
 
     console.log("IN ADDBOOKDETAILITEM", reading_st, props.shelfname,  props.owned)
 
       const changeStatus = (event) => {
-          
+        setResetBookDetail(false)
         const statuses_update = 
           {"reading_status": readingStatus, "owned_status": ownedStatus, "shelf": props.shelfname, "book_id": props.book_id }
     
@@ -378,15 +381,18 @@ function AddBookDetailItem(props) {
         .then(data => {
          
             alert(`${data.shelved_book} added to Shelf ${props.shelfname}`)
+            
           
         })
         console.log("UPDATING reading status", statuses_update)   
           event.preventDefault();
           console.log("sent to server??", statuses_update)
+          setResetBookDetail(true)
         }
-        history.push('/bookshelf')
+        history.push('/')
 
-    return <React.Fragment>
+    return ( !resetBookDetail &&
+         <React.Fragment>
                 <tr>
                     <td><img src={props.image}></img></td>
                     <td>{props.title}</td>
@@ -406,8 +412,8 @@ function AddBookDetailItem(props) {
                   {/*  <td><ReadingStatusMenu reading={reading_st} select_status ={true} handleReading={() => handleReading} /></td>
                     <td><BookStatusMenu owned={props.owned} select_status ={true} handleOwned={() => handleOwned} /></td> */}
                     <td><button onClick={changeStatus}>Update Book Statuses</button></td>
-                    <td><Link to={`/book-info/${props.book_id}`}> Go to Book Page </Link></td>
+                    
                 </tr>
-            </React.Fragment>
+            </React.Fragment> )
     }
 

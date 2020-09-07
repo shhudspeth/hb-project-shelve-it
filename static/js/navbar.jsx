@@ -8,7 +8,22 @@ const useHistory = ReactRouterDOM.useHistory;
 const useParams = ReactRouterDOM.useParams;
 
 
-// REGISTER A NEW USER FUNCTIONS 
+// --------------- NavBar Component ------------------------- //
+
+// function NavBar(props) {
+
+// return(
+//   <div className="navbar">
+//     {!props.loggedIn && <Login loggedIn={props.loggedIn} handleLogin={() =>props.handleLogin} /> }
+//     {!props.loggedIn && <Register loggedIn={props.loggedIn} handleLogin={() =>props.handleLogin} /> }
+//     {props.loggedIn && <Logout loggedIn={props.loggedIn} handleLogin={() =>props.handleLogin} /> }
+//   </div>
+// )
+// }
+
+
+
+// ----------------- REGISTER A NEW USER FUNCTIONS -------------------- //
 
 function Register(props) {
     // register a user in React
@@ -49,7 +64,7 @@ function Register(props) {
       console.log(register_user)   
         event.preventDefault();
       }
-      history.push(`/bookshelf/${username}`)
+      history.push(`/`)
     return (
       <form className="form-register" onSubmit={handleSubmit}>
   
@@ -171,12 +186,12 @@ function Register(props) {
   }
 
 
-// LOGOUT IN FUNCTIONS AND ROUTES
+// -------------LOGOUT IN FUNCTIONS AND ROUTES ----------------//
 
 function Logout(props) { 
     let history = useHistory();
     
-  
+    console.log("IN LOGOUT")
     const handleSubmit = (event) => {
   
       const logout_user = {"logout": true}
@@ -190,14 +205,13 @@ function Logout(props) {
         
         })
         console.log( "LOGGING OUT", logout_user)
-        event.preventDefault();
         props.handleLogin(false);
         
         
         //   setIsRegistered(true)
         
       }
-      history.push('/')
+      history.push('/login')
       console.log("LOGGEDOUT", props.isLoggedIn)
     // a form 
     return (
@@ -251,7 +265,7 @@ function Logout(props) {
       
       console.log("LOGIN USER", login_user);
       event.preventDefault();
-      history.push('/bookshelf')
+      history.push('/')
 
       }
       

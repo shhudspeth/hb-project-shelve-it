@@ -131,11 +131,23 @@ def update_book_statuses():
         current_user = crud.get_user_by_username(session['user'])
         
         # update book reading status
+        if 'reading_status' in status_dict:
+            reading_st = status_dict['reading_status']
+            
+        else:
+            reading_st = 'liked'
+        
         shelved_book = crud.update_shelvedbook_reading_st(current_user.user_id, \
-                            status_dict['book_id'], status_dict['reading_status'])
+                            status_dict['book_id'], reading_st)
         # update book owned status
+        if 'owned_status' in status_dict:
+            owned_st = status_dict['reading_status']   
+        else:
+            owned_st = 'to order from store'
+
         shelved_book = crud.update_shelvedbook_owned_st(current_user.user_id, \
-                            status_dict['book_id'], status_dict['owned_status'])
+                            status_dict['book_id'], owned_st)
+        
         print("IS IT SAVING TE RIGHT STATUS", shelved_book, shelved_book.reading_status, shelved_book.owned_status )
         return(jsonify({"shelved_book": shelved_book.book.title }))
     
@@ -172,13 +184,14 @@ def process_login():
 def process_logout():
     """Log user out of site.
     """
+    print("TRYING TO LOGOUT")
     if session['user']:
         [session.pop(key) for key in list(session.keys())]
-        flash("You've logged out successfully")
+        print("You've logged out successfully")
         return(jsonify({'status': "ok. you are logged out. Login to see shelf!"}))
       
     else:
-        flash("You are not logged in. Please log in to log out")
+        print("You are not logged in. Please log in to log out")
         return(jsonify({'status': "no logout possible"}))
 
 

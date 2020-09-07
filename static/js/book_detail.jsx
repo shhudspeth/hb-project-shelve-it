@@ -8,38 +8,6 @@ const useHistory = ReactRouterDOM.useHistory;
 const useParams = ReactRouterDOM.useParams;
 const { Modal } = ReactBootstrap;
 
-/* 
-function SendBooklistEmail(props){
-        console.log("AT SENDLISTEMAIL", props)
-
-        const sendBookEmail = (event) => {
-                 
-        console.log("SET TEXT SHELF", newValue, "SHELF TO BE PASSED", props.textShelf)
-
-        const text = {"title": enteredbook, "author": enteredauthor, "shelf": props.textShelf}
-        
-        fetch(`/api/make-booklist/${textShelf}`, {
-            method: 'POST', 
-            body: JSON.stringify(text),
-            headers: {
-              'Content-Type': 'application/json'
-            }}
-          )
-          .then(response => response.json())
-          .then(data => {
-            alert(`Thanks. Just sent you an email! ${data}`)
-            } )
-           
-        
-        event.preventDefault();
-        event.target.reset();
-          } 
-
-          return( 
-                <React.Fragment>
-                           <h1>EMAIL WAS SENT WE THINK</h1>
-                </React.Fragment>
-          )} */
 
  
 function DisplayShelf(props){
@@ -71,7 +39,7 @@ function DisplayShelf(props){
         })
         
         }, [props.shelf]);
-        history.push(`/displaybookshelf/${props.shelf}`)
+        history.push(`/`)
         
         return(<FilterableBookshelfTable  bookTabs={booksonShelfTable} shelf={props.shelf}
             reading={props.reading} owned={props.owned} 
