@@ -4,28 +4,31 @@
 /* Style  navbar + logo. */
 
 div.navbar-header {
-    width: 300px;
+    
     /* float: left; */
     margin-top: 7px;
     margin-right: 7px;
 }
+div.container {
+  width:90%;
 
+}
 
 div.logo-header img{
   
-  align-content: center;
+  display:block;
   margin: 0px auto;
   
 }
 
 #display-components {
     margin-top: 7px;
-    margin-right: 7px;
+    
 }
 
 .btn-group 
 {
-  width:120%;
+  width:100%;
   text-align: center;
   text-overflow: ellipsis;
 
@@ -33,7 +36,7 @@ div.logo-header img{
 
 
 .bookrows img {
-  width:100px;
+  width:100%;
   margin: auto;
 }
 

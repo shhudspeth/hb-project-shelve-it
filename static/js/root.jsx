@@ -236,7 +236,7 @@ function App(props) {
         <Router>
             <div className="navbar-header" >
                 <nav className="nav" id="nav">
-                    {/* <div className="row">
+                    <div className="row">
                      <ul>
                         <li>
                         <i className="fas fa-book"></i>
@@ -252,8 +252,9 @@ function App(props) {
                             {isLoggedIn && <Link to="/logout"> Logout </Link> }
                         </li>
                     </ul>
-                    </div>  */}
+                    </div> 
                 </nav>
+                </div>
               
 
                 <Switch>
@@ -289,7 +290,7 @@ function App(props) {
                         <Homepage loggedIn={isLoggedIn} handleLogin={() =>handleLogin} books={bookList} bookTabs={bookTable} reading={reading_stats} owned={owned_stats} shelves={shelvesList} />
                     </Route>
                  </Switch>
-            </div>
+           
         </Router>
         );
   

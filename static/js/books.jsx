@@ -29,7 +29,7 @@ function ShelvesListMenu(props){
     return (<div>
                 <div className="dropdown">
                     <label htmlFor="shelf-menu" className="dropbtn">Please choose a Bookshelf</label>
-                        <select name="shelf-menu" value={props.shelves[0]} className="dropdown-content">
+                        <select name="shelf-menu" className="dropdown-content">
                             <option key="all" name="all">All shelves</option>
                             {props.shelves.map((name, index) =>
                                 <option key={index} value={name} onChange={e => props.handleChange(e.target.value)}>{name}</option>)}
@@ -112,7 +112,7 @@ function BookRow(props){
     
     return (
             <tr>
-                <td><img src={bookData.img}></img></td>
+                <td><Link to={`/book-info/${bookData.book_id}`}><img src={bookData.img}></img></Link></td>
                 <td><Link to={`/book-info/${bookData.book_id}`} >{bookData.title}</Link></td>
                 <td>{bookData.author}</td>
                 <td>{bookData.publisher}</td>
@@ -120,7 +120,6 @@ function BookRow(props){
                 <td>{bookData.owned_stat}</td>
                 <td>{bookData.shelf_name}</td>
                 <td><button>Edit Book</button></td>
-                <td><Link to={`/book-info/${bookData.book_id}`}> Go to Book Page </Link></td>
             </tr>
     )
 }
