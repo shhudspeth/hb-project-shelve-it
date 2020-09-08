@@ -8,78 +8,40 @@ const useHistory = ReactRouterDOM.useHistory;
 const useParams = ReactRouterDOM.useParams;
 const { Modal } = ReactBootstrap;
 
-/* 
-function SendBooklistEmail(props){
-        console.log("AT SENDLISTEMAIL", props)
-
-        const sendBookEmail = (event) => {
-                 
-        console.log("SET TEXT SHELF", newValue, "SHELF TO BE PASSED", props.textShelf)
-
-        const text = {"title": enteredbook, "author": enteredauthor, "shelf": props.textShelf}
-        
-        fetch(`/api/make-booklist/${textShelf}`, {
-            method: 'POST', 
-            body: JSON.stringify(text),
-            headers: {
-              'Content-Type': 'application/json'
-            }}
-          )
-          .then(response => response.json())
-          .then(data => {
-            alert(`Thanks. Just sent you an email! ${data}`)
-            } )
-           
-        
-        event.preventDefault();
-        event.target.reset();
-          } 
-
-          return( 
-                <React.Fragment>
-                           <h1>EMAIL WAS SENT WE THINK</h1>
-                </React.Fragment>
-          )} */
 
  
 function DisplayShelf(props){
-    let history = useHistory()
-    let { shelfName } = useParams();
+    let history = useHistory();
+    // let { shelfName } = useParams();
 
-    // Fetches books from database and displays on site
-    console.log(props.shelf, "IN DISPLAYSHELF", booksonShelfTable)
-    const [selectShelf, setSelectShelf] = React.useState();
-
-    if(shelfName) {
-        setSelectShelf(shelfName);
-    }
-    else{
-        setSelectShelf(props.shelf);
-    }
-    
     const [booksonShelfTable, setBooksonShelfTable] = React.useState([]);
-    React.useEffect(() => {
+    console.log(props.shelf, "IN DISPLAYSHELF",  booksonShelfTable)
 
-        console.log("fetching books, shelves, reading statuses, owned statuses...")
-        fetch(`/api/display-shelf/${selectShelf}`)
+
+    
+    React.useEffect(() => {
+        
+        console.log("fetching books from one shelf.")
+        fetch(`/api/display-shelf/${props.shelf}`)
         .then(response => response.json())
         .then((data) => {
             
             //get book data
-            const bookTable= [];
+            const shelfTable= [];
             for (const post of data.books) {
-            
-                bookTable.push(post)
+                console.log(post);
+                shelfTable.push(post);
                 };
         
-            setBooksonShelfTable(bookTable);
+            setBooksonShelfTable(shelfTable);
+            console.log('ADD BOOKS FROM A SPECIFIC SHELF', booksonShelfTable);
         
         })
         
         }, [props.shelf]);
-        history.push(`/bookshelf/${shelfName}`)
+        history.push(`/`)
         
-        return(<FilterableBookshelfTable  bookTabs={booksonShelfTable} 
+        return(<FilterableBookshelfTable  bookTabs={booksonShelfTable} shelf={props.shelf}
             reading={props.reading} owned={props.owned} 
             shelves={props.shelves}/>
 

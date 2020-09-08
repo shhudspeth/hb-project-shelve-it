@@ -1,0 +1,101 @@
+/* Style for Shelve-It Curate your books Site */
+
+
+/* Style  navbar + logo. */
+
+div.navbar-header {
+    
+    /* float: left; */
+    margin-top: 7px;
+    margin-right: 7px;
+}
+div.container {
+  width:90%;
+
+}
+
+div.logo-header img{
+  
+  display:block;
+  margin: 0px auto;
+  
+}
+
+#display-components {
+    margin-top: 7px;
+    
+}
+
+.btn-group 
+{
+  width:100%;
+  text-align: center;
+  text-overflow: ellipsis;
+
+}
+
+
+.bookrows img {
+  width:100%;
+  margin: auto;
+}
+
+.container{
+  margin: 0 auto;
+}
+/* .slideshow {
+    position: relative;
+    overflow: hidden; 
+  }
+  .images {
+    background: url("slideshow.jpg");
+    background-size: 50px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 300%;
+    animation: slideshow 10s linear infinite;
+  }
+  @keyframes slideshow {
+    0%    { left: 0; }
+    100%  { left: -200%; }
+  } */
+
+
+img.shelf {
+    height: 15px;
+}
+
+li {
+    vertical-align: middle;
+    display: inline;
+    margin-right:10px;}
+
+/* all-books styling tables */
+
+div.summary img {
+    width: 15em;
+}
+
+div.summary .comment {
+    margin: 0.5em 0;
+    font-size: 150%;
+    font-weight: bold;
+}
+
+
+/* book-detail-page */
+
+.warning {
+    color: red;
+}
+
+
+/* login form */
+
+.form-signin {
+  max-width: 330px;
+  margin: 5em auto 0 auto;  /* TRBL */
+}
+

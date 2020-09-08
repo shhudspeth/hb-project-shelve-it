@@ -11,6 +11,7 @@ from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Mail
 
 key = os.environ['key']
+
 def get_latln_from_zip(zipcode):
     g = geocoder.google('postal_code:'+str(zipcode), key=key)
     if g.ok:

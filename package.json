@@ -4,7 +4,9 @@
   "description": "A virtual bookshelf that helps you organize your reading list",
   "main": "root.js",
   "dependencies": {
-    "@sendgrid/mail": "^7.2.4"
+    "@sendgrid/mail": "^7.2.4",
+    "bootstrap": "^4.5.2",
+    "react-bootstrap": "^1.3.0"
   },
   "devDependencies": {},
   "scripts": {
