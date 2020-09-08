@@ -211,7 +211,8 @@ function Logout(props) {
         //   setIsRegistered(true)
         
       }
-      history.push('/login')
+      event.preventDefault();
+      history.push('/')
       console.log("LOGGEDOUT", props.isLoggedIn)
     // a form 
     return (

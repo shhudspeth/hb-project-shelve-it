@@ -3,6 +3,7 @@ import crud, more_crud
 import model
 import json
 import api
+import utility
 import os
 from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Mail
@@ -45,25 +46,59 @@ def send_email():
 
 @app.route("/api/make-booklist/<shelf>", methods=["POST"])
 def generate_text(shelf):
-    # if session['user']:
-    #     print(session['user'])
-    #     current_user = crud.get_user_by_username(session['user'])
-        
-    #     books_on_shelf = crud.return_books_on_shelf_by_nickname(shelf, current_user.user_id)
+    if session['user']:
+        print(session['user'])
 
-    #     print("RETREIVED BOOKS ON SEHFL", books_on_shelf)
+        # make a dictionary of books with statusess from username and shelfname
+        shelf_books = utility.make_dict_books_a_shelf(session['user'], shelf)
+        
+        
+        # make libraries and bookstores calls from google places
+        libraries_json = more_crud.library_urls(current_user.lat, current_user.long)
+        bookstores_json = more_crud.bookstore_urls(current_user.lat, current_user.long)
+        print(libraries_json, "LIRBARIES")
+        print(bookstores_json, "BOOKSTORES")
+
     # else:
     #     flash("please login first!")
     #     return(jsonify({"status": "please login first"}))
-
+    
+    
     shelf_info = request.get_json()
     print("SENDING EMAIL TEST", shelf_info)
+    content = {"user" : session['user'], "shelfname": shelf, "message" : shelf_info['message'],
+                "books":shelf_books, "libraries": libraries_json, "bookstores" :bookstores_json}
+
+    print(content)
+#     request_body = {
+#         "personalization" : [
+#         {"to" : [
+#                 {
+#                     "email": shelf_info['email'], 
+#                     "name": session['user']
+#                 }
+#                 ],
+#          "dynamic_template_data": content,
+#          "subject": "Your Shelve-It Book List"
+#          },
+#         ],
+#         "from": {
+#             "email":"shhudspeth@gmail.com", 
+#             "name" : "Sarah at Shelve-It"
+#         },
+#         "reply_to": {
+#             "email": "shhudspeth@gmail.com",
+#             "name": "Sarah at Shelve-It"
+#         },
+#         "template_id": "d-7b49772a617240e1b94a2f9b47510d22"
+# }
+   
     message = Mail(
-        from_email='from_email@example.com',
-        to_emails='to@example.com',
+        from_email='shhudspeth@gmail.com',
+        to_emails=shelf_info['email'],
         subject='Your Shelve-It Book List',
         #html_content= shelf_info['html']
-        html_content='<strong>and easy to do anywhere, even with Python</strong>'
+        html_content="<strong> DID THIS TEST EMAIL WORK. HOW DO I INTEGRATE WITH DYNAMIC TEMPLATES?</strong>"
         )
 
     try:
@@ -73,7 +108,7 @@ def generate_text(shelf):
         print(response.body)
         print(response.headers)
     except Exception as e:
-        print(e.message)
+        print(e)
 
 
 
@@ -82,38 +117,13 @@ def display_by_shelf(shelf):
     print("IN DISPLAY BY SELF", shelf)
     if session['user']:
         print(session['user'])
-        current_user = crud.get_user_by_username(session['user'])
+        shelf_books = utility.make_dict_books_a_shelf(session['user'], shelf)
         
-        books_on_selected_shelf = crud.return_books_on_shelf_by_nickname(shelf, current_user.user_id)
-        
-
-        print("RETREIVED BOOKS ON SEHFL", books_on_selected_shelf, len(books_on_selected_shelf))
     else:
         flash("please login first!")
         return(jsonify({"status": "please login first"}))
     
     
-    shelf_books = []
-    for book in books_on_selected_shelf: 
-        #get sheleved book info : shelf id, bookid, reading and owned statuses
-        #print("SHEVLEDBOOK ID",current_user, current_user.user_id, book.book_id)
-        shelf_st = crud.get_shelvedbook(current_user.user_id, book.book_id)
-        print("SHELF", shelf_st, shelf_st.bookshelf.nickname)
-        own_st = crud.get_owned_status(shelf_st.owned_status)
-        reading_st = crud.get_reading_status(shelf_st.reading_status)
-        # print("TRYING TO GET SHELF NAME", book, book.book_id, shelf_st, shelf_st.bookshelf.nickname, shelf_st.owned_status, shelf_st.reading_status)
-        # print(reading_st, own_st)
-        if book.cover_img_source.startswith('http'):
-            image_url = 'https'+ str(book.cover_img_source)[4:]
-        
-        shelf_books.append({'book_id': book.book_id, "title":book.title, 
-                                'author': book.author, 'publisher': book.publisher, 
-                                'description':book.description, "img":image_url, 
-                                'shelf_name': shelf_st.bookshelf.nickname,
-                                'shelf_id':shelf_st.bookshelf.shelf_id,
-                                'reading_stat':reading_st,
-                                'owned_stat':own_st
-                                 })
     print("DID ALL THE BOOKS SERIALIZE? ", len(shelf_books))
     return jsonify({"user": session['user'],
                     "books": shelf_books, 
@@ -128,25 +138,19 @@ def update_book_statuses():
 
     if session['user']:
         print(session['user'])
-        current_user = crud.get_user_by_username(session['user'])
         
-        # update book reading status
+        # update book reading statusif 'reading_status' in status_dict:
         if 'reading_status' in status_dict:
-            reading_st = status_dict['reading_status']
-            
+            shelved_book = utility.update_reading_status(session['user'], status_dict['book_id'], status_dict['reading_status'])
         else:
-            reading_st = 'liked'
-        
-        shelved_book = crud.update_shelvedbook_reading_st(current_user.user_id, \
-                            status_dict['book_id'], reading_st)
+            shelved_book = utility.update_reading_status(session['user'], status_dict['book_id'])
+
+       
         # update book owned status
         if 'owned_status' in status_dict:
-            owned_st = status_dict['reading_status']   
+            shelved_book = utility.update_owned_status(session['user'], status_dict['book_id'], status_dict['owned_status'])  
         else:
-            owned_st = 'to order from store'
-
-        shelved_book = crud.update_shelvedbook_owned_st(current_user.user_id, \
-                            status_dict['book_id'], owned_st)
+            shelved_book = utility.update_reading_status(session['user'], status_dict['book_id'])
         
         print("IS IT SAVING TE RIGHT STATUS", shelved_book, shelved_book.reading_status, shelved_book.owned_status )
         return(jsonify({"shelved_book": shelved_book.book.title }))
@@ -226,7 +230,9 @@ def display_bookshelf():
         print(session['user'])
         current_user = crud.get_user_by_username(session['user'])
         print("\n\n\n CHECK USER", current_user)
-        user_books = crud.return_all_books_on_shelves_by_user(current_user.user_id)
+
+
+        user_books = utility.make_dict_books_a_shelf(session['user'], "all")
     
         # print("CHECK BOOKS", user_books, "\n\n\n")
         user_shelves = crud.return_all_shelves_by_user(current_user.user_id)
@@ -242,8 +248,7 @@ def display_bookshelf():
     
     serial_shelves = []
     for shelf in user_shelves:
-        serial_shelves.append({'shelf_id': shelf.shelf_id, 'name': shelf.nickname})
-    
+        serial_shelves.append({'shelf_id': shelf.shelf_id, 'name': shelf.nickname}) 
     
     serialized_reading_statuses = []
     for stat in reading_stats:
@@ -253,34 +258,10 @@ def display_bookshelf():
     for stat in owned_stats:
         serialized_owned_statuses.append({'owned_id': stat.owned_id, 'owned_status': stat.owned_text})
 
-    
-    serialized_books = []
-    # user_books is a list of a list!!!
-    for book in user_books: 
-        #get sheleved book info : shelf id, bookid, reading and owned statuses
-        #print("SHEVLEDBOOK ID",current_user, current_user.user_id, book.book_id)
-        shelf_st = crud.get_shelvedbook(current_user.user_id, book.book_id)
-        # print("SHELF", shelf_st, shelf_st.bookshelf.nickname)
-        own_st = crud.get_owned_status(shelf_st.owned_status)
-        reading_st = crud.get_reading_status(shelf_st.reading_status)
-        # print("TRYING TO GET SHELF NAME", book, book.book_id, shelf_st, shelf_st.bookshelf.nickname, shelf_st.owned_status, shelf_st.reading_status)
-        # print(reading_st, own_st)
-        if book.cover_img_source.startswith('http'):
-            image_url = 'https'+ str(book.cover_img_source)[4:]
-
-        
-        
-        serialized_books.append({'book_id': book.book_id, "title":book.title, 
-                                'author': book.author, 'publisher': book.publisher, 
-                                'description':book.description, "img":image_url, 
-                                'shelf_name': shelf_st.bookshelf.nickname,
-                                'shelf_id':shelf_st.bookshelf.shelf_id,
-                                'reading_stat':reading_st,
-                                'owned_stat':own_st
-                                 })
+ 
     # print("WHY ARE ALL SHELVES BOOKWORMMArY", serialized_books)
     return jsonify({"user": session['user'],
-                    "books": serialized_books, 
+                    "books": user_books, 
                     "shelves": serial_shelves, 
                     "reading_st_list": serialized_reading_statuses, 
                     "owned_st_list": serialized_owned_statuses })
@@ -325,14 +306,13 @@ def add_to_bookshelf():
     
 @app.route('/api/book_info/<book_id>')
 def display_book_info(book_id):
-    #update or create shelvedbooked info
-    # create_shelvedbook(shelf, book, reading_status, owned_status)
-    # TODO 1. display book image, 2. display description, 3. add buttons for all the things
-    # add function for users that don't have account or are not signed in to save to booklist
+    """ A function that display info on a book and any comments that have been written about that book """
     
     if session['user']:
         current_user = crud.get_user_by_username(session['user'])
         book = crud.get_book_by_id(book_id)
+
+        
         comments = crud.get_comments_by_book_id(book_id)
         print(comments, book, "COMMENTS")
        
@@ -347,6 +327,39 @@ def display_book_info(book_id):
                                 'description':book.description, "img":image_url,"comments": comment_list}
              
     return jsonify(serialized_book)
+
+
+@app.route('/api/book_info/<book_id>', methods=["POST"])
+def update_book_info(book_id):
+    """ A function that display info on a book and any comments that have been written about that book """
+    
+    if session['user']:
+        current_user = crud.get_user_by_username(session['user'])
+        book = crud.get_book_by_id(book_id)
+        
+        new_comment = request.get_json()
+        make_comment = crud.create_comment(current_user.user_id, book_id, new_comment['comment_text'])
+        
+
+        comments = crud.get_comments_by_book_id(book_id)
+        # print(comments, book, "COMMENTS")
+       
+        comment_list = []
+        for comment in comments:
+            # print(comment.comment_text)
+            comment_list.append({"text":comment.comment_text, "user": comment.user.user_name, "likes": comment.like_count, "post_date": comment.date_written})
+     
+        image_url = 'https'+ str(book.cover_img_source)[4:]
+        serialized_book = {'book_id': book.book_id, "title":book.title, 
+                                'author': book.author, 'publisher': book.publisher, 
+                                'description':book.description, "img":image_url,"comments": comment_list}
+             
+    return jsonify(serialized_book)
+
+
+
+
+
 
 
 

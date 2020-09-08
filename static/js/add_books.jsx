@@ -9,13 +9,48 @@ const useParams = ReactRouterDOM.useParams;
 
 
 function BookDetailItem(props) {
+    let history = useHistory();
+
+    const [comment, setComment] = React.useState("")
+
+    const [commentList, setCommentList]= React.useState(props.comments)
+
+
     console.log("WHERE ARE THE COMMENTS", props.comments);
         for (const comment of props.comments){
             console.log(comment.text, comment.user, "HERE ARE TE COMMENT TEXT");
         }
 
         const handleSubmit = (event) => {
-            console.log(event)}
+
+            const addComment = {"comment_text": comment, "book_id": props.book_id }
+    
+        fetch(`/api/book_info/${props.book_id}`, {
+          method: 'POST', 
+          body: JSON.stringify(addComment),
+          headers: {
+            'Content-Type': 'application/json'
+          },
+        })
+        .then(response => response.json())
+        .then(data => {
+            const new_comments=[]
+            for (const comment of data.comments){
+                new_comments.push(comment);
+            }
+            setCommentList(new_comments)
+            alert(`New comment added !`)
+            
+          
+        })
+        
+          event.preventDefault();
+          event.target.reset();
+            
+          
+        }
+        history.push(`/book-info/${props.book_id}`)
+
 
     return <React.Fragment>
 
@@ -49,7 +84,7 @@ function BookDetailItem(props) {
                         </div>
                         
                    
-                            {props.comments.map((comment,index) => { 
+                            {commentList.map((comment,index) => { 
                                 return  (
                                         <div  className='row' key={index}> 
                                             <div className='col'>{comment.user} </div> 
@@ -63,7 +98,7 @@ function BookDetailItem(props) {
                         <div className='row' id="add_comment">
                             <form id="bookcomment">
                             <div className='col'> <label htmlFor='comment'>Comment Here!</label></div>
-                            <textarea name="comment" form="bookcomment"> this book... </textarea>
+                            <textarea name="comment" onChange={e => setComment(e.target.value)} form="bookcomment"> </textarea>
                             <button onClick={handleSubmit}> Submit Comment</button>
                             </form>
                         </div>
@@ -110,152 +145,6 @@ function ShowBookInfo(props) {
             </div>
   }
 
-//   function ConfirmUploadTextsModal(props){
-
-
-//     return(<div className="modal" tabindex="-1" role="dialog">
-//     <div className="modal-dialog" role="document">
-//       <div className="modal-content">
-//         <div className="modal-header">
-//           <h5 className="modal-title">Modal title</h5>
-//           <button type="button" className="close" data-dismiss="modal" aria-label="Close">
-//             <span aria-hidden="true">&times;</span>
-//           </button>
-//         </div>
-//         <div className="modal-body">
-//           <p>Modal body text goes here.</p>
-//         </div>
-//         <div className="modal-footer">
-//           <button type="button" className="btn btn-primary">Save changes</button>
-//           <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
-//         </div>
-//       </div>
-//     </div>
-//   </div>
-
-//     )
-//   }
-
-
-// ---------------------UPLOAD A PHOTO AND GET BOOK INFORMATION -------
-function UploadAPhoto(props){
-    // upload a photo and scrape the text off of it
-   let history = useHistory();
-   const [shelfname, setShelfname] = React.useState("");
-   const [booksFile, setBooksFile] = React.useState("");
-   const [newBooks, setNewBooks] = React.useState();
-   const [bookDetail, setBookDetail] = React.useState([]);
-
-   console.log("UPLOAD BOOK< SHELVES", props.shelves, props.reading, props.owned)
-
-   function handleChange(newValue) {
-    setShelfname(newValue);
-    console.log("DID SHELF CHANGE", newValue, "SHELF TO BE PASSED", shelfname)
-  }
-   
-   const uploadBookPhoto = (event) => {
-   console.log('trying to add books to page')
- 
-     const post = {"filepath": booksFile, "shelfname": shelfname}
-     console.log("POSTING DATA")
-     fetch('/api/bookshelf/upload', {
-       method: 'POST', 
-       body: JSON.stringify(post),
-       headers: {
-         'Content-Type': 'application/json'
-       }}
-     )
-     .then(response => response.json())
-     .then(data => {
-    
-        for (const post of data) {
-            console.log("CHECKING SHELFNAME", shelfname)
-            bookDetail.push(<AddBookDetailItem  key = {post.book_id} book_id={post.book_id} 
-                                                title={post.title} author={post.author}
-                                                publisher={post.publisher} image = {post.img} 
-                                                description={post.description} shelfname={shelfname} 
-                                                reading={props.reading} owned={props.owned} /> )}
-
-        
-        console.log("PRINTING FROM FETCH PUSH", bookDetail)
-        // setBookonShelf(true)
-        setBookDetail(bookDetail);
-        setNewBooks(true)
-       })
-       
-   
-       event.preventDefault();
-       event.target.reset();
-       
-       console.log("NEW BOOKS logged?? ", newBooks)
-     } 
-     history.push("/")
-
-     return (
-            <React.Fragment>
-            
-                <div className="col">
-                    <h4>Add a Book via Photo Upload</h4>
-                        <form className='form-upload' onSubmit={uploadBookPhoto}> 
-                            <div className="dropdown">
-                                <label htmlFor="shelf-menu" className="dropbtn">Please choose a Bookshelf</label>
-                                    <select name="shelf-menu" onChange={e => handleChange(e.target.value)} className="dropdown-content">
-                                        {props.shelves.map((name, index) =>
-                                        <option key={index} value={name} >{name}</option>)}
-                                 </select>
-                            </div>
-                            {/* <ShelvesListMenu key={2} shelves={props.shelves} handleUploadShelf={() =>props.handleUploadShelf} /> */}
-                            <div>
-                                <label htmlFor="shelfname">Or add to a new shelf: </label>
-                                    <input type="text" name="shelfname" onChange={e => setShelfname(e.target.value)} /> <br />
-                                <label htmlFor="fileElem">Select an image of a stack of books</label>
-                                    <input type="file" id="bookstack" name="booksFile" onChange={e => setBooksFile(e.target.value)} accept="image/png, image/jpeg" encType="multipart/form-data" /> <br />
-                                <button type="submit"> Click here to upload</button>
-                            </div>
-                        </form>
-               
-
-                    {/* Button trigger modal*/}
-                    <button type="button" className="btn btn-primary" data-toggle="modal" data-target="#uploadModal">
-                    Confirm Books to add to shelf here
-                    </button>
-
-                    {/* Modal */}
-                    <div className="modal fade upload-modal-lg" id="uploadModal" tabIndex="-1" role="dialog" aria-labelledby="myLargeUploadModal" aria-hidden="true">
-                        <div className="modal-dialog modal-lg" role="form">
-                            <div className="modal-content">
-                                <div className="modal-header">
-                                    <h5 className="modal-title" id="exampleModalLabel">Books to upload</h5><br></br>
-                                        
-                                    
-                                    <button type="button" className="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <div className="modal-body">
-                                    Please edit typos or delete books you do not want. 
-                                    <table>
-                                        <tbody>
-                                        {bookDetail}
-                                        </tbody>
-                                    </table>
-                                </div>
-                                <div className="modal-footer">
-                                    <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    <button type="button" className="btn btn-primary">Save changes</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-            </div>
-                
-
-            </React.Fragment>
-           
-       
-         )
-
-}
 
 
 // ------------------------- ADD A BOOK TO SHELF ----------

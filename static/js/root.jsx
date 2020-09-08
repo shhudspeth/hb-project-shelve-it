@@ -7,6 +7,7 @@ const Redirect = ReactRouterDOM.Redirect;
 const useHistory = ReactRouterDOM.useHistory;
 const useParams = ReactRouterDOM.useParams;
 const { Modal } = ReactBootstrap;
+const {Dropdown} =ReactBootstrap ;
 
 
   
@@ -18,13 +19,21 @@ function Homepage(props) {
     const [allShelves, setAllShelves] = React.useState(true);
     const [displayShelf, setDisplayShelf] = React.useState("");
     const [textShelf, setTextShelf] = React.useState("");
-    const [popupEmailModal, setPopupEmailModal] = React.useState(false)
-    const [showUploadPhoto, setShowUploadPhoto] = React.useState(false)
-    const [showAddaBook, setShowAddabook] = React.useState(false)
-    const [showLogin, setShowLogin] = React.useState(false)
-    
+    const [popupEmailModal, setPopupEmailModal] = React.useState(false);
+    const [showUploadPhoto, setShowUploadPhoto] = React.useState(false);
+    const [showAddaBook, setShowAddabook] = React.useState(false);
+    const [showLogout, setShowLogout] = React.useState(false);
+    const [loginLogoutText, setLoginLogoutText] = React.useState("Logout");
+    const [modalEmail, setModalEmail] = React.useState("")
+    const [modalMessage, setModalMessage] = React.useState("")
+    // if (props.loggedIn){
+    //     setLoginLogoutText("Logout");
+    // }
 
-
+    function handleShowLogout(newValue) {
+        setShowLogout(newValue)
+        setLoginLogoutText("Login")
+    }
     function handleUploadPhoto(newValue) {
         setShowUploadPhoto(newValue)
     }
@@ -51,9 +60,9 @@ function Homepage(props) {
         
         const sendBookEmail = (event) => {
                  
-        console.log("SET TEXT SHELF", "SHELF TO BE PASSED", props.textShelf)
+        console.log("SET TEXT SHELF", "SHELF TO BE PASSED", textShelf, )
 
-            const text = {"email": email, "message": message, "shelf": props.textShelf}
+            const text = {"email": modalEmail, "message": modalMessage, "shelf": textShelf}
             
             
             fetch(`/api/make-booklist/${textShelf}`, {
@@ -70,7 +79,7 @@ function Homepage(props) {
             
             
             event.preventDefault();
-            event.target.reset();
+            
 
           } 
 
@@ -100,14 +109,10 @@ function Homepage(props) {
                 </div>
                 
                 <div className="btn-group" role="group">
-                    <button id="btnGroupDrop1" type="button" className="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <button id="btnGroupDrop1" type="button" className="btn btn-secondary " data-toggle='modal' data-target="#shelf-modal" aria-haspopup="true" aria-expanded="false">
                         Email books from Selected Shelf
                     </button>
-                    <div className="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                        <a className="dropdown-item" data-toggle="modal" data-target="#shelf-modal" onClick={()=> handleTextShelf("all")}>All Shelves</a>
-                            {props.shelves.map((name, index) =>
-                                 <a className="dropdown-item" key={index} data-toggle="modal" data-target="#shelf-modal" onClick= {()=> handleTextShelf(name)}>{name}</a>)}
-                    </div>
+        
                     <div className="modal fade" id="shelf-modal" tabIndex="-1" role="dialog" aria-labelledby="shelf-modal1-label" aria-hidden="true">
                         <div className="modal-dialog" role="document">
                             <div className="modal-content">
@@ -121,24 +126,37 @@ function Homepage(props) {
                                     <form>
                                         <div className="form-group">
                                             <label htmlFor="recipient-name" className="col-form-label">Email:</label>
-                                                <input type="text" className="form-control" name="email" id="recipient-email" />
+                                                <input type="text" onChange={e => setModalEmail(e.target.value)} className="form-control" name="email" id="recipient-email" />
                                         </div>
                                         <div className="form-group">
                                             <label htmlFor="message-text" className="col-form-label">Message:</label>
-                                                <textarea className="form-control" message="message" id="message-text"></textarea>
+                                                <textarea className="form-control" onChange={e => setModalMessage(e.target.value)} message="message" id="message-text"></textarea>
                                         </div>
+                                        <div className="form-group" aria-labelledby="btnGroupDrop1">
+                                            <Dropdown>
+                                                <Dropdown.Toggle variant="success" id="dropdown-basic">
+                                                Shelves or Shelf to Email
+                                                </Dropdown.Toggle>
+                                                <Dropdown.Menu>
+                                                    <Dropdown.Item onClick={e => setTextShelf("all")}>All Shelves</Dropdown.Item>
+                                                        {props.shelves.map((name, index) =>
+                                                    <Dropdown.Item className="dropdown-item" key={index} onClick= {e=> setTextShelf(name)}>{name}</Dropdown.Item>)}
+                                                </Dropdown.Menu>
+                                            </Dropdown>
+                                        </div>
+                                        Shelf selected: {textShelf}
                                     </form>
                                 </div>
                                 <div className="modal-footer">
                                     <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    <button type="submit" className="btn btn-primary" onClick={sendBookEmail}> Send email</button>
+                                    <button type="submit" className="btn btn-primary" onClick={sendBookEmail} data-dismiss="modal" > Send email</button>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             
-                <button type="button" className="btn btn-secondary">Log out</button>
+                <button type="button" onClick={() => handleShowLogout(true)} className="btn btn-secondary">{loginLogoutText}</button>
             </div>
             </div>
             {/* <h1>Welcome to Shelve-It</h1>
@@ -146,6 +164,7 @@ function Homepage(props) {
             <p></p> */}
             <div className="container">
                 <div className="row" id= "display-components">
+                    {showLogout && <Logout loggedIn={props.isLoggedIn} handleLogin={() =>props.handleLogin} />}
                     {showUploadPhoto &&  <UploadAPhoto shelves={props.shelves}reading={props.reading} owned={props.owned}  />}
                     {showAddaBook && <AddaBook reading={props.reading} owned={props.owned} shelves={props.shelves} handleAddaBook={() => handleAddaBook} /> }
                 
@@ -157,7 +176,9 @@ function Homepage(props) {
                                         shelves={props.shelves} shelf={displayShelf}/> }
                     {allShelves && <FilterableBookshelfTable books={props.books} bookTabs={props.bookTabs} 
                                         reading={props.reading} owned={props.owned} 
-                                        shelves={props.shelves}/> }
+                                    shelves={props.shelves}/> }
+
+                  
            
                 </div>
             </div>

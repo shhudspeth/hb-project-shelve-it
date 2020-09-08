@@ -80,7 +80,7 @@ function UploadAPhoto(props){
    const [shelfname, setShelfname] = React.useState("");
    const [booksFile, setBooksFile] = React.useState("");
    const [newBooks, setNewBooks] = React.useState();
-   const [bookDetail, setBookDetail] = React.useState(['loading']);
+   const [bookDetail, setBookDetail] = React.useState(['loading... count to 20... it takes a bit of time']);
 
    console.log("UPLOAD BOOK< SHELVES", props.shelves, props.reading, props.owned)
 
