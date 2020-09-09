@@ -86,7 +86,7 @@ function BookTable(props){
         rows.push(<BookRow book={book} key={idx} />)
 
     });
-    return <table>
+    return <table className="table">
                 <thead>
                     <tr>
                         <th>Book </th>
@@ -99,7 +99,7 @@ function BookTable(props){
                         <th>Edit Options</th>
                     </tr>
                 </thead>
-                <tbody className="bookrows">
+                <tbody className="bookrows table-hover" >
                     {rows}
                 </tbody>
              </table>
@@ -109,6 +109,7 @@ function BookTable(props){
 function BookRow(props){
     const bookData = props.book;
     console.log("BOOKROW")
+    // TODO: ADD EDIT BUTTON FEATURE< TO DELETE BOOK< UPDATE STATUSES, or MOVE TO A NEW SHELF
     
     return (
             <tr>

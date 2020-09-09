@@ -32,7 +32,12 @@ function Homepage(props) {
 
     function handleShowLogout(newValue) {
         setShowLogout(newValue)
+        if (showLogout){
+        setLoginLogoutText("Logout")
+        }
+        else {
         setLoginLogoutText("Login")
+        }
     }
     function handleUploadPhoto(newValue) {
         setShowUploadPhoto(newValue)
@@ -74,7 +79,7 @@ function Homepage(props) {
             )
             .then(response => response.json())
             .then(data => {
-                alert(`Thanks. Just sent you an email! ${data}`)
+                alert(`Thanks, ${data.user}. Just sent you an email! ${data.status}`)
                 } )
             
             
@@ -107,17 +112,28 @@ function Homepage(props) {
                                  <a className="dropdown-item" key={index} onClick={()=> handleDisplayShelfname(name)}>{name}</a>)}
                     </div>
                 </div>
-                
                 <div className="btn-group" role="group">
-                    <button id="btnGroupDrop1" type="button" className="btn btn-secondary " data-toggle='modal' data-target="#shelf-modal" aria-haspopup="true" aria-expanded="false">
+                    <button id="btnGroupDrop1" type="button" className="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Email books from Selected Shelf
                     </button>
+                    <div className="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                        <a className="dropdown-item" href="#">All Shelves</a>
+                        <a className="dropdown-item" data-toggle="modal" data-target="#shelf-modal" onClick= {e=> setTextShelf("all")}>All Shelves</a>
+                            {props.shelves.map((name, index) =>
+            
+                                 <a className="dropdown-item" key={index} data-toggle="modal" data-target="#shelf-modal" onClick= {e=> setTextShelf(name)}>{name}</a>)}
+                    </div>
+                    
+                {/* <div className="btn-group" role="group">
+                    <button id="btnGroupDrop1" type="button" className="btn btn-secondary " data-toggle='modal' data-target="#shelf-modal" aria-haspopup="true" aria-expanded="false">
+                        Email books from Selected Shelf
+                    </button> */}
         
                     <div className="modal fade" id="shelf-modal" tabIndex="-1" role="dialog" aria-labelledby="shelf-modal1-label" aria-hidden="true">
                         <div className="modal-dialog" role="document">
                             <div className="modal-content">
                                 <div className="modal-header">
-                                    <h5 className="modal-title" id="SendEmailModal">Send an Email With the following Books</h5>
+                                    <h5 className="modal-title" id="SendEmailModal">Send an Email with the following Books</h5>
                                         <button type="button" className="close" data-dismiss="modal" aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
                                         </button>
@@ -194,12 +210,11 @@ function App(props) {
     let cookieValue = document.cookie
     console.log("COOKIE", cookieValue);
 
-    
-    const [bookList, setBookList] = React.useState(["loading..."]);
+
     const [shelvesList, setShelvesList] = React.useState([]);
     const [reading_stats, setReadingStats] = React.useState([]);
     const [owned_stats,setOwnedStats] = React.useState([]);
-    const [bookTable, setBookTable] = React.useState([]);
+    const [bookTable, setBookTable] = React.useState(["loading"]);
     // Fetches books from database and displays on site
 
 
@@ -249,14 +264,14 @@ function App(props) {
         
         })
         
-        }, ["loading"]);
+        }, [isLoggedIn]);
         
   
    
     return (
         <Router>
             <div className="navbar-header" >
-                <nav className="nav" id="nav">
+                <nav className="navbar" id="nav">
                     <div className="row">
                      <ul>
                         <li>
@@ -300,7 +315,7 @@ function App(props) {
                     </Route>
 
                     <Route path="/bookshelf">
-                        <FilterableBookshelfTable loggedIn={isLoggedIn} handleLogin={() =>handleLogin} books={bookList} bookTabs={bookTable} reading={reading_stats} owned={owned_stats} shelves={shelvesList} />
+                        <FilterableBookshelfTable loggedIn={isLoggedIn} handleLogin={() =>handleLogin} bookTabs={bookTable} reading={reading_stats} owned={owned_stats} shelves={shelvesList} />
                     </Route> 
                     
                     <Route path="/book-info/:bookId">
@@ -308,7 +323,7 @@ function App(props) {
                     </Route>
         
                     <Route path="/">
-                        <Homepage loggedIn={isLoggedIn} handleLogin={() =>handleLogin} books={bookList} bookTabs={bookTable} reading={reading_stats} owned={owned_stats} shelves={shelvesList} />
+                        <Homepage loggedIn={isLoggedIn} handleLogin={() =>handleLogin}  bookTabs={bookTable} reading={reading_stats} owned={owned_stats} shelves={shelvesList} />
                     </Route>
                  </Switch>
            

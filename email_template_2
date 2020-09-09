@@ -1,0 +1,49 @@
+{
+  "shelfname" : "TestShelfList",
+  "user": "BookWormMary", 
+  "message" : "This is my test email to myself about books", 
+  
+  "libraries": [
+      {"results": {"name":"Petaluma Sonoma County", "formatted_address" : "Sonoma County Fairgrounds", "url": "www.sonomacountylibrary.org","business_status": "OPERATIONAL"}}],
+  
+   "bookstores": [
+       {"results": {"name":"Copperfields", "formatted_address" : "Kentucky Street", "url": "www.copperfields.com","business_status": "OPERATIONAL" }}],
+  
+  "books":[
+  {
+        "title": "Gulliver's Travels",
+        "author": "Jonathan Swift",
+        "publisher": "Boston : Ginn",
+        "year_published": "1886-01-01 00:00:00",
+        "isbn": "UOM:39015078566067",
+        "description": "unknown",
+        "cover_img_source": {
+            "smallThumbnail": "http://books.google.com/books/content?id=vorRAAAAMAAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api",
+            "thumbnail": "http://books.google.com/books/content?id=vorRAAAAMAAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api"
+        }
+    },
+    {
+        "title": "Absalom, Absalom!",
+        "author": "William Faulkner",
+        "publisher": "Vintage",
+        "year_published": "2011-05-18 00:00:00",
+        "isbn": "0679641432",
+        "description": "\u201cRead, read, read. Read everything\u2014trash, classics, good and bad, and see how they do it. Just like a carpenter who works as an apprentice and studies the master. Read! You\u2019ll absorb it. Then write. If it is good, you\u2019ll find out. If it\u2019s not, throw it out the window.\u201d \u2014William Faulkner Absalom, Absalom! is Faulkner\u2019s epic tale of Thomas Sutpen, an enigmatic stranger who comes to Jefferson, Mississippi, in the early 1830s to wrest his mansion out of the muddy bottoms of the north Mississippi wilderness. He was a man, Faulkner said, \u201cwho wanted sons and the sons destroyed him.\u201d",
+        "cover_img_source": {
+            "smallThumbnail": "http://books.google.com/books/content?id=bSW6uk_CzXUC&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api",
+            "thumbnail": "http://books.google.com/books/content?id=bSW6uk_CzXUC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api"
+        }
+    },
+    {
+        "title": "Beloved",
+        "author": "Toni Morrison",
+        "publisher": "Vintage",
+        "year_published": "2007-07-24 00:00:00",
+        "isbn": "9780307388629",
+        "description": "New York Times Bestseller Staring unflinchingly into the abyss of slavery, this spellbinding novel transforms history into a story as powerful as Exodus and as intimate as a lullaby. Sethe, its protagonist, was born a slave and escaped to Ohio, but eighteen years later she is still not free. She has too many memories of Sweet Home, the beautiful farm where so many hideous things happened. And Sethe\u2019s new home is haunted by the ghost of her baby, who died nameless and whose tombstone is engraved with a single word: Beloved. Filled with bitter poetry and suspense as taut as a rope, Beloved is a towering achievement. \"You can't go wrong by reading or re-reading the collected works of Toni Morrison. Beloved, Song of Solomon, The Bluest Eye, Sula, everything else \u2014 they're transcendent, all of them. You\u2019ll be glad you read them.\"--Barack Obama",
+        "cover_img_source": {
+            "smallThumbnail": "http://books.google.com/books/content?id=sfmp6gjZGP8C&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api",
+            "thumbnail": "http://books.google.com/books/content?id=sfmp6gjZGP8C&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api"
+        }
+    }]
+}

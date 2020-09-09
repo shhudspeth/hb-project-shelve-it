@@ -209,10 +209,10 @@ function Logout(props) {
         
         
         //   setIsRegistered(true)
-        
+      history.push('/')
       }
       event.preventDefault();
-      history.push('/')
+     
       console.log("LOGGEDOUT", props.isLoggedIn)
     // a form 
     return (
@@ -236,8 +236,6 @@ function Logout(props) {
      
   
     const handleSubmit = (event) => {
-
-
       const login_user = 
         {"email": email, "password": password }
   
@@ -254,7 +252,9 @@ function Logout(props) {
           alert(`${data.status}`);
           if (data.status.startsWith('ok')) {
             props.handleLogin(true);
+            console.log("WHAT IS THIS PROPS", props.loggedIn)
           }
+          
           else {
               history.push('/')
           }
@@ -263,11 +263,10 @@ function Logout(props) {
       )
     
       
-      
       console.log("LOGIN USER", login_user);
       event.preventDefault();
       history.push('/')
-
+      console.log(props.loggedIn)
       }
       
     // a form 

@@ -18,12 +18,12 @@ function BookDetailItem(props) {
 
     console.log("WHERE ARE THE COMMENTS", props.comments);
         for (const comment of props.comments){
-            console.log(comment.text, comment.user, "HERE ARE TE COMMENT TEXT");
+            console.log(comment.text, comment.user, "HERE ARE THE COMMENT TEXTS");
         }
 
-        const handleSubmit = (event) => {
+    const handleSubmit = (event) => {
 
-            const addComment = {"comment_text": comment, "book_id": props.book_id }
+        const addComment = {"comment_text": comment, "book_id": props.book_id }
     
         fetch(`/api/book_info/${props.book_id}`, {
           method: 'POST', 
@@ -49,33 +49,50 @@ function BookDetailItem(props) {
             
           
         }
-        history.push(`/book-info/${props.book_id}`)
+
+    history.push(`/book-info/${props.book_id}`)
 
 
     return <React.Fragment>
 
-            <table>
-                <thead>
-                    <tr>
-                        <th>Book</th>
-                        <th>Title</th>
-                        <th>Author</th>
-                        <th>Publisher</th>
-                    </tr>
-                </thead>
-                <tbody>
-        
-                    <tr>
-                        <td> <img src={props.image}></img></td>
-                        <td>{props.title}</td>
-                        <td>{props.author}</td>
-                        <td>{props.publisher}</td>
-                    </tr>
-                    <tr><td>{props.description}</td></tr>
-                    </tbody>
-            </table>
+            <div className="container">
+                <div className="row">
+                    <div className="col-5">Book Cover</div>
+                    
+
+                    <div className="col-6">  
+                        <div className = "row">
+                            <div className="col">Title</div>
+                            <div className="col">Author</div>
+                            <div className="col">Publisher</div>
+                        </div>
+                    </div>
+
+                    <div className="row"> 
+                        <div className="col-5"></div>
+                            <img src={props.image}></img>
+                        </div> 
+                   
+                        <div className="col-6 offset-3">
+                            <div className="row">
+                                <div className="col">{props.title}</div>
+                                <div className="col">{props.author}</div>
+                                <div className="col">{props.publisher}</div>
+                            </div>
+                            <div className="row" id="book-description">
+                                <div className="col">{props.description}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                       
+                    
+                   
+            
+           
+                    
+                    <div className='container' id="comments-list">
                     <b>COMMENTS</b>
-                    <div className='container'>
                         <div className='row' id="comments-header">
                             <div className='col'>User </div> 
                             <div className='col'>Post Date</div> 
@@ -98,8 +115,9 @@ function BookDetailItem(props) {
                         <div className='row' id="add_comment">
                             <form id="bookcomment">
                             <div className='col'> <label htmlFor='comment'>Comment Here!</label></div>
-                            <textarea name="comment" onChange={e => setComment(e.target.value)} form="bookcomment"> </textarea>
-                            <button onClick={handleSubmit}> Submit Comment</button>
+                            <div className="col">
+                            <textarea name="comment" onChange={e => setComment(e.target.value)} form="bookcomment"> </textarea></div>
+                            <div className="col"><button onClick={handleSubmit}> Submit Comment</button></div>
                             </form>
                         </div>
                     </div>
@@ -108,8 +126,8 @@ function BookDetailItem(props) {
                    
                     <div className='container'>
                         <div  className='row'>
-                            <div className='col'><button>Edit Book</button></div>
-                            <div className='col'> <Link to={`/bookshelf`}>Go to BookShelf</Link></div>
+                            <div className='col offset-8'><button>Edit Book</button></div>
+                            <div className='col'> <button><Link to={`/bookshelf`}>Go to BookShelf</Link></button> </div>
                         </div>
                     </div>
               
@@ -207,7 +225,7 @@ function AddaBook(props) {
                         <form className='form-add-book' onSubmit={addNewBooktoShelf}>
                             <h4>Add a Book via Title and Author</h4>
                             <div className="dropdown">
-                                <label htmlFor="shelf-menu" className="dropbtn">Please choose a Bookshelf</label>
+                                <label htmlFor="shelf-menu" className="dropbtn">Please choose a Bookshelf </label>
                                     <select name="shelfname" onChange={e => setShelfname(e.target.value)} className="dropdown-content">
                                             {props.shelves.map((name, index) =>
                                             <option key={index} value={name} onChange={e => setShelfname(e.target.value)}>{name}</option>)}
@@ -220,11 +238,11 @@ function AddaBook(props) {
                                   <input type="text" name="shelfname" onChange={e => setShelfname(e.target.value)} />
                             </div>
                             <div>
-                                <label htmlFor="entertitle">Enter a Book Title </label>
+                                <label htmlFor="entertitle">Enter a Book Title: </label>
                                 <input type="text" name="enteredTitle" onChange={e => setEnteredBook(e.target.value)} /> 
                             </div>
                              <div>
-                                <label htmlFor="enterauthor">Please enter Author name</label>
+                                <label htmlFor="enterauthor">Please enter Author name </label>
                                 <input type="text"  name="enteredAuthor" onChange={e => setEnteredAuthor(e.target.value)} /> <br />
                             </div>
                             <   button type="submit"> Click here to add a Book to your shelf</button>

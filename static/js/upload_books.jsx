@@ -103,19 +103,19 @@ function UploadAPhoto(props){
      )
      .then(response => response.json())
      .then(data => {
-    
+        const bookUpload =[];
         for (const post of data) {
             console.log("CHECKING SHELFNAME", shelfname)
-            bookDetail.push(<AddUploadBookDetailItem  key = {post.book_id} book_id={post.book_id} 
+            bookUpload.push(<AddUploadBookDetailItem  key = {post.book_id} book_id={post.book_id} 
                                                 title={post.title} author={post.author}
                                                 publisher={post.publisher} image = {post.img} 
                                                 description={post.description} shelfname={shelfname} 
                                                 reading={props.reading} owned={props.owned} /> )}
 
         
-        console.log("PRINTING FROM FETCH PUSH", bookDetail)
+        console.log("PRINTING FROM FETCH PUSH", bookUpload)
         // setBookonShelf(true)
-        setBookDetail(bookDetail);
+        setBookDetail(bookUpload);
         setNewBooks(true)
        })
        
@@ -134,7 +134,7 @@ function UploadAPhoto(props){
                     <h4>Add a Book via Photo Upload</h4>
                         <form id="upload" className='form-upload' onSubmit={uploadBookPhoto}> 
                             <div className="dropdown">
-                                <label htmlFor="shelf-menu" className="dropbtn">Please choose a Bookshelf</label>
+                                <label htmlFor="shelf-menu" className="dropbtn">Please choose a Bookshelf: </label>
                                     <select name="shelf-menu" onChange={e => handleChange(e.target.value)} className="dropdown-content">
                                         {props.shelves.map((name, index) =>
                                         <option key={index} value={name} >{name}</option>)}
@@ -142,9 +142,9 @@ function UploadAPhoto(props){
                             </div>
                             {/* <ShelvesListMenu key={2} shelves={props.shelves} handleUploadShelf={() =>props.handleUploadShelf} /> */}
                             <div>
-                                <label htmlFor="shelfname">Or add to a new shelf: </label>
+                                <label htmlFor="shelfname">Or add to a new shelf:  </label>
                                     <input type="text" name="shelfname" onChange={e => setShelfname(e.target.value)} /> <br />
-                                <label htmlFor="fileElem">Select an image of a stack of books</label>
+                                <label htmlFor="fileElem">Select an image of a stack of books:</label>
                                     <input type="file" id="bookstack" name="booksFile" onChange={e => setBooksFile(e.target.value)} accept="image/png, image/jpeg" encType="multipart/form-data" /> <br />
                                 
                             </div>

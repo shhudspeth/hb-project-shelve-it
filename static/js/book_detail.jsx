@@ -36,10 +36,12 @@ function DisplayShelf(props){
             setBooksonShelfTable(shelfTable);
             console.log('ADD BOOKS FROM A SPECIFIC SHELF', booksonShelfTable);
         
-        })
-        
+        }) 
+
+        history.push(`/${props.shelf}`)
         }, [props.shelf]);
-        history.push(`/`)
+
+    
         
         return(<FilterableBookshelfTable  bookTabs={booksonShelfTable} shelf={props.shelf}
             reading={props.reading} owned={props.owned} 
@@ -54,7 +56,7 @@ function BookDetailItem(props) {
         
     return <React.Fragment>
 
-            <table>
+            <table className="table table-bordered table-hover">
                 <thead>
                     <tr>
                         <th>Book</th>
