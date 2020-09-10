@@ -3,10 +3,9 @@ import json
 from random import choice, randint
 from datetime import datetime
 
-import importlib
-crud  = importlib.load_module('../crud.py')
-model = importlib.load_module('../model.py')
-server = importlib.load_module('../server.py')
+import crud
+import model
+import server
 # import crud
 # import model
 # import server

@@ -41,11 +41,13 @@ function BookDetailItem(props) {
             setCommentList(new_comments)
             alert(`New comment added !`)
             
+            
           
         })
         
           event.preventDefault();
           event.target.reset();
+         
             
           
         }
@@ -55,25 +57,25 @@ function BookDetailItem(props) {
 
     return <React.Fragment>
 
-            <div className="container">
+            <div className="container" >
                 <div className="row">
-                    <div className="col-5">Book Cover</div>
+                    <div className="col-5"><b>Book Cover</b></div>
                     
 
                     <div className="col-6">  
                         <div className = "row">
-                            <div className="col">Title</div>
-                            <div className="col">Author</div>
-                            <div className="col">Publisher</div>
+                            <div className="col"><b>Title</b></div>
+                            <div className="col"><b>Author</b></div>
+                            <div className="col"><b>Publisher</b></div>
                         </div>
                     </div>
-
-                    <div className="row"> 
-                        <div className="col-5"></div>
+                </div>
+                <div className="row"> 
+                        <div className="col-5 cover-bookdetail">
                             <img src={props.image}></img>
                         </div> 
-                   
-                        <div className="col-6 offset-3">
+                        
+                        <div className="col-6">
                             <div className="row">
                                 <div className="col">{props.title}</div>
                                 <div className="col">{props.author}</div>
@@ -83,8 +85,9 @@ function BookDetailItem(props) {
                                 <div className="col">{props.description}</div>
                             </div>
                         </div>
-                    </div>
                 </div>
+                </div>
+               
                        
                     
                    
@@ -113,21 +116,21 @@ function BookDetailItem(props) {
                             )}    
 
                         <div className='row' id="add_comment">
-                            <form id="bookcomment">
+                           
                             <div className='col'> <label htmlFor='comment'>Comment Here!</label></div>
                             <div className="col">
                             <textarea name="comment" onChange={e => setComment(e.target.value)} form="bookcomment"> </textarea></div>
-                            <div className="col"><button onClick={handleSubmit}> Submit Comment</button></div>
-                            </form>
+                            <div className="col"><button className="btn btn-secondary" onClick={handleSubmit}> Submit Comment</button></div>
+                            
                         </div>
                     </div>
 
 
                    
-                    <div className='container'>
-                        <div  className='row'>
-                            <div className='col offset-8'><button>Edit Book</button></div>
-                            <div className='col'> <button><Link to={`/bookshelf`}>Go to BookShelf</Link></button> </div>
+                    <div className='container'id="book-comment-detail" >
+                        <div  className='row' >
+                            <div className='col offset-8'><button className="btn btn-secondary">Edit Book</button></div>
+                            <div className='col'> <button  className="btn btn-outline-info"><Link to={`/bookshelf`}>Go to BookShelf</Link></button> </div>
                         </div>
                     </div>
               
@@ -245,7 +248,7 @@ function AddaBook(props) {
                                 <label htmlFor="enterauthor">Please enter Author name </label>
                                 <input type="text"  name="enteredAuthor" onChange={e => setEnteredAuthor(e.target.value)} /> <br />
                             </div>
-                            <   button type="submit"> Click here to add a Book to your shelf</button>
+                            <   button className="btn btn-info"type="submit"> Click here to add a Book to your shelf</button>
                         </form>
                     </div>
             
@@ -287,8 +290,9 @@ function AddBookDetailItem(props) {
         .then(response => response.json())
         .then(data => {
          
-            alert(`${data.shelved_book} added to Shelf ${props.shelfname}`)
-            
+            alert(`${data.shelved_book} added to Shelf ${props.shelfname}`);
+            history.push('/');
+            setResetBookDetail(true);
           
         })
         console.log("UPDATING reading status", statuses_update)   
@@ -318,7 +322,7 @@ function AddBookDetailItem(props) {
                           </select> </td>
                   {/*  <td><ReadingStatusMenu reading={reading_st} select_status ={true} handleReading={() => handleReading} /></td>
                     <td><BookStatusMenu owned={props.owned} select_status ={true} handleOwned={() => handleOwned} /></td> */}
-                    <td><button onClick={changeStatus}>Update Book Statuses</button></td>
+                    <td><button className="btn btn-outline-info" onClick={changeStatus}>Update Book Statuses</button></td>
                     
                 </tr>
             </React.Fragment> )

@@ -162,12 +162,16 @@ def update_book_statuses():
         else:
             shelved_book = utility.update_reading_status(session['user'], status_dict['book_id'])
 
+        if 'shelf' and 'change_shelf' in status_dict:
+            if status_dict['change_shelf']:
+                current_user = crud.get_user_by_username(session['user'])
+                shelved_book = crud.update_shelf_for_shelvedbook(current_user.user_id, status_dict['book_id'], status_dict['shelf'])
        
         # update book owned status
         if 'owned_status' in status_dict:
             shelved_book = utility.update_owned_status(session['user'], status_dict['book_id'], status_dict['owned_status'])  
         else:
-            shelved_book = utility.update_reading_status(session['user'], status_dict['book_id'])
+            shelved_book = utility.update_owned_status(session['user'], status_dict['book_id'])
         
         print("IS IT SAVING TE RIGHT STATUS", shelved_book, shelved_book.reading_status, shelved_book.owned_status )
         return(jsonify({"shelved_book": shelved_book.book.title }))
@@ -262,9 +266,9 @@ def display_bookshelf():
         return(jsonify({"status": "please login first"}))
     
     # print(f"\n\n\n {current_user} \n {user_shelves} \n {reading_stats} \n {owned_stats}")
-    
+    print("PRINTING SHELVES",user_shelves)
     serial_shelves = []
-    for shelf in user_shelves:
+    for shelf in list(set(user_shelves)):
         serial_shelves.append({'shelf_id': shelf.shelf_id, 'name': shelf.nickname}) 
     
     serialized_reading_statuses = []

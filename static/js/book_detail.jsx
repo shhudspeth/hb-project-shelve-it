@@ -75,7 +75,7 @@ function BookDetailItem(props) {
                         <td>{props.publisher}</td>
                         <td>{props.description}</td>
                 
-                        <td><button>Edit Book</button></td>
+                        <td><button class="btn btn-outline-info">Edit Book</button></td>
                         <td><Link to={`/bookshelf`}> Go to BookShelf </Link></td>
                     </tr>
                 </tbody>

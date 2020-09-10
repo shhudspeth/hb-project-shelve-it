@@ -140,6 +140,11 @@ def return_user_bookshelf_by_name(user_id, nickname):
     shelf = db.session.query(Bookshelf).filter(Bookshelf.user_id==user_id, Bookshelf.nickname==nickname).first()
     return shelf
 
+def return_id_bookshelf_by_name(user_id, nickname):
+    """ Return a shelf object by user_id and nickname"""
+    shelf = db.session.query(Bookshelf).filter(Bookshelf.user_id==user_id, Bookshelf.nickname==nickname).first()
+    return shelf.shelf_id
+
 def return_all_shelves_by_user(user_id):
     # TODO: make into a drop menu
     """ Return a list of all books on a user shelf by user id"""
@@ -190,6 +195,22 @@ def get_shelvedbook(user_id, book_id):
     shelved_book = db.session.query(ShelvedBook).filter(ShelvedBook.book_id == book_id, ShelvedBook.user.contains(user_sb)).first()
 
     return shelved_book
+
+def update_shelf_for_shelvedbook(user_id, book_id, shelf_name):
+    shelves = [shelf.nickname for shelf in return_all_shelves_by_user(user_id)]
+    if shelf_name not in shelves:
+        shelf = create_user_bookshelf(user_id, shelf_name)
+        id_shelf = shelf.shelf_id
+    else:
+        id_shelf = return_id_bookshelf_by_name(user_id, shelf_name)
+
+    shelved_book = get_shelvedbook(user_id=user_id, book_id=book_id)
+    shelved_book.shelf_id = id_shelf
+
+    db.session.commit()
+
+    return shelved_book
+
 
 def get_reading_status_id(status_text):
     return db.session.query(ReadingStatus).filter(ReadingStatus.reading_status_name==status_text).first().reading_status_id

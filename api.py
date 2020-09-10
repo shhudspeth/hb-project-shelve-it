@@ -197,8 +197,10 @@ def parse_response_data_for_info(book_data):
         description= 'unknown'
    
     year_published = book_data['response']['items'][0]['volumeInfo']['publishedDate']
-    cover_img_source = book_data['response']['items'][0]['volumeInfo']['imageLinks']['thumbnail']
-
+    if "imageLinks" in book_data['response']['items'][0]['volumeInfo']:
+        cover_img_source = book_data['response']['items'][0]['volumeInfo']['imageLinks']['thumbnail']
+    else:
+        cover_img_source ="unknown"
     if len(book_data['response']['items'][0]['volumeInfo']['industryIdentifiers']) > 1:
         isbn = book_data['response']['items'][0]['volumeInfo']['industryIdentifiers'][1]['identifier']
     else:

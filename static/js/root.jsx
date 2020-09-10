@@ -79,7 +79,7 @@ function Homepage(props) {
             )
             .then(response => response.json())
             .then(data => {
-                alert(`Thanks, ${data.user}. Just sent you an email! ${data.status}`)
+                alert(`Thanks, ${data.user}. Just sent you an email. ${data.status}`)
                 } )
             
             
@@ -114,7 +114,7 @@ function Homepage(props) {
                 </div>
                 <div className="btn-group" role="group">
                     <button id="btnGroupDrop1" type="button" className="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Email books from Selected Shelf
+                        Email Books from Selected Shelf
                     </button>
                     <div className="dropdown-menu" aria-labelledby="btnGroupDrop1">
                         <a className="dropdown-item" href="#">All Shelves</a>
@@ -148,24 +148,12 @@ function Homepage(props) {
                                             <label htmlFor="message-text" className="col-form-label">Message:</label>
                                                 <textarea className="form-control" onChange={e => setModalMessage(e.target.value)} message="message" id="message-text"></textarea>
                                         </div>
-                                        <div className="form-group" aria-labelledby="btnGroupDrop1">
-                                            <Dropdown>
-                                                <Dropdown.Toggle variant="success" id="dropdown-basic">
-                                                Shelves or Shelf to Email
-                                                </Dropdown.Toggle>
-                                                <Dropdown.Menu>
-                                                    <Dropdown.Item onClick={e => setTextShelf("all")}>All Shelves</Dropdown.Item>
-                                                        {props.shelves.map((name, index) =>
-                                                    <Dropdown.Item className="dropdown-item" key={index} onClick= {e=> setTextShelf(name)}>{name}</Dropdown.Item>)}
-                                                </Dropdown.Menu>
-                                            </Dropdown>
-                                        </div>
-                                        Shelf selected: {textShelf}
+                                        Shelf selected to send: {textShelf}
                                     </form>
                                 </div>
                                 <div className="modal-footer">
-                                    <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    <button type="submit" className="btn btn-primary" onClick={sendBookEmail} data-dismiss="modal" > Send email</button>
+                                    <button type="button" className="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                    <button type="submit" className="btn btn-info" onClick={sendBookEmail} data-dismiss="modal" > Send email</button>
                                 </div>
                             </div>
                         </div>
@@ -178,7 +166,7 @@ function Homepage(props) {
             {/* <h1>Welcome to Shelve-It</h1>
             <h3> a place to keep track of your reading needs </h3>
             <p></p> */}
-            <div className="container">
+            <div className="container" id="below-logo">
                 <div className="row" id= "display-components">
                     {showLogout && <Logout loggedIn={props.isLoggedIn} handleLogin={() =>props.handleLogin} />}
                     {showUploadPhoto &&  <UploadAPhoto shelves={props.shelves}reading={props.reading} owned={props.owned}  />}
@@ -211,7 +199,7 @@ function App(props) {
     console.log("COOKIE", cookieValue);
 
 
-    const [shelvesList, setShelvesList] = React.useState([]);
+    const [shelvesList, setShelvesList] = React.useState(['no shelves']);
     const [reading_stats, setReadingStats] = React.useState([]);
     const [owned_stats,setOwnedStats] = React.useState([]);
     const [bookTable, setBookTable] = React.useState(["loading"]);
@@ -235,32 +223,35 @@ function App(props) {
             }
             
             // going to be a prop... not need to update
+            const r_s =[];
             for (const stat of data.reading_st_list) {
-                reading_stats.push(stat.reading_status)   
+                r_s.push(stat.reading_status)   
             };
-            setReadingStats(reading_stats)
+            setReadingStats(r_s)
 
              // going to be a prop... not need to update
+             const o_s =[];
             for (const stat of data.owned_st_list) {
-                owned_stats.push(stat.owned_status)   
+                o_s.push(stat.owned_status)   
             };
-            setOwnedStats(owned_stats)
+            setOwnedStats(o_s)
 
              // going to be a State should be able to update
-            const shelvesList = [];
+            const newshelvesList = [];
             for (const shelf of data.shelves) {
-                shelvesList.push(shelf.name)
+                newshelvesList.push(shelf.name)
             };
-            setShelvesList(shelvesList)
+            setShelvesList(newshelvesList)
+            console.log("WHAT SHELVES ARE BEING SENT", shelvesList)
             
             //get book data
-            const bookTable= [];
+            const newbookTable= [];
             for (const post of data.books) {
             
-                bookTable.push(post)
+                newbookTable.push(post)
                 };
         
-            setBookTable(bookTable);
+            setBookTable(newbookTable);
         
         })
         
@@ -271,7 +262,7 @@ function App(props) {
     return (
         <Router>
             <div className="navbar-header" >
-                <nav className="navbar" id="nav">
+                <nav className="navbar-light bg-light" id="nav">
                     <div className="row">
                      <ul>
                         <li>
@@ -284,9 +275,7 @@ function App(props) {
                         <li>
                             {!isLoggedIn && <Link to="/login" > Login </Link> }
                         </li>
-                        <li>
-                            {isLoggedIn && <Link to="/logout"> Logout </Link> }
-                        </li>
+                        
                     </ul>
                     </div> 
                 </nav>

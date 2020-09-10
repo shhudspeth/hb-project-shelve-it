@@ -6,14 +6,17 @@
 div.navbar-header {
     
     /* float: left; */
-    background-image: url("../images/wood_1.png");
+    
     border-radius: 1em;
-    color: white;
+    color: gray;
     margin-top: 7px;
     margin-right: 7px;
     
     text-align: center;
     
+}
+#container book-shelf{
+  background-color:lightgray;
 }
 
 div.navbar-header a:visited {
@@ -29,6 +32,9 @@ div.logo-header img{
 
 #display-components {
     margin-top: 7px;
+    
+    
+    
     
     
 }
@@ -63,7 +69,7 @@ a:active {
 
 
 .btn-group 
-{ background-color: url("../images/wood_1.png");
+{ 
   width:100%;
   height:120%:
   text-align: center;
@@ -73,7 +79,7 @@ a:active {
 }
 .btn-group .btn
 {
-  background-image: url("../images/wood_1.png");
+  
   width:40%;
  
 }
@@ -85,10 +91,24 @@ a:active {
   
 }
 
-.container{
+.container {
   width:100%;
-  margin: 0 auto;
-  
+}
+.cover-bookdetail {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden
+}
+.cover-bookdetail img {
+  flex-shrink: 0;
+  min-width: 100%;
+  min-height: 100%
+}
+
+
+#book-comment-detail {
+  align-content: center;
 }
 
 table{
@@ -118,22 +138,34 @@ table{
 
 thead{
   color:black;
-  background-image: url("../images/paper.png");
+  
+  
 }
 
 th,td{
   text-align:center;
   padding:5px 0;
+
 }
 
+
 tbody tr:nth-child(even){
-  background-image: url("../images/paper.png");
+  color:black;
+  background-url:url("../images/paper.png");
+  
 }
 
 tbody tr:hover{
 background:#BDC3C7;
   color:#FFFFFF;
-  background-image: url("../images/wood_1.png");
+  background-image: url("../images/retina_wood.png");
+
+  
+}
+
+button {
+  border-radius: 1em;
+
 }
 
 .fixed{

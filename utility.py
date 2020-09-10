@@ -47,7 +47,7 @@ def make_dict_books_a_shelf(user, shelf):
 def update_reading_status(user, book_id, reading_status=None):
 
     if not reading_status:
-        reading_status = crud.get_reading_status(1).reading_status_name
+        reading_status = crud.get_reading_status(1)
     current_user = crud.get_user_by_username(user)
     shelved_book = crud.update_shelvedbook_reading_st(current_user.user_id, \
                             book_id, reading_status)
@@ -58,7 +58,7 @@ def update_reading_status(user, book_id, reading_status=None):
 def update_owned_status(user, book_id, owned_status=None):
 
     if not owned_status:
-        owned_status = crud.get_owned_status(1).owned_text
+        owned_status = crud.get_owned_status(1)
     current_user = crud.get_user_by_username(user)
     shelved_book = crud.update_shelvedbook_owned_st(current_user.user_id, \
                             book_id, owned_status)

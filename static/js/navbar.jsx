@@ -38,7 +38,7 @@ function Register(props) {
     const [phoneNumber, setPhoneNumber] = React.useState();
     const [zipcode, setZipcode] = React.useState();
   
-  
+    console.log("IN REGISTER")
     const handleSubmit = (event) => {
   
       const register_user = 
@@ -58,13 +58,14 @@ function Register(props) {
        
           alert(`${data.message}`);
           props.handleLogin(true);
-          
+          history.push(`/`)
         
       })
       console.log(register_user)   
         event.preventDefault();
+       history.push(`/`)
       }
-      history.push(`/`)
+      history.push(`/register`)
     return (
       <form className="form-register" onSubmit={handleSubmit}>
   
@@ -179,7 +180,7 @@ function Register(props) {
   
           </div>
           <p></p>
-          <button className="btn btn-lg btn-primary btn-block">Register
+          <button className="btn btn-lg btn-info btn-block">Register
           </button>
       </form>
     )
@@ -212,6 +213,7 @@ function Logout(props) {
       history.push('/')
       }
       event.preventDefault();
+      history.push('/')
      
       console.log("LOGGEDOUT", props.isLoggedIn)
     // a form 
@@ -221,7 +223,7 @@ function Logout(props) {
   
                 <h2 className="form-signout-heading">Logout</h2>
   
-                <button>Log out</button>
+                <button className="btn btn-outline-secondary">Log out</button>
   
                 </form>
         
@@ -253,6 +255,7 @@ function Logout(props) {
           if (data.status.startsWith('ok')) {
             props.handleLogin(true);
             console.log("WHAT IS THIS PROPS", props.loggedIn)
+            history.push('/')
           }
           
           else {
@@ -296,7 +299,7 @@ function Logout(props) {
                   required />
           </div>
   
-          <button className="btn btn-lg btn-primary btn-block">Sign In
+          <button className="btn btn-lg btn-info btn-block">Sign In
           </button>
   
         </form>
