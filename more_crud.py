@@ -32,14 +32,14 @@ def library_urls(lat, long):
     for result in r2.json()['results']:
         place_ids.append(result['place_id'])
 
-    websites_libs = {}
+    websites_libs = []
     for place_id in place_ids:
         
         find_urls = "https://maps.googleapis.com/maps/api/place/details/json?place_id="+place_id+"&fields=name,business_status,url,formatted_address&key="+key
         print(find_urls)
         result = requests.get(find_urls)
        
-        websites_libs[place_id] = result.json()
+        websites_libs.append({"result": result.json()['result']})
 
     return websites_libs
 
@@ -52,14 +52,14 @@ def bookstore_urls(lat, long):
     for result in r2.json()['results']:
         place_ids.append(result['place_id'])
 
-    websites_libs = {}
+    websites_libs = []
     for place_id in place_ids:
         
         find_urls = "https://maps.googleapis.com/maps/api/place/details/json?place_id="+place_id+"&fields=name,business_status,url,formatted_address&key="+key
         print(find_urls)
         result = requests.get(find_urls)
        
-        websites_libs[place_id] = result.json()
+        websites_libs.append({"result": result.json()['result']})
 
     return websites_libs
 

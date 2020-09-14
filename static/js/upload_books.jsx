@@ -1,3 +1,5 @@
+
+
 const Router = ReactRouterDOM.BrowserRouter;
 const Route =  ReactRouterDOM.Route;
 const Link =  ReactRouterDOM.Link;
@@ -6,6 +8,9 @@ const Switch = ReactRouterDOM.Switch;
 const Redirect = ReactRouterDOM.Redirect;
 const useHistory = ReactRouterDOM.useHistory;
 const useParams = ReactRouterDOM.useParams;
+const { FormControl } = ReactBootstrap;
+const { Form } = ReactBootstrap;
+const { ProgressBar } = ReactBootstrap;
 
 // ------------- show the book detail to set reading status FOR THE MODAL FORM ----------- //
 
@@ -17,14 +22,22 @@ function AddUploadBookDetailItem(props) {
     const [readingStatus, setReadingStatus] = React.useState();
     const [ownedStatus, setOwnedStatus] = React.useState();
     const[resetBookDetail, setResetBookDetail]= React.useState(false);
-
-    console.log("IN ADDBOOKDETAILITEM MODAL", reading_st, props.shelfname,  props.owned)
-
-      const changeStatus = (event) => {
+    const [confirmTitle, setConfirmTitle] =React.useState(props.title);
+    const [confirmAuthor, setConfirmAuthor] =React.useState(props.author);
+    const [nowProgress2, setnowProgress2] = React.useState(70);
+    const [showProgress, setShowProgress] = React.useState(true);
+    console.log("IN ADDBOOKDETAILITEM MODAL", reading_st, props.shelfname,  props.owned, confirmTitle, confirmAuthor)
+    
+    
+    
+    
+    const changeStatus = (event) => {
         setResetBookDetail(false)
         const statuses_update = 
-          {"reading_status": readingStatus, "owned_status": ownedStatus, "shelf": props.shelfname, "book_id": props.book_id }
-    
+          {"reading_status": readingStatus, "owned_status": ownedStatus, "shelf": props.shelfname, 
+          "book_id": props.book_id, "author": confirmAuthor, "title": confirmTitle}
+        console.log(statuses_update, "IS TIS WORKING UPLOAD FORM UPDATE")
+        
         fetch('/update_status', {
           method: 'POST', 
           body: JSON.stringify(statuses_update),
@@ -34,24 +47,37 @@ function AddUploadBookDetailItem(props) {
         })
         .then(response => response.json())
         .then(data => {
-         
-            alert(`${data.shelved_book} added to Shelf ${props.shelfname}`)
+            setShowProgress(false);
+            alert(`${data.shelved_book} added to Shelf ${props.shelfname}`);
             
           
         })
         console.log("UPDATING reading status", statuses_update)   
           event.preventDefault();
+          
           console.log("sent to server??", statuses_update)
           setResetBookDetail(true)
+          
         }
         history.push('/')
 
     return ( !resetBookDetail &&
          <React.Fragment>
-                <tr>
-                    <td>{props.title}</td>
-                    <td>{props.author}</td>
-                    <td>{props.publisher}</td>
+                    {/* {showProgress && <tr><td><ProgressBar striped variant="info" now={90} /></tr>}</td>*/}
+                    <tr>
+                    <td>
+                    <form >
+                    <label htmlFor="title" >Confirm Title</label>
+                        <input type="text"  onChange={(e)=> setConfirmTitle(e.target.value)} placeholder={props.title}/>
+                    </form>
+                    </td>
+                    <td>
+                    <form >
+                    <label htmlFor="author" >Confirm Author</label>
+                        <input  type="text" onChange={(e)=> setConfirmAuthor(e.target.value)} placeholder={props.author}/>
+                    </form>
+                    </td>
+                   
                     <td>{props.shelf}</td>
                     <td><label htmlFor="reading-menu" className="dropbtn">Reading Status</label>
                           <select name="reading-menu" onChange={e => setReadingStatus(e.target.value)} className="dropdown-content">
@@ -65,7 +91,7 @@ function AddUploadBookDetailItem(props) {
                           </select> </td>
                   {/*  <td><ReadingStatusMenu reading={reading_st} select_status ={true} handleReading={() => handleReading} /></td>
                     <td><BookStatusMenu owned={props.owned} select_status ={true} handleOwned={() => handleOwned} /></td> */}
-                    <td><button onClick={changeStatus}>Add Book</button></td>
+                    <td><button className="btn btn-outline-info" onClick={changeStatus}>Add Book</button></td>
                     
                 </tr>
             </React.Fragment> )
@@ -81,7 +107,7 @@ function UploadAPhoto(props){
    const [booksFile, setBooksFile] = React.useState("");
    const [newBooks, setNewBooks] = React.useState();
    const [bookDetail, setBookDetail] = React.useState(['loading... count to 20... it takes a bit of time']);
-
+   const [nowProgress, setnowProgress] = React.useState(60)
    console.log("UPLOAD BOOK< SHELVES", props.shelves, props.reading, props.owned)
 
    function handleChange(newValue) {
@@ -103,29 +129,30 @@ function UploadAPhoto(props){
      )
      .then(response => response.json())
      .then(data => {
-    
+        const bookUpload =[];
         for (const post of data) {
             console.log("CHECKING SHELFNAME", shelfname)
-            bookDetail.push(<AddUploadBookDetailItem  key = {post.book_id} book_id={post.book_id} 
+            bookUpload.push(<AddUploadBookDetailItem  key = {post.book_id} book_id={post.book_id} 
                                                 title={post.title} author={post.author}
                                                 publisher={post.publisher} image = {post.img} 
                                                 description={post.description} shelfname={shelfname} 
                                                 reading={props.reading} owned={props.owned} /> )}
 
         
-        console.log("PRINTING FROM FETCH PUSH", bookDetail)
+        console.log("PRINTING FROM FETCH PUSH", bookUpload)
         // setBookonShelf(true)
-        setBookDetail(bookDetail);
+        setBookDetail(bookUpload);
         setNewBooks(true)
        })
        
    
        event.preventDefault();
        event.target.reset();
-       
+       history.push("/")
        console.log("NEW BOOKS logged?? ", newBooks)
      } 
      history.push("/")
+  
 
      return (
             <React.Fragment>
@@ -134,7 +161,7 @@ function UploadAPhoto(props){
                     <h4>Add a Book via Photo Upload</h4>
                         <form id="upload" className='form-upload' onSubmit={uploadBookPhoto}> 
                             <div className="dropdown">
-                                <label htmlFor="shelf-menu" className="dropbtn">Please choose a Bookshelf</label>
+                                <label htmlFor="shelf-menu" className="dropbtn">Please choose a Bookshelf: </label>
                                     <select name="shelf-menu" onChange={e => handleChange(e.target.value)} className="dropdown-content">
                                         {props.shelves.map((name, index) =>
                                         <option key={index} value={name} >{name}</option>)}
@@ -142,23 +169,23 @@ function UploadAPhoto(props){
                             </div>
                             {/* <ShelvesListMenu key={2} shelves={props.shelves} handleUploadShelf={() =>props.handleUploadShelf} /> */}
                             <div>
-                                <label htmlFor="shelfname">Or add to a new shelf: </label>
+                                <label htmlFor="shelfname">Or add to a new shelf:  </label>
                                     <input type="text" name="shelfname" onChange={e => setShelfname(e.target.value)} /> <br />
-                                <label htmlFor="fileElem">Select an image of a stack of books</label>
-                                    <input type="file" id="bookstack" name="booksFile" onChange={e => setBooksFile(e.target.value)} accept="image/png, image/jpeg" encType="multipart/form-data" /> <br />
+                                <label htmlFor="fileElem">Select an image of a stack of books:</label>
+                                    <input type="file" id="bookstack" className="btn btn-outline-info" name="booksFile" onChange={e => setBooksFile(e.target.value)} accept="image/png, image/jpeg" encType="multipart/form-data" /> <br />
                                 
                             </div>
                         </form>
                
 
                     {/* Button trigger modal*/}
-                    <button type="button" type='submit' form="upload" className="btn btn-primary" data-toggle="modal" data-target="#uploadModal">
+                    <button type="button" type='submit' form="upload" className="btn btn-info" data-toggle="modal" data-target="#uploadModal">
                     Confirm Books to add to shelf here
                     </button>
 
                     {/* Modal */}
                     <div className="modal fade upload-modal-lg" id="uploadModal" tabIndex="-1" role="dialog" aria-labelledby="myLargeUploadModal" aria-hidden="true">
-                        <div className="modal-dialog" style={{maxWidth: "80%"}} role="form">
+                        <div className="modal-dialog" style={{maxWidth: "90%"}} role="form">
                             <div className="modal-content">
                                 <div className="modal-header">
                                     <h5 className="modal-title" id="exampleModalLabel">Books to upload</h5><br></br>
@@ -172,6 +199,7 @@ function UploadAPhoto(props){
                                     Please edit typos or delete books you do not want. 
                                     <table>
                                         <tbody>
+                                        {/* <tr><ProgressBar striped variant="info" now={nowProgress} /></tr> */}
                                         {bookDetail}
                                         </tbody>
                                     </table>

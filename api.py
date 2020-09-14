@@ -82,7 +82,7 @@ def localize_objects_with_crop(path):
         # print(im2.size)
         
         new_crop_object = object_.name+ str(num)
-        new_file_name = 'static/images/' + new_crop_object+'.png'
+        new_file_name = 'static/images/demo_pics/' + new_crop_object+'.png'
         im2.save(new_file_name)
         print('Saved new image')
         new_crops_of_books.append(new_file_name)
@@ -195,10 +195,16 @@ def parse_response_data_for_info(book_data):
          description = book_data['response']['items'][0]['volumeInfo']['description']
     else:
         description= 'unknown'
-   
-    year_published = book_data['response']['items'][0]['volumeInfo']['publishedDate']
-    cover_img_source = book_data['response']['items'][0]['volumeInfo']['imageLinks']['thumbnail']
 
+    if 'publishedDate' in book_data['response']['items'][0]['volumeInfo']:
+        year_published = book_data['response']['items'][0]['volumeInfo']['publishedDate']
+    else:
+        year_published = 0
+        
+    if "imageLinks" in book_data['response']['items'][0]['volumeInfo']:
+        cover_img_source = book_data['response']['items'][0]['volumeInfo']['imageLinks']['thumbnail']
+    else:
+        cover_img_source ="unknown"
     if len(book_data['response']['items'][0]['volumeInfo']['industryIdentifiers']) > 1:
         isbn = book_data['response']['items'][0]['volumeInfo']['industryIdentifiers'][1]['identifier']
     else:
@@ -253,7 +259,7 @@ if __name__ == '__main__':
 
     if len(sys.argv) > 1:
         file = sys.argv[1]
-        new_photos = localize_objects_with_crop(f"static/images/{file}")
+        new_photos = localize_objects_with_crop(f"static/images/demo_pics/{file}")
         book_titles = get_text_from_list_of_photos(new_photos)
         book_dictions = {}
         for book in book_titles:

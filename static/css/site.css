@@ -6,12 +6,20 @@
 div.navbar-header {
     
     /* float: left; */
+    
+    border-radius: 1em;
+    color: gray;
     margin-top: 7px;
     margin-right: 7px;
+    
 }
-div.container {
-  width:90%;
+.book-shelf{
+  align-content: left ;
+  text-align: left;
+}
 
+div.navbar-header a:visited {
+  color:	#69c3be;
 }
 
 div.logo-header img{
@@ -23,26 +31,172 @@ div.logo-header img{
 
 #display-components {
     margin-top: 7px;
-    
 }
+
+#comments-list {
+  margin-top:25px;
+}
+
+#book-description {
+  margin-top: 10px;
+}
+
+/* unvisited link */
+a:link {
+  color:#345bad;
+}
+
+/* visited link */
+a:visited {
+  color:	#345bad;
+}
+
+/* mouse over link */
+a:hover {
+  color: lightblue;
+}
+
+/* selected link */
+a:active {
+  color:#69c3be	;
+}
+
 
 .btn-group 
-{
+{ 
   width:100%;
+  height:120%:
   text-align: center;
   text-overflow: ellipsis;
-
+  border-collapse:collapse;
+  border-radius: 1em;
 }
+.btn-group .btn
+{  
+  width:40%;
+ }
 
 
 .bookrows img {
-  width:100%;
+  width:100px;
   margin: auto;
+  
 }
 
-.container{
-  margin: 0 auto;
+.container {
+  width:100%;
 }
+.cover-bookdetail {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+.cover-bookdetail img {
+  flex-shrink: 0;
+  min-width: 100%;
+  min-height: 100%
+}
+.communicationpref {
+  align-content: center;
+  width:60%;
+}
+.publicshelf {
+  align-content: center;
+  width:60%;
+}
+
+#book-comment-detail {
+  align-content: center;
+}
+
+table{
+ 
+  border-width: 2em;
+  width:90%;
+  
+  border-collapse:collapse;
+  border-color: brown;
+}
+
+.blue{
+  border:2px solid #1ABC9C;
+}
+
+.blue thead{
+  background:#1ABC9C;
+}
+
+.purple{
+  border:2px solid #9B59B6;
+}
+
+.purple thead{
+  background:#9B59B6;
+}
+
+thead{
+  color:black;
+  
+  
+}
+
+th,td{
+  text-align:center;
+  padding:5px 0;
+
+}
+
+
+tbody tr:nth-child(even){
+  color:black;
+  
+}
+
+tbody tr:nth-child(odd){
+  color:black;
+  background-image:url("../images/papersmall.png");
+ 
+ 
+  
+  
+}
+
+tbody tr:hover{
+background:#BDC3C7;
+color:#FFFFFF;
+background-image: url("../images/emptyshelf.jpg");
+
+  justify-content: center;
+  align-items: center;
+ 
+  flex-shrink: 0;
+  min-width: 100%;
+  min-height: 100%
+  
+}
+
+button {
+  border-radius: 1em;
+
+}
+
+.fixed{
+  top:0;
+  position:fixed;
+  width:auto;
+  display:none;
+  border:none;
+}
+
+.scrollMore{
+  margin-top:600px;
+}
+
+.up{
+  cursor:pointer;
+}
+
 /* .slideshow {
     position: relative;
     overflow: hidden; 
@@ -63,9 +217,10 @@ div.logo-header img{
   } */
 
 
-img.shelf {
-    height: 15px;
-}
+/* img.bookrows{
+    height: 100px;
+    width: 100px;
+} */
 
 li {
     vertical-align: middle;

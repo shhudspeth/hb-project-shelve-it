@@ -9,6 +9,7 @@ body {
     padding: 10px;
     color: white;
     text-align: center;
+   
 }
 
 /* site-wrapper and site-wrapper-inner are to vertically center content using
@@ -35,8 +36,19 @@ footer {
     width: 100%;  /* required because fixed position */
 }
 
+
+
+
 @media (min-width: 1200px) {
     .modal-xlg {
        width: 90%; 
     }
  }
+
+ input {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+  }
+

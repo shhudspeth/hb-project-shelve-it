@@ -7,6 +7,9 @@ import utility
 import os
 from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Mail
+import http.client
+
+conn = http.client.HTTPSConnection("api.sendgrid.com")
 
 app = Flask(__name__)
 app.secret_key = 'to-be-determined'
@@ -48,6 +51,8 @@ def send_email():
 def generate_text(shelf):
     if session['user']:
         print(session['user'])
+        
+        current_user = crud.get_user_by_username(session['user'])
 
         # make a dictionary of books with statusess from username and shelfname
         shelf_books = utility.make_dict_books_a_shelf(session['user'], shelf)
@@ -56,8 +61,8 @@ def generate_text(shelf):
         # make libraries and bookstores calls from google places
         libraries_json = more_crud.library_urls(current_user.lat, current_user.long)
         bookstores_json = more_crud.bookstore_urls(current_user.lat, current_user.long)
-        print(libraries_json, "LIRBARIES")
-        print(bookstores_json, "BOOKSTORES")
+        # print(libraries_json, "LIRBARIES")
+        # print(bookstores_json, "BOOKSTORES")
 
     # else:
     #     flash("please login first!")
@@ -70,36 +75,46 @@ def generate_text(shelf):
                 "books":shelf_books, "libraries": libraries_json, "bookstores" :bookstores_json}
 
     print(content)
-#     request_body = {
-#         "personalization" : [
-#         {"to" : [
-#                 {
-#                     "email": shelf_info['email'], 
-#                     "name": session['user']
-#                 }
-#                 ],
-#          "dynamic_template_data": content,
-#          "subject": "Your Shelve-It Book List"
-#          },
-#         ],
-#         "from": {
-#             "email":"shhudspeth@gmail.com", 
-#             "name" : "Sarah at Shelve-It"
-#         },
-#         "reply_to": {
-#             "email": "shhudspeth@gmail.com",
-#             "name": "Sarah at Shelve-It"
-#         },
-#         "template_id": "d-7b49772a617240e1b94a2f9b47510d22"
-# }
+    
+    # request_body = {
+    #     "personalization" : [
+    #     {
+    #         "to" : [
+    #             {
+    #                 "email": shelf_info['email'], 
+    #                 "name": session['user']
+    #             }
+    #             ],
+         
+    #      "subject": "Your Shelve-It Book List"
+    #      },
+    #     ],
+    #     "from": {
+    #         "email":"shhudspeth@gmail.com", 
+    #         "name" : "Sarah at Shelve-It"
+    #     },
+    #     "reply_to": {
+    #         "email": "shhudspeth@gmail.com",
+    #         "name": "Sarah at Shelve-It"
+    #     },
+    #     "content" :[
+    #         {"type": "text/plain", 
+    #         "content": content
+    #         }
+    #     ]
+    #     "template_id": "d-7b49772a617240e1b94a2f9b47510d22" }
+
    
     message = Mail(
         from_email='shhudspeth@gmail.com',
         to_emails=shelf_info['email'],
         subject='Your Shelve-It Book List',
         #html_content= shelf_info['html']
-        html_content="<strong> DID THIS TEST EMAIL WORK. HOW DO I INTEGRATE WITH DYNAMIC TEMPLATES?</strong>"
+        html_content="<strong> STILL IN DEVELOPMENT. Please REPLY WITH FEEDBACK</strong>"
         )
+    message.dynamic_template_data = content
+    message.template_id = "d-7b49772a617240e1b94a2f9b47510d22"
+    
 
     try:
         sg = SendGridAPIClient(os.environ.get('SENDGRID_API_KEY'))
@@ -109,6 +124,8 @@ def generate_text(shelf):
         print(response.headers)
     except Exception as e:
         print(e)
+
+    return (jsonify({'status': "Make sure to check for it!", "user" : current_user.user_name}))
 
 
 
@@ -145,12 +162,16 @@ def update_book_statuses():
         else:
             shelved_book = utility.update_reading_status(session['user'], status_dict['book_id'])
 
+        if 'shelf' and 'change_shelf' in status_dict:
+            if status_dict['change_shelf']:
+                current_user = crud.get_user_by_username(session['user'])
+                shelved_book = crud.update_shelf_for_shelvedbook(current_user.user_id, status_dict['book_id'], status_dict['shelf'])
        
         # update book owned status
         if 'owned_status' in status_dict:
             shelved_book = utility.update_owned_status(session['user'], status_dict['book_id'], status_dict['owned_status'])  
         else:
-            shelved_book = utility.update_reading_status(session['user'], status_dict['book_id'])
+            shelved_book = utility.update_owned_status(session['user'], status_dict['book_id'])
         
         print("IS IT SAVING TE RIGHT STATUS", shelved_book, shelved_book.reading_status, shelved_book.owned_status )
         return(jsonify({"shelved_book": shelved_book.book.title }))
@@ -189,7 +210,7 @@ def process_logout():
     """Log user out of site.
     """
     print("TRYING TO LOGOUT")
-    if session['user']:
+    if session.get('user'):
         [session.pop(key) for key in list(session.keys())]
         print("You've logged out successfully")
         return(jsonify({'status': "ok. you are logged out. Login to see shelf!"}))
@@ -226,7 +247,7 @@ def register_new_account():
 @app.route('/api/bookshelf')
 def display_bookshelf():
     
-    if session['user']:
+    if session.get('user'):
         print(session['user'])
         current_user = crud.get_user_by_username(session['user'])
         print("\n\n\n CHECK USER", current_user)
@@ -245,9 +266,9 @@ def display_bookshelf():
         return(jsonify({"status": "please login first"}))
     
     # print(f"\n\n\n {current_user} \n {user_shelves} \n {reading_stats} \n {owned_stats}")
-    
+    print("PRINTING SHELVES",user_shelves)
     serial_shelves = []
-    for shelf in user_shelves:
+    for shelf in list(set(user_shelves)):
         serial_shelves.append({'shelf_id': shelf.shelf_id, 'name': shelf.nickname}) 
     
     serialized_reading_statuses = []
@@ -278,7 +299,7 @@ def add_to_bookshelf():
         file = info['filepath'].split("\\").pop()
         shelf = info['shelfname']
         current_user = crud.get_user_by_username(session['user'])
-        new_photos = api.localize_objects_with_crop(f"static/images/{file}")
+        new_photos = api.localize_objects_with_crop(f"static/images/demo_pics/{file}")
         # print(new_photos)
         book_titles = api.get_text_from_list_of_photos(new_photos)
         print('HERE ARE TE BOOK TITLES', book_titles)
