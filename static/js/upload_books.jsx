@@ -10,6 +10,7 @@ const useHistory = ReactRouterDOM.useHistory;
 const useParams = ReactRouterDOM.useParams;
 const { FormControl } = ReactBootstrap;
 const { Form } = ReactBootstrap;
+const { ProgressBar } = ReactBootstrap;
 
 // ------------- show the book detail to set reading status FOR THE MODAL FORM ----------- //
 
@@ -21,17 +22,22 @@ function AddUploadBookDetailItem(props) {
     const [readingStatus, setReadingStatus] = React.useState();
     const [ownedStatus, setOwnedStatus] = React.useState();
     const[resetBookDetail, setResetBookDetail]= React.useState(false);
-    const [confirmTitle, setConfirmTitle] =React.useState(props.title)
-    const [confirmAuthor, setConfirmAuthor] =React.useState(props.author)
-
+    const [confirmTitle, setConfirmTitle] =React.useState(props.title);
+    const [confirmAuthor, setConfirmAuthor] =React.useState(props.author);
+    const [nowProgress2, setnowProgress2] = React.useState(70);
+    const [showProgress, setShowProgress] = React.useState(true);
     console.log("IN ADDBOOKDETAILITEM MODAL", reading_st, props.shelfname,  props.owned, confirmTitle, confirmAuthor)
-
-      const changeStatus = (event) => {
+    
+    
+    
+    
+    const changeStatus = (event) => {
         setResetBookDetail(false)
         const statuses_update = 
           {"reading_status": readingStatus, "owned_status": ownedStatus, "shelf": props.shelfname, 
           "book_id": props.book_id, "author": confirmAuthor, "title": confirmTitle}
         console.log(statuses_update, "IS TIS WORKING UPLOAD FORM UPDATE")
+        
         fetch('/update_status', {
           method: 'POST', 
           body: JSON.stringify(statuses_update),
@@ -41,7 +47,7 @@ function AddUploadBookDetailItem(props) {
         })
         .then(response => response.json())
         .then(data => {
-         
+            setShowProgress(false);
             alert(`${data.shelved_book} added to Shelf ${props.shelfname}`);
             
           
@@ -57,6 +63,7 @@ function AddUploadBookDetailItem(props) {
 
     return ( !resetBookDetail &&
          <React.Fragment>
+                    {/* {showProgress && <tr><td><ProgressBar striped variant="info" now={90} /></tr>}</td>*/}
                     <tr>
                     <td>
                     <form >
@@ -100,7 +107,7 @@ function UploadAPhoto(props){
    const [booksFile, setBooksFile] = React.useState("");
    const [newBooks, setNewBooks] = React.useState();
    const [bookDetail, setBookDetail] = React.useState(['loading... count to 20... it takes a bit of time']);
-
+   const [nowProgress, setnowProgress] = React.useState(60)
    console.log("UPLOAD BOOK< SHELVES", props.shelves, props.reading, props.owned)
 
    function handleChange(newValue) {
@@ -192,6 +199,7 @@ function UploadAPhoto(props){
                                     Please edit typos or delete books you do not want. 
                                     <table>
                                         <tbody>
+                                        {/* <tr><ProgressBar striped variant="info" now={nowProgress} /></tr> */}
                                         {bookDetail}
                                         </tbody>
                                     </table>

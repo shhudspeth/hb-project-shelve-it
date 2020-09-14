@@ -12,11 +12,10 @@ div.navbar-header {
     margin-top: 7px;
     margin-right: 7px;
     
-    text-align: center;
-    
 }
-#container book-shelf{
-  background-color:lightgray;
+.book-shelf{
+  align-content: left ;
+  text-align: left;
 }
 
 div.navbar-header a:visited {
@@ -32,11 +31,6 @@ div.logo-header img{
 
 #display-components {
     margin-top: 7px;
-    
-    
-    
-    
-    
 }
 
 #comments-list {
@@ -78,11 +72,9 @@ a:active {
   border-radius: 1em;
 }
 .btn-group .btn
-{
-  
+{  
   width:40%;
- 
-}
+ }
 
 
 .bookrows img {
@@ -98,14 +90,21 @@ a:active {
   display: flex;
   justify-content: center;
   align-items: center;
-  overflow: hidden
+  overflow: hidden;
 }
 .cover-bookdetail img {
   flex-shrink: 0;
   min-width: 100%;
   min-height: 100%
 }
-
+.communicationpref {
+  align-content: center;
+  width:60%;
+}
+.publicshelf {
+  align-content: center;
+  width:60%;
+}
 
 #book-comment-detail {
   align-content: center;
@@ -151,15 +150,29 @@ th,td{
 
 tbody tr:nth-child(even){
   color:black;
-  background-url:url("../images/paper.png");
+  
+}
+
+tbody tr:nth-child(odd){
+  color:black;
+  background-image:url("../images/papersmall.png");
+ 
+ 
+  
   
 }
 
 tbody tr:hover{
 background:#BDC3C7;
-  color:#FFFFFF;
-  background-image: url("../images/retina_wood.png");
+color:#FFFFFF;
+background-image: url("../images/emptyshelf.jpg");
 
+  justify-content: center;
+  align-items: center;
+ 
+  flex-shrink: 0;
+  min-width: 100%;
+  min-height: 100%
   
 }
 

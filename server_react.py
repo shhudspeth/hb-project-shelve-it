@@ -125,7 +125,7 @@ def generate_text(shelf):
     except Exception as e:
         print(e)
 
-    return (jsonify({'status': "Make sure to check it!", "user" : current_user.user_name}))
+    return (jsonify({'status': "Make sure to check for it!", "user" : current_user.user_name}))
 
 
 
@@ -299,7 +299,7 @@ def add_to_bookshelf():
         file = info['filepath'].split("\\").pop()
         shelf = info['shelfname']
         current_user = crud.get_user_by_username(session['user'])
-        new_photos = api.localize_objects_with_crop(f"static/images/{file}")
+        new_photos = api.localize_objects_with_crop(f"static/images/demo_pics/{file}")
         # print(new_photos)
         book_titles = api.get_text_from_list_of_photos(new_photos)
         print('HERE ARE TE BOOK TITLES', book_titles)

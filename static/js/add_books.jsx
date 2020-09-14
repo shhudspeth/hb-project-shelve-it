@@ -38,19 +38,21 @@ function BookDetailItem(props) {
             for (const comment of data.comments){
                 new_comments.push(comment);
             }
-            setCommentList(new_comments)
-            alert(`New comment added !`)
-            
+    setCommentList(new_comments)
+    alert(`New comment added !`)
+   
             
           
         })
         
           event.preventDefault();
-          event.target.reset();
+          
          
             
           
-        }
+        };
+
+     
 
     history.push(`/book-info/${props.book_id}`)
 

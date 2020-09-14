@@ -8,6 +8,7 @@ const useHistory = ReactRouterDOM.useHistory;
 const useParams = ReactRouterDOM.useParams;
 const { Modal } = ReactBootstrap;
 const {Dropdown} =ReactBootstrap ;
+const LoginComplete = React.createContext(null);
 
 
   
@@ -16,6 +17,7 @@ const {Dropdown} =ReactBootstrap ;
 function Homepage(props) {
     
     // Sets some state Variables and props variables
+   
     const [allShelves, setAllShelves] = React.useState(true);
     const [displayShelf, setDisplayShelf] = React.useState("");
     const [textShelf, setTextShelf] = React.useState("");
@@ -26,13 +28,15 @@ function Homepage(props) {
     const [loginLogoutText, setLoginLogoutText] = React.useState("Logout");
     const [modalEmail, setModalEmail] = React.useState("")
     const [modalMessage, setModalMessage] = React.useState("")
+    const {loggedIn, setLoggedIn} = React.useContext(LoginComplete);
+    
     // if (props.loggedIn){
     //     setLoginLogoutText("Logout");
     // }
 
     function handleShowLogout(newValue) {
         setShowLogout(newValue)
-        if (showLogout){
+        if (loggedIn){
         setLoginLogoutText("Logout")
         }
         else {
@@ -84,12 +88,12 @@ function Homepage(props) {
             
             
             event.preventDefault();
-            
+            setAllShelves(true);
 
           } 
-
-    
+   
     console.log(props.loggedIn, "checking rendering value")
+    
     console.log(displayShelf, allShelves, "TRYING TO MAKE SURE VLAUES CHANGE DISPLAYSHELF")
     
     return (
@@ -97,7 +101,7 @@ function Homepage(props) {
         <div className="logo-header">
         <img src="static/images/CurateLogo.png" className="center-logo" id="logo" alt= "Bookshelf of books" title="Shelve-It: Curate your books; Curate your reading list"></img>   
         
-           {/* <Navbar loggedIn={props.isLoggedIn} handleLogin={() =>props.handleLogin} /> */}
+           {/* <Navbar loggedIn={props.loggedIn} handleLogin={() =>props.handleLogin} /> */}
             <div className="btn-group" role="group" aria-label="Button group with nested dropdown">
                 <button type="button" onClick={()=> handleUploadPhoto(true)} className="btn btn-secondary">Upload Books</button>
                 <button type="button" onClick={()=> handleAddaBook(true)} className="btn btn-secondary">Add Book</button>
@@ -168,11 +172,10 @@ function Homepage(props) {
             <p></p> */}
             <div className="container" id="below-logo">
                 <div className="row" id= "display-components">
-                    {showLogout && <Logout loggedIn={props.isLoggedIn} handleLogin={() =>props.handleLogin} />}
+                    {showLogout && <Logout loggedIn={props.loggedIn} handleLogin={() =>props.handleLogin} />}
                     {showUploadPhoto &&  <UploadAPhoto shelves={props.shelves}reading={props.reading} owned={props.owned}  />}
                     {showAddaBook && <AddaBook reading={props.reading} owned={props.owned} shelves={props.shelves} handleAddaBook={() => handleAddaBook} /> }
-                
-                     <p></p>
+    
                     {/* && <SendBooklistEmail textShelf={textShelf} /> */}
                     {popupEmailModal}
 
@@ -193,33 +196,33 @@ function Homepage(props) {
 // MAIN ROUTER AND SWITCH APP
 
 function App(props) {
-    const [isLoggedIn, setIsLoggedIn] = React.useState(false);
-
-    let cookieValue = document.cookie
-    console.log("COOKIE", cookieValue);
-
-
+    
+    const [loggedIn, setLoggedIn] = React.useState(null);
     const [shelvesList, setShelvesList] = React.useState(['no shelves']);
     const [reading_stats, setReadingStats] = React.useState([]);
     const [owned_stats,setOwnedStats] = React.useState([]);
     const [bookTable, setBookTable] = React.useState(["loading"]);
+  
+    
     // Fetches books from database and displays on site
 
-
       function handleLogin(newValue) {
-        setIsLoggedIn(newValue);
+        setLoggedIn(newValue);
       }
-    
-    console.log("LOGGED IN", isLoggedIn)
+
+    console.log("LOGGED IN", loggedIn)
 
     React.useEffect(() => {
+        
         console.log("fetching books, shelves, reading statuses, owned statuses...")
         fetch('/api/bookshelf')
         .then(response => response.json())
         .then((data) => {
+            console.log("DATA FROM SERVER, APP ISLOGGEDIN", data)
             if (data.user) {
-                setIsLoggedIn(true)
-                console.log(data.user)
+                handleLogin(true);
+                setLoggedIn(true);
+                console.log(data.user, "fetched books")
             }
             
             // going to be a prop... not need to update
@@ -235,31 +238,33 @@ function App(props) {
                 o_s.push(stat.owned_status)   
             };
             setOwnedStats(o_s)
-
+            
              // going to be a State should be able to update
             const newshelvesList = [];
             for (const shelf of data.shelves) {
                 newshelvesList.push(shelf.name)
             };
-            setShelvesList(newshelvesList)
-            console.log("WHAT SHELVES ARE BEING SENT", shelvesList)
+            setShelvesList(newshelvesList);
+            console.log("WHAT SHELVES ARE BEING SENT", newshelvesList, shelvesList)
             
             //get book data
             const newbookTable= [];
             for (const post of data.books) {
             
                 newbookTable.push(post)
+                console.log("adding_books")
                 };
         
             setBookTable(newbookTable);
+            
+        }) 
         
-        })
         
-        }, [isLoggedIn]);
+        }, [loggedIn]);
         
-  
-   
+       
     return (
+        <LoginComplete.Provider value={{loggedIn, setLoggedIn}}>
         <Router>
             <div className="navbar-header" >
                 <nav className="navbar-light bg-light" id="nav">
@@ -267,33 +272,35 @@ function App(props) {
                      <ul>
                         <li>
                         <i className="fas fa-book"></i>
-                            <Link to="/"> Home </Link>
+                            <Link to="/" > Home </Link>
                         </li>
                         <li> 
-                            {!isLoggedIn && <Link to="/register"> Register </Link> }
+                            {!loggedIn && <Link to="/register"> Register </Link> }
                         </li>
                         <li>
-                            {!isLoggedIn && <Link to="/login" > Login </Link> }
+                            {!loggedIn && <Link to="/login" > Login </Link> }
                         </li>
                         
                     </ul>
                     </div> 
                 </nav>
                 </div>
+                
               
 
                 <Switch>
 
                     <Route path="/register" >
-                        <Register loggedIn={isLoggedIn} handleLogin={() =>handleLogin}/>
+                        <Register loggedIn={loggedIn} handleLogin={() =>handleLogin}/>
                     </Route>
                     
                     <Route path="/login">
-                        <Login loggedIn={isLoggedIn} handleLogin={() =>handleLogin} />
-                    </Route>
 
+                            <Login loggedIn={loggedIn} handleLogin={() =>handleLogin} />
+                    </Route>
+                   
                     <Route path="/logout">
-                        <Logout loggedIn={isLoggedIn} handleLogin={() =>handleLogin} />
+                        <Logout loggedIn={loggedIn} handleLogin={() =>handleLogin} />
                     </Route>
             
                     <Route path="/upload-book-photo">
@@ -304,7 +311,7 @@ function App(props) {
                     </Route>
 
                     <Route path="/bookshelf">
-                        <FilterableBookshelfTable loggedIn={isLoggedIn} handleLogin={() =>handleLogin} bookTabs={bookTable} reading={reading_stats} owned={owned_stats} shelves={shelvesList} />
+                        <FilterableBookshelfTable loggedIn={loggedIn} handleLogin={() =>handleLogin} bookTabs={bookTable} reading={reading_stats} owned={owned_stats} shelves={shelvesList} />
                     </Route> 
                     
                     <Route path="/book-info/:bookId">
@@ -312,11 +319,14 @@ function App(props) {
                     </Route>
         
                     <Route path="/">
-                        <Homepage loggedIn={isLoggedIn} handleLogin={() =>handleLogin}  bookTabs={bookTable} reading={reading_stats} owned={owned_stats} shelves={shelvesList} />
+                        
+                        <Homepage loggedIn={loggedIn} handleLogin={() =>handleLogin} bookTabs={bookTable} reading={reading_stats} owned={owned_stats} shelves={shelvesList} />
+                        
                     </Route>
                  </Switch>
            
         </Router>
+        </LoginComplete.Provider>
         );
   
   } 

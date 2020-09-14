@@ -41,11 +41,13 @@ for item in book_data:
 user_data_seeding = []
 with open('data/seeding_jsons/test_user_info.json') as f:
      user_data = json.loads(f.read())
+     zipcode = ["94115", "94941", "94607", "94501", "94577", "94010", "94608", "94115" ]
 
      for user in user_data:
         new_user = crud.create_user(user['email'], 
                                     user['password'], 
-                                    user['user_name'])
+                                    user['user_name'], 
+                                    choice(zipcode))
         print( f"added new book to database : {new_user}")
         user_data_seeding.append(new_user)
 

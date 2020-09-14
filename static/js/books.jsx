@@ -150,17 +150,17 @@ function FilterableBookshelfTable (props) {
 
     return (
 
-        <div>
+        <React.Fragment>
             {/* <SendAnEmail /> */}
             {/* <h4>Search Bar and Sort Methods</h4>
             <ReadingStatusMenu reading={props.reading}  />
             <ShelvesListMenu key={1} shelves={props.shelves} handleShelvesSelect={() =>props.handleShelvesSelect} /> */}
             {/* <SearchBar reading={props.reading} owned={props.owned} /> */}
             <div className="container book-shelf">
-                <h2>Books on Your Shelf</h2>
-                </div>
+            <h2>Books on Your Shelf</h2>
+            </div>
             <BookTable books={props.bookTabs} reading={props.reading} owned={props.owned} shelves={props.shelves}/>
-        </div>
+        </React.Fragment>
             
             )
     
@@ -172,14 +172,15 @@ function EditBookDetailItem(props) {
     
     const [readingStatus, setReadingStatus] = React.useState();
     const [ownedStatus, setOwnedStatus] = React.useState();
+    const [editBook, setEditBook] =React.useState(false);
  
     const[newBookShelf, setNewBookShelf]= React.useState("");
     console.log("IN EDIT BOOKDETAIL ITEM... is nothing happening")
 
       const changeBookStatus = (event) => {
-        
+        setEditBook(true)
         const statuses_update = 
-          {"reading_status": readingStatus, "owned_status": ownedStatus, "shelf": newBookShelf, "book_id": props.book.book_id }
+          {"reading_status": readingStatus, "owned_status": ownedStatus, "change_shelf": editBook, "shelf": newBookShelf, "book_id": props.book.book_id }
     
         fetch('/update_status', {
           method: 'POST', 
@@ -206,7 +207,7 @@ function EditBookDetailItem(props) {
     return ( 
          <Modal.Dialog>
                <Modal.Header closeButton>
-                   <Modal.Title> Update Book Status</Modal.Title>
+                   <Modal.Title> Edit Book Statuses</Modal.Title>
                </Modal.Header>
                                 
                 <Modal.Body>

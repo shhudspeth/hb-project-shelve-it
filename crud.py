@@ -31,10 +31,11 @@ def get_comments_by_book_id(book_id):
   
 # CRUD FUNCTIONS for USER CLASS
 
-def create_user(email, password, user_name):
+def create_user(email, password, user_name, zipcode):
     """Create and return a new user."""
     joined_at = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-    user = User(email=email, password=password, user_name=user_name, joined_at = joined_at)
+    latlng = more_crud.get_latln_from_zip(zipcode)
+    user = User(email=email, password=password, user_name=user_name, joined_at = joined_at,lat=latlng[0], long=latlng[1])
 
     db.session.add(user)
     db.session.commit()
