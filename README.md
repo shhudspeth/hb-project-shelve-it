@@ -1,4 +1,5 @@
 <!-- THANKS TO https://github.com/othneildrew/Best-README-Template/blob/master/README.md for the README template!]>
+
 <!-- PROJECT SHIELDS -->
 <!--
 *** I'm using markdown "reference style" links for readability.
@@ -7,11 +8,7 @@
 *** for contributors-url, forks-url, etc. This is an optional, concise syntax you may use.
 *** https://www.markdownguide.org/basic-syntax/#reference-style-links
 -->
-[![Contributors][contributors-shield]][contributors-url]
-[![Forks][forks-shield]][forks-url]
-[![Stargazers][stars-shield]][stars-url]
-[![Issues][issues-shield]][issues-url]
-[![MIT License][license-shield]][license-url]
+
 [![LinkedIn][linkedin-shield]][linkedin-url]
  
   
@@ -20,7 +17,7 @@
 <br />
 <p align="center">
   <a href="www.shelve-it.com">
-    <img src="static/images/ShelveItlogo.png" alt="Logo" width="80" height="80">
+    <img src="static/images/Shelveitlogo.png" alt="Logo" width="80" height="80">
   </a>
 
   <h3 align="center">Shelve-It, Curate Your Reading Lists</h3>
@@ -100,7 +97,7 @@ Make sure your pip is updated!
 
 ### Installation
 
-1. Get a free API Key at [https://google.com](https://google.com)
+1. Get a free API Key at [https://developers.google.com/maps/documentation/javascript/get-api-key](https://developers.google.com/maps/documentation/javascript/get-api-key)
 2. Clone the repo
 ```sh
 git clone https://github.com/shhudspeth/hb-project-shelve-it/
@@ -111,7 +108,7 @@ pip3 install -r requirements.txt
 ```
 4. Enter your API key and SendGrid key in `secrets.sh`
 ```sh
-source secrets.sh';
+source secrets.sh
 ```
 
 
@@ -119,9 +116,17 @@ source secrets.sh';
 <!-- USAGE EXAMPLES -->
 ## Usage
 
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
+Below are instructions and main features of Shelve-It. 
 
-_For more examples, please refer to the [Documentation](https://example.com)_
+<ol>
+  <li> Uploading a Bookshelf </li>
+  <li> Making a Bookshelf </li>
+  <li> Add a Book to a Bookshelf </li>
+  <li> Email a Bookshelf </li>
+  <li> Display by a Shelf </li>
+  <li> Add or View Comments by a Book </li>
+</ol>
+
 
 
 
@@ -166,14 +171,7 @@ Project Link: [https://github.com/shhudspeth/hb-project-shelve-it/](https://gith
 * [GitHub Emoji Cheat Sheet](https://www.webpagefx.com/tools/emoji-cheat-sheet)
 * [Img Shields](https://shields.io)
 * [Choose an Open Source License](https://choosealicense.com)
-* [GitHub Pages](https://pages.github.com)
-* [Animate.css](https://daneden.github.io/animate.css)
-* [Loaders.css](https://connoratherton.com/loaders)
-* [Slick Carousel](https://kenwheeler.github.io/slick)
-* [Smooth Scroll](https://github.com/cferdinandi/smooth-scroll)
-* [Sticky Kit](http://leafo.net/sticky-kit)
-* [JVectorMap](http://jvectormap.com)
-* [Font Awesome](https://fontawesome.com)
+
 
 
 
