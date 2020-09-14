@@ -16,9 +16,8 @@
   <!-- PROJECT LOGO -->
 <br />
 <p align="center">
-  <a href="https://www.shelve-it.com">
     <img src="static/images/Shelveitlogo.png" alt="Logo" width="80" height="80">
-  </a>
+
 
   <h3 align="center">Shelve-It, Curate Your Reading Lists</h3>
 
@@ -118,7 +117,7 @@ source secrets.sh
 
 Below are instructions and main features of Shelve-It. 
 
-<ol>
+
   <li> Uploading a Bookshelf </li>
   <img src="static/images/uploadstatus.png" alt="upload" width="100" height="100">
   <li> Making a Bookshelf </li>
@@ -129,7 +128,7 @@ Below are instructions and main features of Shelve-It.
   <li> Display by a Shelf </li>
   <img src="static/images/Displayshelf.png" alt="display_shelf" width="100" height="100">
   <li> Add or View Comments by a Book </li>
-</ol>
+
 
 
 
