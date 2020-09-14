@@ -120,14 +120,14 @@ Below are instructions and main features of Shelve-It.
 
 <ol>
   <li> Uploading a Bookshelf </li>
-  <img src="static/images/uploadstatus.png" alt="upload" width="80" height="80">
+  <img src="static/images/uploadstatus.png" alt="upload" width="100" height="100">
   <li> Making a Bookshelf </li>
 
   <li> Add a Book to a Bookshelf </li>
   <li> Email a Bookshelf </li>
-  <img src="static/images/sendemail.png" alt="sendemail" width="80" height="80">
+  <img src="static/images/sendemail.png" alt="sendemail" width="100" height="100">
   <li> Display by a Shelf </li>
-  <img src="static/images/Displayshelf.png" alt="display_shelf" width="80" height="80">
+  <img src="static/images/Displayshelf.png" alt="display_shelf" width="100" height="100">
   <li> Add or View Comments by a Book </li>
 </ol>
 

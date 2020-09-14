@@ -262,7 +262,7 @@ def display_bookshelf():
         owned_stats = crud.return_all_types_owned()
     
     else:
-        flash("please login first!")
+        
         return(jsonify({"status": "please login first"}))
     
     # print(f"\n\n\n {current_user} \n {user_shelves} \n {reading_stats} \n {owned_stats}")
