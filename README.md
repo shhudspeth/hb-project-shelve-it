@@ -16,7 +16,7 @@
   <!-- PROJECT LOGO -->
 <br />
 <p align="center">
-    <img src="static/images/Shelveitlogo.png" alt="Logo" width="80" height="80">
+    <img src="https://github.com/shhudspeth/hb-project-shelve-it/blob/master/static/images/ShelveitLogo.png" alt="Logo" width="80" height="80">
 
 
   <h3 align="center">Shelve-It, Curate Your Reading Lists</h3>
