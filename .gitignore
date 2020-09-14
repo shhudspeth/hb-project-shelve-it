@@ -7,7 +7,7 @@ notes_to_self/
 *.sql
 .DS_Store
 .env
-shelve_it.sql
+shelve_it_dump.sql
 .vscode
 sendgrid.env
 sendgrid.env

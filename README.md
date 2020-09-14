@@ -16,14 +16,14 @@
   <!-- PROJECT LOGO -->
 <br />
 <p align="center">
-  <a href="www.shelve-it.com">
+  <a href="https://www.shelve-it.com">
     <img src="static/images/Shelveitlogo.png" alt="Logo" width="80" height="80">
   </a>
 
   <h3 align="center">Shelve-It, Curate Your Reading Lists</h3>
 
   <p align="center">
-  This web-app lets you upload a photo of a stack of books and add them to your virtual bookshelf. 
+  This web-app lets you upload a photo of a stack of books and add them to a virtual bookshelf. 
     <br />
     <a href="https://github.com/shhudspeth/hb-project-shelve-it"><strong>Explore the docs »</strong></a>
     <br />
@@ -60,7 +60,7 @@
 
 [![Shelve-It Screen Shot][product-screenshot]](https://shelve-it.com)
 
-Curate your reading needs. Track your reading lists. This web-app lets you upload a photo of a stack of books and add them to your virtual bookshelf. Organize books by shelves, reading status, or to borrow status. See information on a book and leave a comment. Email your bookshelves to yourself or friends. See a list of nearby libraries and bookstores based on your zip-code. Shelve-It, here to help you track and curate your reading needs.
+Curate your reading needs. Track your reading lists. This web-app lets you upload a photo of a stack of books. Organize books by shelves, reading status, or to borrow status. See information on a book and leave a comment. Email your bookshelves to yourself or friends. See a list of nearby libraries and bookstores based on your zip-code. Shelve-It, here to help you track and curate your reading needs.
 
 ### Built With
 Shelve-It uses:
@@ -92,7 +92,7 @@ Shelve-It is deployed on an AWS LightSail Instance. Please go to Shelve-It.com t
 
 ### Prerequisites
 
-Make sure your pip is updated!
+Make sure your pip is updated and you are running Python 3.6 or greater. 
 
 
 ### Installation
@@ -120,10 +120,14 @@ Below are instructions and main features of Shelve-It.
 
 <ol>
   <li> Uploading a Bookshelf </li>
+  <img src="static/images/uploadstatus.png" alt="upload" width="80" height="80">
   <li> Making a Bookshelf </li>
+
   <li> Add a Book to a Bookshelf </li>
   <li> Email a Bookshelf </li>
+  <img src="static/images/sendemail.png" alt="sendemail" width="80" height="80">
   <li> Display by a Shelf </li>
+  <img src="static/images/Displayshelf.png" alt="display_shelf" width="80" height="80">
   <li> Add or View Comments by a Book </li>
 </ol>
 
@@ -160,7 +164,7 @@ Distributed under the MIT License. See `LICENSE` for more information.
 <!-- CONTACT -->
 ## Contact
 
-Your Name - [@sarahhuds](https://twitter.com/sarahhuds) - sarah@shelve-it.com
+Your Name - [@sarahhhuds](https://twitter.com/sarahhhuds) - sarah@shelve-it.com
 
 Project Link: [https://github.com/shhudspeth/hb-project-shelve-it/](https://github.com/shhudspeth/hb-project-shelve-it/)
 
