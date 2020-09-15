@@ -16,7 +16,7 @@
   <!-- PROJECT LOGO -->
 <br />
 <p align="center">
-    <img src="https://github.com/shhudspeth/hb-project-shelve-it/blob/master/static/images/ShelveitLogo.png" alt="Logo">
+    <img src="https://github.com/shhudspeth/hb-project-shelve-it/blob/master/static/images/CurateLogo.png" alt="Logo">
 
 
   <h3 align="center">Shelve-It, Curate Your Reading Lists</h3>
@@ -27,7 +27,7 @@
     <a href="https://github.com/shhudspeth/hb-project-shelve-it"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="https://youtu.be/aFCG_f8CZ1I">View Demo</a>
+    <a href="https://youtu.be/ZxeXyDhHanE">View Demo</a>
     ·
     <a href="https://github.com/shhudspeth/hb-project-shelve-it/issues">Report Bug</a>
     ·
@@ -175,6 +175,7 @@ Project Link: [https://github.com/shhudspeth/hb-project-shelve-it/](https://gith
 * [GitHub Emoji Cheat Sheet](https://www.webpagefx.com/tools/emoji-cheat-sheet)
 * [Img Shields](https://shields.io)
 * [Choose an Open Source License](https://choosealicense.com)
+* [ReadMe Template](https://github.com/othneildrew/Best-README-Template/blob/master/README.md)
 
 
 
