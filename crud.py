@@ -47,16 +47,44 @@ def return_user_lat_long(user_id):
     return((user.lat, user.long))
 
 
-def create_user_register(email, password, user_name, text_number, communication, contact, zipcode):
+def create_user_register(email, password, user_name, text_number,communication, contact, zipcode):
     """Create and return a new user via registration form."""
 
     # TODO 
     # 1. make a zipcode function DONE
     # 2. make a text_number function
     # 3. make a public or private display feature
-    latlng = more_crud.get_latln_from_zip(zipcode)
+    ''' 
+    user_id = db.Column(db.Integer, primary_key=True, nullable=False, autoincrement=True)
+    user_name = db.Column(db.String(30), unique=True)
+    email = db.Column(db.String(30), nullable=False, unique=True)
+    password = db.Column(db.String(30), nullable=False)
+    joined_at = db.Column(db.DateTime)
+    profile_link = db.Column(db.String(100))
+    text_number = db.Column(db.String(100))
+    contact_by_email = db.Column(db.Boolean)
+    contact_by_text = db.Column(db.Boolean)
+    share_link = db.Column(db.String())
+    lat = db.Column(db.Float)
+    long = db.Column(db.Float)
+     email = data['email']
+    pswd = data['password']
+    uname = data['username']
+    phnum = data.get('phone_number')
+    email_text = data.get('email_or_text')
+    public = data.get('public_shelf')
+    zipc = data.get('zipcode')
+    {'email': 'sgh2s@virginia.edu', 'password': 'testtest', 'username': 'SarahTest', 'public_shelf': True, 'email_or_text': 'email_list', 'phone_number': '111-111-1111', 'zipcode': '11111'} 
 
+    new_user = crud.create_user_register(email, pswd, uname, phnum, email_text, public, zipc)
+    '''
+    if zipcode == '11111':
+        latlng = [0,0]
+    else:
+        latlng = more_crud.get_latln_from_zip(zipcode)
+    
     joined_at = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+
     user = User(email=email, password=password, user_name=user_name, 
                 joined_at = joined_at, text_number=text_number, lat=latlng[0], long=latlng[1])
     

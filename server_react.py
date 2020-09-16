@@ -228,11 +228,13 @@ def register_new_account():
     email = data['email']
     pswd = data['password']
     uname = data['username']
-    phnum = data.get('phone_number')
-    email_text = data.get('email_or_text')
-    public = data.get('public_shelf')
-    zipc = data.get('zipcode')
+    phnum = data.get('phone_number', 0)
+    email_text = data.get('email_or_text', None)
+    public = data.get('public_shelf', True)
+    zipc = data.get('zipcode', 0)
+    print(zipc, public, email_text, phnum)
 
+    # email=email, password=password, user_name=user_name, text_number=text_number, communication=communication, contact=contact, zipcode=zipcode
     new_user = crud.create_user_register(email, pswd, uname, phnum, email_text, public, zipc)
 
     if new_user:
