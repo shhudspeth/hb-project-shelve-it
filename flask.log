@@ -1,0 +1,596 @@
+Connected to the db!
+ * Serving Flask app "server_react" (lazy loading)
+ * Environment: production
+   WARNING: This is a development server. Do not use it in a production deployment.
+   Use a production WSGI server instead.
+ * Debug mode: off
+ * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+127.0.0.1 - - [15/Sep/2020 22:45:08] "[37mGET / HTTP/1.0[0m" 200 -
+127.0.0.1 - - [15/Sep/2020 22:45:08] "[37mGET /static/css/site.css HTTP/1.0[0m" 200 -
+127.0.0.1 - - [15/Sep/2020 22:45:08] "[37mGET /static/css/homepage.css HTTP/1.0[0m" 200 -
+127.0.0.1 - - [15/Sep/2020 22:45:08] "[37mGET /static/js/add_books.jsx HTTP/1.0[0m" 200 -
+127.0.0.1 - - [15/Sep/2020 22:45:08] "[37mGET /static/js/book_detail.jsx HTTP/1.0[0m" 200 -
+127.0.0.1 - - [15/Sep/2020 22:45:08] "[37mGET /static/js/navbar.jsx HTTP/1.0[0m" 200 -
+127.0.0.1 - - [15/Sep/2020 22:45:08] "[37mGET /static/js/upload_books.jsx HTTP/1.0[0m" 200 -
+127.0.0.1 - - [15/Sep/2020 22:45:08] "[37mGET /static/js/books.jsx HTTP/1.0[0m" 200 -
+127.0.0.1 - - [15/Sep/2020 22:45:08] "[37mGET /static/images/shelfcolorbig.png HTTP/1.0[0m" 200 -
+127.0.0.1 - - [15/Sep/2020 22:45:09] "[37mGET /static/js/root.jsx HTTP/1.0[0m" 200 -
+127.0.0.1 - - [15/Sep/2020 22:45:10] "[37mGET /static/images/papersmall.png HTTP/1.0[0m" 200 -
+127.0.0.1 - - [15/Sep/2020 22:45:10] "[37mGET /static/images/CurateLogo.png HTTP/1.0[0m" 200 -
+127.0.0.1 - - [15/Sep/2020 22:45:10] "[37mGET /api/bookshelf HTTP/1.0[0m" 200 -
+127.0.0.1 - - [15/Sep/2020 22:45:58] "[37mGET /static/images/emptyshelf.jpg HTTP/1.0[0m" 200 -
+127.0.0.1 - - [15/Sep/2020 22:46:07] "[37mGET / HTTP/1.0[0m" 200 -
+127.0.0.1 - - [15/Sep/2020 22:46:07] "[37mGET /static/css/site.css HTTP/1.0[0m" 200 -
+127.0.0.1 - - [15/Sep/2020 22:46:07] "[37mGET /static/css/homepage.css HTTP/1.0[0m" 200 -
+127.0.0.1 - - [15/Sep/2020 22:46:12] "[37mGET /static/js/book_detail.jsx HTTP/1.0[0m" 200 -
+127.0.0.1 - - [15/Sep/2020 22:46:12] "[37mGET /static/js/add_books.jsx HTTP/1.0[0m" 200 -
+127.0.0.1 - - [15/Sep/2020 22:46:12] "[37mGET /static/js/navbar.jsx HTTP/1.0[0m" 200 -
+127.0.0.1 - - [15/Sep/2020 22:46:12] "[37mGET /static/js/upload_books.jsx HTTP/1.0[0m" 200 -
+127.0.0.1 - - [15/Sep/2020 22:46:12] "[37mGET /static/js/books.jsx HTTP/1.0[0m" 200 -
+127.0.0.1 - - [15/Sep/2020 22:46:12] "[37mGET /static/js/root.jsx HTTP/1.0[0m" 200 -
+127.0.0.1 - - [15/Sep/2020 22:46:12] "[37mGET /static/images/shelfcolorbig.png HTTP/1.0[0m" 200 -
+127.0.0.1 - - [15/Sep/2020 22:46:13] "[37mGET /static/images/CurateLogo.png HTTP/1.0[0m" 200 -
+127.0.0.1 - - [15/Sep/2020 22:46:13] "[37mGET /static/images/papersmall.png HTTP/1.0[0m" 200 -
+127.0.0.1 - - [15/Sep/2020 22:46:13] "[37mGET /api/bookshelf HTTP/1.0[0m" 200 -
+127.0.0.1 - - [15/Sep/2020 22:46:28] "[37mGET /static/images/emptyshelf.jpg HTTP/1.0[0m" 200 -
+127.0.0.1 - - [15/Sep/2020 22:48:23] "[37mGET / HTTP/1.0[0m" 200 -
+127.0.0.1 - - [15/Sep/2020 22:48:23] "[33mGET /robots.txt HTTP/1.0[0m" 404 -
+127.0.0.1 - - [15/Sep/2020 22:48:23] "[37mGET /static/css/site.css HTTP/1.0[0m" 200 -
+127.0.0.1 - - [15/Sep/2020 22:48:23] "[37mGET /static/css/homepage.css HTTP/1.0[0m" 200 -
+127.0.0.1 - - [15/Sep/2020 22:48:23] "[33mGET /robots.txt HTTP/1.0[0m" 404 -
+127.0.0.1 - - [15/Sep/2020 22:48:24] "[37mGET /static/js/navbar.jsx HTTP/1.0[0m" 200 -
+127.0.0.1 - - [15/Sep/2020 22:48:24] "[37mGET /static/js/add_books.jsx HTTP/1.0[0m" 200 -
+127.0.0.1 - - [15/Sep/2020 22:48:24] "[37mGET /static/js/book_detail.jsx HTTP/1.0[0m" 200 -
+127.0.0.1 - - [15/Sep/2020 22:48:24] "[37mGET / HTTP/1.0[0m" 200 -
+127.0.0.1 - - [15/Sep/2020 22:48:24] "[37mGET /static/css/homepage.css HTTP/1.0[0m" 200 -
+127.0.0.1 - - [15/Sep/2020 22:48:25] "[37mGET /static/js/upload_books.jsx HTTP/1.0[0m" 200 -
+127.0.0.1 - - [15/Sep/2020 22:48:25] "[37mGET /static/js/root.jsx HTTP/1.0[0m" 200 -
+127.0.0.1 - - [15/Sep/2020 22:48:25] "[37mGET /static/js/books.jsx HTTP/1.0[0m" 200 -
+127.0.0.1 - - [15/Sep/2020 22:48:25] "[37mGET /static/images/shelfcolorbig.png HTTP/1.0[0m" 200 -
+127.0.0.1 - - [15/Sep/2020 22:48:26] "[37mGET /static/images/CurateLogo.png HTTP/1.0[0m" 200 -
+127.0.0.1 - - [15/Sep/2020 22:48:26] "[37mGET /static/images/papersmall.png HTTP/1.0[0m" 200 -
+127.0.0.1 - - [15/Sep/2020 22:48:26] "[37mGET /static/js/upload_books.jsx HTTP/1.0[0m" 200 -
+127.0.0.1 - - [15/Sep/2020 22:48:26] "[37mGET /api/bookshelf HTTP/1.0[0m" 200 -
+127.0.0.1 - - [15/Sep/2020 22:48:27] "[37mGET /static/images/emptyshelf.jpg HTTP/1.0[0m" 200 -
+127.0.0.1 - - [15/Sep/2020 22:48:35] "[37mGET /logout HTTP/1.0[0m" 200 -
+127.0.0.1 - - [15/Sep/2020 22:48:35] "[37mGET /api/bookshelf HTTP/1.0[0m" 200 -
+127.0.0.1 - - [15/Sep/2020 22:48:36] "[37mGET / HTTP/1.0[0m" 200 -
+127.0.0.1 - - [15/Sep/2020 22:48:38] "[37mGET /api/bookshelf HTTP/1.0[0m" 200 -
+127.0.0.1 - - [15/Sep/2020 22:49:14] "[37mGET /api/bookshelf HTTP/1.0[0m" 200 -
+[2020-09-15 22:50:05,333] ERROR in app: Exception on /update_status [POST]
+Traceback (most recent call last):
+  File "/home/ubuntu/hb-project-shelve-it/env/lib/python3.6/site-packages/flask/app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/ubuntu/hb-project-shelve-it/env/lib/python3.6/site-packages/flask/app.py", line 1952, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/ubuntu/hb-project-shelve-it/env/lib/python3.6/site-packages/flask/app.py", line 1821, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/ubuntu/hb-project-shelve-it/env/lib/python3.6/site-packages/flask/_compat.py", line 39, in reraise
+    raise value
+  File "/home/ubuntu/hb-project-shelve-it/env/lib/python3.6/site-packages/flask/app.py", line 1950, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/ubuntu/hb-project-shelve-it/env/lib/python3.6/site-packages/flask/app.py", line 1936, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "server_react.py", line 156, in update_book_statuses
+    if session['user']:
+  File "/home/ubuntu/hb-project-shelve-it/env/lib/python3.6/site-packages/werkzeug/local.py", line 377, in <lambda>
+    __getitem__ = lambda x, i: x._get_current_object()[i]
+  File "/home/ubuntu/hb-project-shelve-it/env/lib/python3.6/site-packages/flask/sessions.py", line 84, in __getitem__
+    return super(SecureCookieSession, self).__getitem__(key)
+KeyError: 'user'
+127.0.0.1 - - [15/Sep/2020 22:50:05] "[35m[1mPOST /update_status HTTP/1.0[0m" 500 -
+[2020-09-15 22:50:10,437] ERROR in app: Exception on /update_status [POST]
+Traceback (most recent call last):
+  File "/home/ubuntu/hb-project-shelve-it/env/lib/python3.6/site-packages/flask/app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/ubuntu/hb-project-shelve-it/env/lib/python3.6/site-packages/flask/app.py", line 1952, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/ubuntu/hb-project-shelve-it/env/lib/python3.6/site-packages/flask/app.py", line 1821, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/ubuntu/hb-project-shelve-it/env/lib/python3.6/site-packages/flask/_compat.py", line 39, in reraise
+    raise value
+  File "/home/ubuntu/hb-project-shelve-it/env/lib/python3.6/site-packages/flask/app.py", line 1950, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/ubuntu/hb-project-shelve-it/env/lib/python3.6/site-packages/flask/app.py", line 1936, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "server_react.py", line 156, in update_book_statuses
+    if session['user']:
+  File "/home/ubuntu/hb-project-shelve-it/env/lib/python3.6/site-packages/werkzeug/local.py", line 377, in <lambda>
+    __getitem__ = lambda x, i: x._get_current_object()[i]
+  File "/home/ubuntu/hb-project-shelve-it/env/lib/python3.6/site-packages/flask/sessions.py", line 84, in __getitem__
+    return super(SecureCookieSession, self).__getitem__(key)
+KeyError: 'user'
+127.0.0.1 - - [15/Sep/2020 22:50:10] "[35m[1mPOST /update_status HTTP/1.0[0m" 500 -
+[2020-09-15 22:50:15,251] ERROR in app: Exception on /update_status [POST]
+Traceback (most recent call last):
+  File "/home/ubuntu/hb-project-shelve-it/env/lib/python3.6/site-packages/flask/app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/ubuntu/hb-project-shelve-it/env/lib/python3.6/site-packages/flask/app.py", line 1952, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/ubuntu/hb-project-shelve-it/env/lib/python3.6/site-packages/flask/app.py", line 1821, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/ubuntu/hb-project-shelve-it/env/lib/python3.6/site-packages/flask/_compat.py", line 39, in reraise
+    raise value
+  File "/home/ubuntu/hb-project-shelve-it/env/lib/python3.6/site-packages/flask/app.py", line 1950, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/ubuntu/hb-project-shelve-it/env/lib/python3.6/site-packages/flask/app.py", line 1936, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "server_react.py", line 156, in update_book_statuses
+    if session['user']:
+  File "/home/ubuntu/hb-project-shelve-it/env/lib/python3.6/site-packages/werkzeug/local.py", line 377, in <lambda>
+    __getitem__ = lambda x, i: x._get_current_object()[i]
+  File "/home/ubuntu/hb-project-shelve-it/env/lib/python3.6/site-packages/flask/sessions.py", line 84, in __getitem__
+    return super(SecureCookieSession, self).__getitem__(key)
+KeyError: 'user'
+127.0.0.1 - - [15/Sep/2020 22:50:15] "[35m[1mPOST /update_status HTTP/1.0[0m" 500 -
+[2020-09-15 22:51:28,959] ERROR in app: Exception on /api/bookshelf/addbook [POST]
+Traceback (most recent call last):
+  File "/home/ubuntu/hb-project-shelve-it/env/lib/python3.6/site-packages/flask/app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/ubuntu/hb-project-shelve-it/env/lib/python3.6/site-packages/flask/app.py", line 1952, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/ubuntu/hb-project-shelve-it/env/lib/python3.6/site-packages/flask/app.py", line 1821, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/ubuntu/hb-project-shelve-it/env/lib/python3.6/site-packages/flask/_compat.py", line 39, in reraise
+    raise value
+  File "/home/ubuntu/hb-project-shelve-it/env/lib/python3.6/site-packages/flask/app.py", line 1950, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/ubuntu/hb-project-shelve-it/env/lib/python3.6/site-packages/flask/app.py", line 1936, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "server_react.py", line 400, in get_book_info
+    if session['user']:
+  File "/home/ubuntu/hb-project-shelve-it/env/lib/python3.6/site-packages/werkzeug/local.py", line 377, in <lambda>
+    __getitem__ = lambda x, i: x._get_current_object()[i]
+  File "/home/ubuntu/hb-project-shelve-it/env/lib/python3.6/site-packages/flask/sessions.py", line 84, in __getitem__
+    return super(SecureCookieSession, self).__getitem__(key)
+KeyError: 'user'
+127.0.0.1 - - [15/Sep/2020 22:51:28] "[35m[1mPOST /api/bookshelf/addbook HTTP/1.0[0m" 500 -
+127.0.0.1 - - [15/Sep/2020 22:52:07] "[37mGET / HTTP/1.0[0m" 200 -
+127.0.0.1 - - [15/Sep/2020 22:52:08] "[37mGET /static/css/site.css HTTP/1.0[0m" 200 -
+127.0.0.1 - - [15/Sep/2020 22:52:08] "[37mGET /static/css/homepage.css HTTP/1.0[0m" 200 -
+127.0.0.1 - - [15/Sep/2020 22:52:08] "[37mGET /static/js/book_detail.jsx HTTP/1.0[0m" 200 -
+127.0.0.1 - - [15/Sep/2020 22:52:08] "[37mGET /static/js/add_books.jsx HTTP/1.0[0m" 200 -
+127.0.0.1 - - [15/Sep/2020 22:52:08] "[37mGET /static/js/navbar.jsx HTTP/1.0[0m" 200 -
+127.0.0.1 - - [15/Sep/2020 22:52:08] "[37mGET /static/js/books.jsx HTTP/1.0[0m" 200 -
+127.0.0.1 - - [15/Sep/2020 22:52:08] "[37mGET /static/js/upload_books.jsx HTTP/1.0[0m" 200 -
+127.0.0.1 - - [15/Sep/2020 22:52:08] "[37mGET /static/js/root.jsx HTTP/1.0[0m" 200 -
+127.0.0.1 - - [15/Sep/2020 22:52:09] "[37mGET /static/images/shelfcolorbig.png HTTP/1.0[0m" 200 -
+127.0.0.1 - - [15/Sep/2020 22:52:09] "[37mGET /static/images/CurateLogo.png HTTP/1.0[0m" 200 -
+127.0.0.1 - - [15/Sep/2020 22:52:09] "[37mGET /static/images/papersmall.png HTTP/1.0[0m" 200 -
+127.0.0.1 - - [15/Sep/2020 22:52:09] "[37mGET /api/bookshelf HTTP/1.0[0m" 200 -
+127.0.0.1 - - [15/Sep/2020 22:52:16] "[37mGET / HTTP/1.0[0m" 200 -
+127.0.0.1 - - [15/Sep/2020 22:52:16] "[37mGET /static/css/site.css HTTP/1.0[0m" 200 -
+127.0.0.1 - - [15/Sep/2020 22:52:16] "[37mGET /static/css/homepage.css HTTP/1.0[0m" 200 -
+127.0.0.1 - - [15/Sep/2020 22:52:17] "[37mGET /static/js/book_detail.jsx HTTP/1.0[0m" 200 -
+127.0.0.1 - - [15/Sep/2020 22:52:17] "[37mGET /static/js/add_books.jsx HTTP/1.0[0m" 200 -
+127.0.0.1 - - [15/Sep/2020 22:52:17] "[37mGET /static/js/navbar.jsx HTTP/1.0[0m" 200 -
+127.0.0.1 - - [15/Sep/2020 22:52:17] "[37mGET /static/js/upload_books.jsx HTTP/1.0[0m" 200 -
+127.0.0.1 - - [15/Sep/2020 22:52:17] "[37mGET /static/js/root.jsx HTTP/1.0[0m" 200 -
+127.0.0.1 - - [15/Sep/2020 22:52:17] "[37mGET /static/js/books.jsx HTTP/1.0[0m" 200 -
+127.0.0.1 - - [15/Sep/2020 22:52:18] "[37mGET /static/images/CurateLogo.png HTTP/1.0[0m" 200 -
+127.0.0.1 - - [15/Sep/2020 22:52:18] "[37mGET /static/images/papersmall.png HTTP/1.0[0m" 200 -
+127.0.0.1 - - [15/Sep/2020 22:52:18] "[37mGET /api/bookshelf HTTP/1.0[0m" 200 -
+127.0.0.1 - - [15/Sep/2020 22:52:18] "[37mGET /static/images/shelfcolorbig.png HTTP/1.0[0m" 200 -
+127.0.0.1 - - [15/Sep/2020 23:01:02] "[37mGET / HTTP/1.0[0m" 200 -
+127.0.0.1 - - [15/Sep/2020 23:03:10] "[37mGET / HTTP/1.0[0m" 200 -
+127.0.0.1 - - [15/Sep/2020 23:03:10] "[37mGET /static/css/site.css HTTP/1.0[0m" 200 -
+127.0.0.1 - - [15/Sep/2020 23:03:10] "[37mGET /static/css/homepage.css HTTP/1.0[0m" 200 -
+127.0.0.1 - - [15/Sep/2020 23:03:11] "[37mGET /static/js/book_detail.jsx HTTP/1.0[0m" 200 -
+127.0.0.1 - - [15/Sep/2020 23:03:11] "[37mGET /static/js/add_books.jsx HTTP/1.0[0m" 200 -
+127.0.0.1 - - [15/Sep/2020 23:03:11] "[37mGET /static/js/books.jsx HTTP/1.0[0m" 200 -
+127.0.0.1 - - [15/Sep/2020 23:03:11] "[37mGET /static/js/upload_books.jsx HTTP/1.0[0m" 200 -
+127.0.0.1 - - [15/Sep/2020 23:03:11] "[37mGET /static/js/navbar.jsx HTTP/1.0[0m" 200 -
+127.0.0.1 - - [15/Sep/2020 23:03:11] "[37mGET /static/js/root.jsx HTTP/1.0[0m" 200 -
+127.0.0.1 - - [15/Sep/2020 23:03:11] "[37mGET /static/images/shelfcolorbig.png HTTP/1.0[0m" 200 -
+127.0.0.1 - - [15/Sep/2020 23:03:12] "[37mGET /static/images/CurateLogo.png HTTP/1.0[0m" 200 -
+127.0.0.1 - - [15/Sep/2020 23:03:12] "[37mGET /static/images/papersmall.png HTTP/1.0[0m" 200 -
+127.0.0.1 - - [15/Sep/2020 23:03:12] "[37mGET /api/bookshelf HTTP/1.0[0m" 200 -
+127.0.0.1 - - [15/Sep/2020 23:09:50] "[37mGET / HTTP/1.0[0m" 200 -
+127.0.0.1 - - [15/Sep/2020 23:09:50] "[37mGET /static/css/site.css HTTP/1.0[0m" 200 -
+127.0.0.1 - - [15/Sep/2020 23:09:50] "[37mGET /static/css/homepage.css HTTP/1.0[0m" 200 -
+127.0.0.1 - - [15/Sep/2020 23:09:51] "[37mGET /static/js/book_detail.jsx HTTP/1.0[0m" 200 -
+127.0.0.1 - - [15/Sep/2020 23:09:51] "[37mGET /static/js/add_books.jsx HTTP/1.0[0m" 200 -
+127.0.0.1 - - [15/Sep/2020 23:09:51] "[37mGET /static/js/upload_books.jsx HTTP/1.0[0m" 200 -
+127.0.0.1 - - [15/Sep/2020 23:09:51] "[37mGET /static/js/navbar.jsx HTTP/1.0[0m" 200 -
+127.0.0.1 - - [15/Sep/2020 23:09:51] "[37mGET /static/js/books.jsx HTTP/1.0[0m" 200 -
+127.0.0.1 - - [15/Sep/2020 23:09:51] "[37mGET /static/images/shelfcolorbig.png HTTP/1.0[0m" 200 -
+127.0.0.1 - - [15/Sep/2020 23:09:51] "[37mGET /static/js/root.jsx HTTP/1.0[0m" 200 -
+127.0.0.1 - - [15/Sep/2020 23:09:52] "[37mGET /static/images/papersmall.png HTTP/1.0[0m" 200 -
+127.0.0.1 - - [15/Sep/2020 23:09:52] "[37mGET /static/images/CurateLogo.png HTTP/1.0[0m" 200 -
+127.0.0.1 - - [15/Sep/2020 23:09:52] "[37mGET /api/bookshelf HTTP/1.0[0m" 200 -
+127.0.0.1 - - [15/Sep/2020 23:30:01] "[37mGET / HTTP/1.0[0m" 200 -
+127.0.0.1 - - [15/Sep/2020 23:30:02] "[37mGET /static/css/site.css HTTP/1.0[0m" 200 -
+127.0.0.1 - - [15/Sep/2020 23:30:02] "[37mGET /static/css/homepage.css HTTP/1.0[0m" 200 -
+127.0.0.1 - - [15/Sep/2020 23:30:03] "[37mGET /static/js/book_detail.jsx HTTP/1.0[0m" 200 -
+127.0.0.1 - - [15/Sep/2020 23:30:03] "[37mGET /static/js/add_books.jsx HTTP/1.0[0m" 200 -
+127.0.0.1 - - [15/Sep/2020 23:30:03] "[37mGET /static/js/navbar.jsx HTTP/1.0[0m" 200 -
+127.0.0.1 - - [15/Sep/2020 23:30:03] "[37mGET /static/js/upload_books.jsx HTTP/1.0[0m" 200 -
+127.0.0.1 - - [15/Sep/2020 23:30:03] "[37mGET /static/js/books.jsx HTTP/1.0[0m" 200 -
+127.0.0.1 - - [15/Sep/2020 23:30:03] "[37mGET /static/images/shelfcolorbig.png HTTP/1.0[0m" 200 -
+127.0.0.1 - - [15/Sep/2020 23:30:03] "[37mGET /static/js/root.jsx HTTP/1.0[0m" 200 -
+127.0.0.1 - - [15/Sep/2020 23:30:05] "[37mGET /static/images/CurateLogo.png HTTP/1.0[0m" 200 -
+127.0.0.1 - - [15/Sep/2020 23:30:05] "[37mGET /static/images/papersmall.png HTTP/1.0[0m" 200 -
+127.0.0.1 - - [15/Sep/2020 23:30:05] "[37mGET /api/bookshelf HTTP/1.0[0m" 200 -
+127.0.0.1 - - [15/Sep/2020 23:30:16] "[37mGET /logout HTTP/1.0[0m" 200 -
+127.0.0.1 - - [15/Sep/2020 23:30:16] "[37mGET /api/bookshelf HTTP/1.0[0m" 200 -
+127.0.0.1 - - [15/Sep/2020 23:30:16] "[37mGET / HTTP/1.0[0m" 200 -
+127.0.0.1 - - [15/Sep/2020 23:30:20] "[37mGET /api/bookshelf HTTP/1.0[0m" 200 -
+127.0.0.1 - - [15/Sep/2020 23:30:25] "[37mGET /static/images/emptyshelf.jpg HTTP/1.0[0m" 200 -
+[2020-09-15 23:31:25,006] ERROR in app: Exception on /register [POST]
+Traceback (most recent call last):
+  File "/home/ubuntu/hb-project-shelve-it/env/lib/python3.6/site-packages/flask/app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/ubuntu/hb-project-shelve-it/env/lib/python3.6/site-packages/flask/app.py", line 1952, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/ubuntu/hb-project-shelve-it/env/lib/python3.6/site-packages/flask/app.py", line 1821, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/ubuntu/hb-project-shelve-it/env/lib/python3.6/site-packages/flask/_compat.py", line 39, in reraise
+    raise value
+  File "/home/ubuntu/hb-project-shelve-it/env/lib/python3.6/site-packages/flask/app.py", line 1950, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/ubuntu/hb-project-shelve-it/env/lib/python3.6/site-packages/flask/app.py", line 1936, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "server_react.py", line 231, in register_new_account
+    phnum = data['phone_number']
+KeyError: 'phone_number'
+127.0.0.1 - - [15/Sep/2020 23:31:25] "[35m[1mPOST /register HTTP/1.0[0m" 500 -
+127.0.0.1 - - [15/Sep/2020 23:31:43] "[37mPOST /login HTTP/1.0[0m" 200 -
+[2020-09-15 23:32:18,728] ERROR in app: Exception on /register [POST]
+Traceback (most recent call last):
+  File "/home/ubuntu/hb-project-shelve-it/env/lib/python3.6/site-packages/flask/app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/ubuntu/hb-project-shelve-it/env/lib/python3.6/site-packages/flask/app.py", line 1952, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/ubuntu/hb-project-shelve-it/env/lib/python3.6/site-packages/flask/app.py", line 1821, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/ubuntu/hb-project-shelve-it/env/lib/python3.6/site-packages/flask/_compat.py", line 39, in reraise
+    raise value
+  File "/home/ubuntu/hb-project-shelve-it/env/lib/python3.6/site-packages/flask/app.py", line 1950, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/ubuntu/hb-project-shelve-it/env/lib/python3.6/site-packages/flask/app.py", line 1936, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "server_react.py", line 231, in register_new_account
+    phnum = data['phone_number']
+KeyError: 'phone_number'
+127.0.0.1 - - [15/Sep/2020 23:32:18] "[35m[1mPOST /register HTTP/1.0[0m" 500 -
+127.0.0.1 - - [15/Sep/2020 23:32:32] "[37mPOST /login HTTP/1.0[0m" 200 -
+127.0.0.1 - - [15/Sep/2020 23:32:47] "[37mGET / HTTP/1.0[0m" 200 -
+127.0.0.1 - - [15/Sep/2020 23:32:47] "[37mGET /static/css/site.css HTTP/1.0[0m" 200 -
+127.0.0.1 - - [15/Sep/2020 23:32:47] "[37mGET /static/css/homepage.css HTTP/1.0[0m" 200 -
+127.0.0.1 - - [15/Sep/2020 23:32:47] "[37mGET /static/js/book_detail.jsx HTTP/1.0[0m" 200 -
+127.0.0.1 - - [15/Sep/2020 23:32:47] "[37mGET /static/js/add_books.jsx HTTP/1.0[0m" 200 -
+127.0.0.1 - - [15/Sep/2020 23:32:47] "[37mGET /static/js/navbar.jsx HTTP/1.0[0m" 200 -
+127.0.0.1 - - [15/Sep/2020 23:32:47] "[37mGET /static/js/upload_books.jsx HTTP/1.0[0m" 200 -
+127.0.0.1 - - [15/Sep/2020 23:32:47] "[37mGET /static/js/books.jsx HTTP/1.0[0m" 200 -
+127.0.0.1 - - [15/Sep/2020 23:32:47] "[37mGET /static/js/root.jsx HTTP/1.0[0m" 200 -
+127.0.0.1 - - [15/Sep/2020 23:32:49] "[37mGET /static/images/CurateLogo.png HTTP/1.0[0m" 200 -
+127.0.0.1 - - [15/Sep/2020 23:32:49] "[37mGET /api/bookshelf HTTP/1.0[0m" 200 -
+127.0.0.1 - - [15/Sep/2020 23:32:49] "[37mGET /static/images/papersmall.png HTTP/1.0[0m" 200 -
+127.0.0.1 - - [15/Sep/2020 23:36:35] "[37mGET / HTTP/1.0[0m" 200 -
+127.0.0.1 - - [15/Sep/2020 23:36:36] "[37mGET /api/bookshelf HTTP/1.0[0m" 200 -
+[2020-09-15 23:43:14,273] ERROR in app: Exception on /api/bookshelf/addbook [POST]
+Traceback (most recent call last):
+  File "/home/ubuntu/hb-project-shelve-it/env/lib/python3.6/site-packages/flask/app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/ubuntu/hb-project-shelve-it/env/lib/python3.6/site-packages/flask/app.py", line 1952, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/ubuntu/hb-project-shelve-it/env/lib/python3.6/site-packages/flask/app.py", line 1821, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/ubuntu/hb-project-shelve-it/env/lib/python3.6/site-packages/flask/_compat.py", line 39, in reraise
+    raise value
+  File "/home/ubuntu/hb-project-shelve-it/env/lib/python3.6/site-packages/flask/app.py", line 1950, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/ubuntu/hb-project-shelve-it/env/lib/python3.6/site-packages/flask/app.py", line 1936, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "server_react.py", line 422, in get_book_info
+    if crud.return_user_bookshelf_by_name(current_user.user_id, data['shelf']):
+AttributeError: 'NoneType' object has no attribute 'user_id'
+127.0.0.1 - - [15/Sep/2020 23:43:14] "[35m[1mPOST /api/bookshelf/addbook HTTP/1.0[0m" 500 -
+[2020-09-15 23:43:41,510] ERROR in app: Exception on /update_status [POST]
+Traceback (most recent call last):
+  File "/home/ubuntu/hb-project-shelve-it/env/lib/python3.6/site-packages/flask/app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/ubuntu/hb-project-shelve-it/env/lib/python3.6/site-packages/flask/app.py", line 1952, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/ubuntu/hb-project-shelve-it/env/lib/python3.6/site-packages/flask/app.py", line 1821, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/ubuntu/hb-project-shelve-it/env/lib/python3.6/site-packages/flask/_compat.py", line 39, in reraise
+    raise value
+  File "/home/ubuntu/hb-project-shelve-it/env/lib/python3.6/site-packages/flask/app.py", line 1950, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/ubuntu/hb-project-shelve-it/env/lib/python3.6/site-packages/flask/app.py", line 1936, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "server_react.py", line 163, in update_book_statuses
+    shelved_book = utility.update_reading_status(session['user'], status_dict['book_id'])
+KeyError: 'book_id'
+127.0.0.1 - - [15/Sep/2020 23:43:41] "[35m[1mPOST /update_status HTTP/1.0[0m" 500 -
+127.0.0.1 - - [15/Sep/2020 23:44:44] "[37mGET /logout HTTP/1.0[0m" 200 -
+127.0.0.1 - - [15/Sep/2020 23:44:45] "[37mGET / HTTP/1.0[0m" 200 -
+[2020-09-15 23:44:45,122] ERROR in app: Exception on /api/bookshelf [GET]
+Traceback (most recent call last):
+  File "/home/ubuntu/hb-project-shelve-it/env/lib/python3.6/site-packages/flask/app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/ubuntu/hb-project-shelve-it/env/lib/python3.6/site-packages/flask/app.py", line 1952, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/ubuntu/hb-project-shelve-it/env/lib/python3.6/site-packages/flask/app.py", line 1821, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/ubuntu/hb-project-shelve-it/env/lib/python3.6/site-packages/flask/_compat.py", line 39, in reraise
+    raise value
+  File "/home/ubuntu/hb-project-shelve-it/env/lib/python3.6/site-packages/flask/app.py", line 1950, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/ubuntu/hb-project-shelve-it/env/lib/python3.6/site-packages/flask/app.py", line 1936, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "server_react.py", line 256, in display_bookshelf
+    user_books = utility.make_dict_books_a_shelf(session['user'], "all")
+  File "/home/ubuntu/hb-project-shelve-it/utility.py", line 15, in make_dict_books_a_shelf
+    books_on_shelf = crud.return_all_books_on_shelves_by_user(current_user.user_id)
+AttributeError: 'NoneType' object has no attribute 'user_id'
+127.0.0.1 - - [15/Sep/2020 23:44:45] "[35m[1mGET /api/bookshelf HTTP/1.0[0m" 500 -
+127.0.0.1 - - [15/Sep/2020 23:44:50] "[37mGET /api/bookshelf HTTP/1.0[0m" 200 -
+127.0.0.1 - - [15/Sep/2020 23:47:49] "[37mGET / HTTP/1.0[0m" 200 -
+127.0.0.1 - - [15/Sep/2020 23:47:50] "[37mGET /static/css/site.css HTTP/1.0[0m" 200 -
+127.0.0.1 - - [15/Sep/2020 23:47:50] "[37mGET /static/css/homepage.css HTTP/1.0[0m" 200 -
+127.0.0.1 - - [15/Sep/2020 23:47:50] "[37mGET /static/js/add_books.jsx HTTP/1.0[0m" 200 -
+127.0.0.1 - - [15/Sep/2020 23:47:50] "[37mGET /static/js/book_detail.jsx HTTP/1.0[0m" 200 -
+127.0.0.1 - - [15/Sep/2020 23:47:50] "[37mGET /static/js/navbar.jsx HTTP/1.0[0m" 200 -
+127.0.0.1 - - [15/Sep/2020 23:47:50] "[37mGET /static/js/books.jsx HTTP/1.0[0m" 200 -
+127.0.0.1 - - [15/Sep/2020 23:47:50] "[37mGET /static/js/upload_books.jsx HTTP/1.0[0m" 200 -
+127.0.0.1 - - [15/Sep/2020 23:47:50] "[37mGET /static/js/root.jsx HTTP/1.0[0m" 200 -
+127.0.0.1 - - [15/Sep/2020 23:47:50] "[37mGET /static/images/shelfcolorbig.png HTTP/1.0[0m" 200 -
+127.0.0.1 - - [15/Sep/2020 23:47:51] "[37mGET /static/images/papersmall.png HTTP/1.0[0m" 200 -
+127.0.0.1 - - [15/Sep/2020 23:47:51] "[37mGET /static/images/CurateLogo.png HTTP/1.0[0m" 200 -
+127.0.0.1 - - [15/Sep/2020 23:47:51] "[37mGET /api/bookshelf HTTP/1.0[0m" 200 -
+127.0.0.1 - - [15/Sep/2020 23:47:53] "[37mGET /static/images/emptyshelf.jpg HTTP/1.0[0m" 200 -
+127.0.0.1 - - [15/Sep/2020 23:50:48] "[37mGET / HTTP/1.0[0m" 200 -
+127.0.0.1 - - [15/Sep/2020 23:50:50] "[37mGET /api/bookshelf HTTP/1.0[0m" 200 -
+127.0.0.1 - - [15/Sep/2020 23:51:09] "[37mPOST /register HTTP/1.0[0m" 200 -
+127.0.0.1 - - [15/Sep/2020 23:51:11] "[37mGET /api/bookshelf HTTP/1.0[0m" 200 -
+TRYING TO LOGOUT
+You are not logged in. Please log in to log out
+
+
+
+ STATUS DICTIONARY FROM ADD A BOOK {'change_shelf': False, 'shelf': '2020 Books'}
+
+
+
+ STATUS DICTIONARY FROM ADD A BOOK {'change_shelf': True, 'shelf': '2020 Books'}
+
+
+
+ STATUS DICTIONARY FROM ADD A BOOK {'change_shelf': True, 'shelf': '2020 Books'}
+TRYING TO LOGOUT
+You are not logged in. Please log in to log out
+{'email': 'rosie.mcqueen@gmail.com', 'password': 'Abcd2883', 'username': 'Rosie', 'public_shelf': True, 'email_or_text': 'neither', 'zipcode': '11104'}
+{'email': 'rosie.mcqueen@gmail.com', 'password': 'Abcd2883', 'username': 'Rosie', 'public_shelf': True, 'email_or_text': 'neither', 'zipcode': '11104'}
+
+
+
+ ADDING A NEW BOOK {'title': 'Of Fire and Stars', 'author': 'Audrey Couthurst', 'shelf': 'YA'} 
+
+
+
+SESSION <SecureCookieSession {'_flashes': [('message', 'No account with that email exists. Please create one or try again'), ('message', 'No account with that email exists. Please create one or try again')], 'user': 'needs_to_register', 'shelf': 'YA'}> 
+
+
+
+CAPTURED Of Fire and Stars 
+
+
+
+
+
+AUTHOR DEBUG ['Audrey Coulthurst'] 
+
+
+
+
+
+
+ STATUS DICTIONARY FROM ADD A BOOK {'change_shelf': False, 'shelf': 'YA'}
+needs_to_register
+TRYING TO LOGOUT
+You've logged out successfully
+needs_to_register
+
+
+
+ CHECK USER None
+{'email': 'shhudspeth@gmail.com', 'password': 'testtest', 'username': 'test_profile', 'public_shelf': True, 'email_or_text': 'email_list', 'phone_number': '703-505-0013', 'zipcode': '94954'}
+<User id =6 name =test_profile email = shhudspeth@gmail.com>
+test_profile
+
+
+
+ CHECK USER <User id =6 name =test_profile email = shhudspeth@gmail.com>
+PRINTING SHELVES []
+Saved new image
+HERE ARE TE BOOK TITLES ['BLISS THOUGHTS & PRAYERS GREENWILLOW ']
+{'title': 'A Book of Bliss', 'response': {'kind': 'books#volumes', 'totalItems': 2185, 'items': [{'kind': 'books#volume', 'id': 'MXD86fwgwgsC', 'etag': 'SGW043ylb/Q', 'selfLink': 'https://www.googleapis.com/books/v1/volumes/MXD86fwgwgsC', 'volumeInfo': {'title': 'A Book of Bliss', 'subtitle': 'Thoughts to Make You Smile', 'authors': ['Sourcebooks, Inc.'], 'publisher': 'Sourcebooks, Inc.', 'publishedDate': '2010-02-01', 'description': 'Bliss is serene happiness — the goodness and joy in life. These paired quotes and contemplations are sure to bring peace to a reader\'s soul and warmth to the heart. "Anyone can have friends, but being a friend is an achievement." "Blessed is the influence of one true, loving human soul on another." — George Eliot "Tea is great on its own, but it\'s infinitely better when coupled with a book." "Some say life is the thing, but I prefer reading." — Ruth Rendell "Embrace life\'s passions, but seek lasting contentment." "If you are content, you have enough to live comfortably." — Plautus More than 150 upbeat thoughts and quotations, in a new giftable package perfect for cheering a friend or loved one', 'industryIdentifiers': [{'type': 'ISBN_13', 'identifier': '9781402224560'}, {'type': 'ISBN_10', 'identifier': '1402224567'}], 'readingModes': {'text': True, 'image': True}, 'pageCount': 208, 'printType': 'BOOK', 'categories': ['Reference'], 'maturityRating': 'NOT_MATURE', 'allowAnonLogging': False, 'contentVersion': '0.0.1.0.preview.3', 'imageLinks': {'smallThumbnail': 'http://books.google.com/books/content?id=MXD86fwgwgsC&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api', 'thumbnail': 'http://books.google.com/books/content?id=MXD86fwgwgsC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api'}, 'language': 'en', 'previewLink': 'http://books.google.com/books?id=MXD86fwgwgsC&printsec=frontcover&dq=BLISS+THOUGHTS&hl=&cd=1&source=gbs_api', 'infoLink': 'http://books.google.com/books?id=MXD86fwgwgsC&dq=BLISS+THOUGHTS&hl=&source=gbs_api', 'canonicalVolumeLink': 'https://books.google.com/books/about/A_Book_of_Bliss.html?hl=&id=MXD86fwgwgsC'}, 'saleInfo': {'country': 'US', 'saleability': 'NOT_FOR_SALE', 'isEbook': False}, 'accessInfo': {'country': 'US', 'viewability': 'PARTIAL', 'embeddable': True, 'publicDomain': False, 'textToSpeechPermission': 'ALLOWED', 'epub': {'isAvailable': True, 'acsTokenLink': 'http://books.google.com/books/download/A_Book_of_Bliss-sample-epub.acsm?id=MXD86fwgwgsC&format=epub&output=acs4_fulfillment_token&dl_type=sample&source=gbs_api'}, 'pdf': {'isAvailable': False}, 'webReaderLink': 'http://play.google.com/books/reader?id=MXD86fwgwgsC&hl=&printsec=frontcover&source=gbs_api', 'accessViewStatus': 'SAMPLE', 'quoteSharingAllowed': False}, 'searchInfo': {'textSnippet': 'Bliss is serene happiness -- the goodness and joy in life.'}}, {'kind': 'books#volume', 'id': 'EMDKlHfsEjoC', 'etag': 'DPaGj6YOYCg', 'selfLink': 'https://www.googleapis.com/books/v1/volumes/EMDKlHfsEjoC', 'volumeInfo': {'title': 'Everyday Bliss for Busy Women', 'subtitle': 'Energy Balancing Secrets for Complete Health and Vitality', 'authors': ['Maryam Webster'], 'publisher': 'New Harbinger  Publications', 'publishedDate': '2008-05-01', 'description': "After rushing through your morning routine, dropping the kids off at school, completing your responsibilities at the office, and handling other daily duties, it's really no wonder that you feel drained at the end of the day. It is possible, though, to find room in even the most hectic schedule to enjoy life moment-by-moment and refocus on the goals that matter most to you. This book shows you how to stop living at warp speed and reclaim your life for yourself. You'll learn how to use cutting-edge energy psychology techniques and the power of intention to: •Create a beautiful private space to escape stress and invite bliss •Recharge throughout the day using the same quick, simple routines used by elite energy coaches •Reduce mental clutter through deliberate acts of focused intention Don't settle for just keeping your head above water and getting everything done. You deserve to find focus, balance, and everyday bliss. With what you'll learn in this book, you can.", 'industryIdentifiers': [{'type': 'ISBN_10', 'identifier': '160882506X'}, {'type': 'ISBN_13', 'identifier': '9781608825066'}], 'readingModes': {'text': True, 'image': True}, 'pageCount': 216, 'printType': 'BOOK', 'categories': ['Self-Help'], 'maturityRating': 'NOT_MATURE', 'allowAnonLogging': False, 'contentVersion': '1.9.5.0.preview.3', 'panelizationSummary': {'containsEpubBubbles': False, 'containsImageBubbles': False}, 'imageLinks': {'smallThumbnail': 'http://books.google.com/books/content?id=EMDKlHfsEjoC&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api', 'thumbnail': 'http://books.google.com/books/content?id=EMDKlHfsEjoC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api'}, 'language': 'en', 'previewLink': 'http://books.google.com/books?id=EMDKlHfsEjoC&pg=PA59&dq=BLISS+THOUGHTS&hl=&cd=2&source=gbs_api', 'infoLink': 'https://play.google.com/store/books/details?id=EMDKlHfsEjoC&source=gbs_api', 'canonicalVolumeLink': 'https://play.google.com/store/books/details?id=EMDKlHfsEjoC'}, 'saleInfo': {'country': 'US', 'saleability': 'FOR_SALE', 'isEbook': True, 'listPrice': {'amount': 11.35, 'currencyCode': 'USD'}, 'retailPrice': {'amount': 9.08, 'currencyCode': 'USD'}, 'buyLink': 'https://play.google.com/store/books/details?id=EMDKlHfsEjoC&rdid=book-EMDKlHfsEjoC&rdot=1&source=gbs_api', 'offers': [{'finskyOfferType': 1, 'listPrice': {'amountInMicros': 11350000, 'currencyCode': 'USD'}, 'retailPrice': {'amountInMicros': 9080000, 'currencyCode': 'USD'}, 'giftable': True}]}, 'accessInfo': {'country': 'US', 'viewability': 'PARTIAL', 'embeddable': True, 'publicDomain': False, 'textToSpeechPermission': 'ALLOWED', 'epub': {'isAvailable': True}, 'pdf': {'isAvailable': True}, 'webReaderLink': 'http://play.google.com/books/reader?id=EMDKlHfsEjoC&hl=&printsec=frontcover&source=gbs_api', 'accessViewStatus': 'SAMPLE', 'quoteSharingAllowed': False}, 'searchInfo': {'textSnippet': 'So, what kind of positive <b>thoughts</b> is it best to concentrate on? I&#39;m glad you asked, <br>\nbecause <b>thoughts</b> about how much you love ice cream or enjoy looking at the <br>\nnew hottie at work aren&#39;t what we&#39;re talking about. Get out the <b>Bliss</b> List you made<br>\n&nbsp;...'}}, {'kind': 'books#volume', 'id': 'KSQ2AAAAQBAJ', 'etag': 'yqY6Jj5tGmU', 'selfLink': 'https://www.googleapis.com/books/v1/volumes/KSQ2AAAAQBAJ', 'volumeInfo': {'title': 'Inspector Bliss Mysteries 8-Book Bundle', 'authors': ['James Hawkins'], 'publisher': 'Dundurn.com', 'publishedDate': '2013-08-09', 'description': 'This ebook bundle contains the first eight novels of the Inspector Bliss Mystery series by James Hawkins.', 'industryIdentifiers': [{'type': 'ISBN_13', 'identifier': '9781459722798'}, {'type': 'ISBN_10', 'identifier': '1459722795'}], 'readingModes': {'text': True, 'image': True}, 'pageCount': 2874, 'printType': 'BOOK', 'categories': ['Fiction'], 'maturityRating': 'NOT_MATURE', 'allowAnonLogging': False, 'contentVersion': '1.10.10.0.preview.3', 'panelizationSummary': {'containsEpubBubbles': False, 'containsImageBubbles': False}, 'imageLinks': {'smallThumbnail': 'http://books.google.com/books/content?id=KSQ2AAAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api', 'thumbnail': 'http://books.google.com/books/content?id=KSQ2AAAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api'}, 'language': 'en', 'previewLink': 'http://books.google.com/books?id=KSQ2AAAAQBAJ&pg=PT577&dq=BLISS+THOUGHTS&hl=&cd=3&source=gbs_api', 'infoLink': 'https://play.google.com/store/books/details?id=KSQ2AAAAQBAJ&source=gbs_api', 'canonicalVolumeLink': 'https://play.google.com/store/books/details?id=KSQ2AAAAQBAJ'}, 'saleInfo': {'country': 'US', 'saleability': 'FOR_SALE', 'isEbook': True, 'listPrice': {'amount': 49.99, 'currencyCode': 'USD'}, 'retailPrice': {'amount': 39.49, 'currencyCode': 'USD'}, 'buyLink': 'https://play.google.com/store/books/details?id=KSQ2AAAAQBAJ&rdid=book-KSQ2AAAAQBAJ&rdot=1&source=gbs_api', 'offers': [{'finskyOfferType': 1, 'listPrice': {'amountInMicros': 49990000, 'currencyCode': 'USD'}, 'retailPrice': {'amountInMicros': 39490000, 'currencyCode': 'USD'}, 'giftable': True}]}, 'accessInfo': {'country': 'US', 'viewability': 'PARTIAL', 'embeddable': True, 'publicDomain': False, 'textToSpeechPermission': 'ALLOWED', 'epub': {'isAvailable': True}, 'pdf': {'isAvailable': True}, 'webReaderLink': 'http://play.google.com/books/reader?id=KSQ2AAAAQBAJ&hl=&printsec=frontcover&source=gbs_api', 'accessViewStatus': 'SAMPLE', 'quoteSharingAllowed': False}, 'searchInfo': {'textSnippet': '“&#39;Specially akid.” How true, <b>Bliss thought</b>, howtrue. He pulledhimself back tothe <br>\npresent andstumbled overhis tongue. “I...I didn&#39;trealize it washim... I had noidea <br>\nitwas the same bloke.I...I didn&#39;t think hewas into restaurants.” “He wasn&#39;t backthen<br>\n,”&nbsp;...'}}, {'kind': 'books#volume', 'id': 'gr8aooVzvwAC', 'etag': 'PIE6k3Q2qPQ', 'selfLink': 'https://www.googleapis.com/books/v1/volumes/gr8aooVzvwAC', 'volumeInfo': {'title': 'Killing Bliss', 'authors': ['Edna Sheedy'], 'publisher': 'Zebra Books', 'publishedDate': '2005', 'description': 'In this thrilling tale of romantic suspense, long-buried secrets are dug up when a 15-year-old unsolved murder case is reopened--and a twisted killer returns for revenge. Original.', 'industryIdentifiers': [{'type': 'ISBN_10', 'identifier': '0821777513'}, {'type': 'ISBN_13', 'identifier': '9780821777510'}], 'readingModes': {'text': False, 'image': True}, 'pageCount': 383, 'printType': 'BOOK', 'categories': ['Fiction'], 'maturityRating': 'NOT_MATURE', 'allowAnonLogging': False, 'contentVersion': '0.0.2.0.preview.1', 'panelizationSummary': {'containsEpubBubbles': False, 'containsImageBubbles': False}, 'imageLinks': {'smallThumbnail': 'http://books.google.com/books/content?id=gr8aooVzvwAC&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api', 'thumbnail': 'http://books.google.com/books/content?id=gr8aooVzvwAC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api'}, 'language': 'en', 'previewLink': 'http://books.google.com/books?id=gr8aooVzvwAC&pg=PA232&dq=BLISS+THOUGHTS&hl=&cd=4&source=gbs_api', 'infoLink': 'http://books.google.com/books?id=gr8aooVzvwAC&dq=BLISS+THOUGHTS&hl=&source=gbs_api', 'canonicalVolumeLink': 'https://books.google.com/books/about/Killing_Bliss.html?hl=&id=gr8aooVzvwAC'}, 'saleInfo': {'country': 'US', 'saleability': 'NOT_FOR_SALE', 'isEbook': False}, 'accessInfo': {'country': 'US', 'viewability': 'PARTIAL', 'embeddable': True, 'publicDomain': False, 'textToSpeechPermission': 'ALLOWED_FOR_ACCESSIBILITY', 'epub': {'isAvailable': False}, 'pdf': {'isAvailable': False}, 'webReaderLink': 'http://play.google.com/books/reader?id=gr8aooVzvwAC&hl=&printsec=frontcover&source=gbs_api', 'accessViewStatus': 'SAMPLE', 'quoteSharingAllowed': False}, 'searchInfo': {'textSnippet': 'If Frank <b>Bliss</b> hadn&#39;t called Sandra that day, told her Grover was “humping his <br>\nprostitute mother and had the state paying for it ... At the moment, no headache <br>\ndrilled into his <b>thoughts</b>, and other than the terror that bunched at the base of his <br>\nskull&nbsp;...'}}, {'kind': 'books#volume', 'id': '9hS0mLTIwDsC', 'etag': 'WeaEsjeLgCk', 'selfLink': 'https://www.googleapis.com/books/v1/volumes/9hS0mLTIwDsC', 'volumeInfo': {'title': 'Biofields & Bliss Trilogy', 'authors': ['Jasmuheen'], 'publisher': 'Lulu.com', 'publishedDate': '2008-08', 'description': 'In a bid to present a more complete version of her work in Interdimensional Biofield Technology, metaphysical author Jasmuheen has now combined the Trilogy of the Biofields & Bliss series into one complete manual. Dealing with principles of the futuristic Higher Light Science that are also based on ancient wisdom, Book 1 - ""Four Body Fitness"" delivers a free, non-religious based lifestyle to harmonize our internal & external energy flows so that we can experience our full physical, emotional, mental and spiritual potential. Book 2 - ""Co-creating Paradise"" takes this to the family and community levels while Book 3 - ""\'The Madonna Frequency\' Planetary Peace Program"" looks at very specific global projects to eliminate war and violence and address basic human rights and bring peace & prosperity to all in our world.', 'industryIdentifiers': [{'type': 'ISBN_13', 'identifier': '9781409205234'}, {'type': 'ISBN_10', 'identifier': '1409205231'}], 'readingModes': {'text': False, 'image': True}, 'pageCount': 242, 'printType': 'BOOK', 'categories': ['Self-Help'], 'maturityRating': 'NOT_MATURE', 'allowAnonLogging': False, 'contentVersion': '1.4.1.0.preview.1', 'panelizationSummary': {'containsEpubBubbles': False, 'containsImageBubbles': False}, 'imageLinks': {'smallThumbnail': 'http://books.google.com/books/content?id=9hS0mLTIwDsC&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api', 'thumbnail': 'http://books.google.com/books/content?id=9hS0mLTIwDsC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api'}, 'language': 'en', 'previewLink': 'http://books.google.com/books?id=9hS0mLTIwDsC&pg=PA159&dq=BLISS+THOUGHTS&hl=&cd=5&source=gbs_api', 'infoLink': 'http://books.google.com/books?id=9hS0mLTIwDsC&dq=BLISS+THOUGHTS&hl=&source=gbs_api', 'canonicalVolumeLink': 'https://books.google.com/books/about/Biofields_Bliss_Trilogy.html?hl=&id=9hS0mLTIwDsC'}, 'saleInfo': {'country': 'US', 'saleability': 'NOT_FOR_SALE', 'isEbook': False}, 'accessInfo': {'country': 'US', 'viewability': 'PARTIAL', 'embeddable': True, 'publicDomain': False, 'textToSpeechPermission': 'ALLOWED', 'epub': {'isAvailable': False}, 'pdf': {'isAvailable': False}, 'webReaderLink': 'http://play.google.com/books/reader?id=9hS0mLTIwDsC&hl=&printsec=frontcover&source=gbs_api', 'accessViewStatus': 'SAMPLE', 'quoteSharingAllowed': False}, 'searchInfo': {'textSnippet': 'Subtlety, sensitivity, awareness, reflective, philosophical <b>thought</b>, all these are <br>\nkeys. In BB1, we discussed the 8-hertz brainwave frequency that allowed a <br>\nperson to attract the Grace. In the next section we also look at the Alpha, Beta, <br>\nTheta and&nbsp;...'}}, {'kind': 'books#volume', 'id': 'Ho1qwtttAMkC', 'etag': '/PslhLLDPn8', 'selfLink': 'https://www.googleapis.com/books/v1/volumes/Ho1qwtttAMkC', 'volumeInfo': {'title': 'Bliss', 'subtitle': 'Living in Silent Awareness', 'authors': ['Catherine Schultz'], 'publisher': 'Xlibris Corporation', 'publishedDate': '2000-12-20', 'description': 'What is bliss? What prevents bliss? How might one live in bliss? Peoples bliss experiences along with various scientific explanations reveal oneness each moment ... transcending any thought about what is occurring. What is Present before, during and after experience? Relax. Drown into One Self.', 'industryIdentifiers': [{'type': 'ISBN_10', 'identifier': '1462830811'}, {'type': 'ISBN_13', 'identifier': '9781462830817'}], 'readingModes': {'text': True, 'image': True}, 'pageCount': 152, 'printType': 'BOOK', 'categories': ['Self-Help'], 'maturityRating': 'NOT_MATURE', 'allowAnonLogging': False, 'contentVersion': '1.2.3.0.preview.3', 'panelizationSummary': {'containsEpubBubbles': False, 'containsImageBubbles': False}, 'imageLinks': {'smallThumbnail': 'http://books.google.com/books/content?id=Ho1qwtttAMkC&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api', 'thumbnail': 'http://books.google.com/books/content?id=Ho1qwtttAMkC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api'}, 'language': 'en', 'previewLink': 'http://books.google.com/books?id=Ho1qwtttAMkC&pg=PA94&dq=BLISS+THOUGHTS&hl=&cd=6&source=gbs_api', 'infoLink': 'https://play.google.com/store/books/details?id=Ho1qwtttAMkC&source=gbs_api', 'canonicalVolumeLink': 'https://play.google.com/store/books/details?id=Ho1qwtttAMkC'}, 'saleInfo': {'country': 'US', 'saleability': 'FOR_SALE', 'isEbook': True, 'listPrice': {'amount': 9.99, 'currencyCode': 'USD'}, 'retailPrice': {'amount': 9.99, 'currencyCode': 'USD'}, 'buyLink': 'https://play.google.com/store/books/details?id=Ho1qwtttAMkC&rdid=book-Ho1qwtttAMkC&rdot=1&source=gbs_api', 'offers': [{'finskyOfferType': 1, 'listPrice': {'amountInMicros': 9990000, 'currencyCode': 'USD'}, 'retailPrice': {'amountInMicros': 9990000, 'currencyCode': 'USD'}, 'giftable': True}]}, 'accessInfo': {'country': 'US', 'viewability': 'PARTIAL', 'embeddable': True, 'publicDomain': False, 'textToSpeechPermission': 'ALLOWED', 'epub': {'isAvailable': True, 'acsTokenLink': 'http://books.google.com/books/download/Bliss-sample-epub.acsm?id=Ho1qwtttAMkC&format=epub&output=acs4_fulfillment_token&dl_type=sample&source=gbs_api'}, 'pdf': {'isAvailable': True, 'acsTokenLink': 'http://books.google.com/books/download/Bliss-sample-pdf.acsm?id=Ho1qwtttAMkC&format=pdf&output=acs4_fulfillment_token&dl_type=sample&source=gbs_api'}, 'webReaderLink': 'http://play.google.com/books/reader?id=Ho1qwtttAMkC&hl=&printsec=frontcover&source=gbs_api', 'accessViewStatus': 'SAMPLE', 'quoteSharingAllowed': False}, 'searchInfo': {'textSnippet': 'Or there is a pull towards contrary <b>thoughts</b> such as “I don&#39;t deserve this”, “I can&#39;t <br>\nhandle this”, “That was a lie”, “This is Stupid”. “This is It? It&#39;s too easy?” “I&#39;m bored”<br>\n. In addition, there may be waves of negative emotions such as fear, rage,&nbsp;...'}}, {'kind': 'books#volume', 'id': 'l2NDanql5J4C', 'etag': 'LiSimvtqrqs', 'selfLink': 'https://www.googleapis.com/books/v1/volumes/l2NDanql5J4C', 'volumeInfo': {'title': 'Yogic Bliss and Sexual Healing', 'authors': ['Autumn Needles'], 'publisher': 'Fanny Press', 'publishedDate': '2010-05-05', 'description': "What happens when you desire or love where you shouldn't? What happens if you don't desire where you love? Or if you don't love where you desire? Combining what she has learned from life and the study of yoga, the author shares her philosophy along with raw, honest, silly & sexy stories that will help you confront your own boundaries and fears. A must-read for sexually adventurous truth-seekers.", 'industryIdentifiers': [{'type': 'ISBN_13', 'identifier': '9781603814423'}, {'type': 'ISBN_10', 'identifier': '1603814426'}], 'readingModes': {'text': True, 'image': False}, 'printType': 'BOOK', 'categories': ['Biography & Autobiography'], 'maturityRating': 'MATURE', 'allowAnonLogging': False, 'contentVersion': '0.1.1.0.preview.2', 'imageLinks': {'smallThumbnail': 'http://books.google.com/books/content?id=l2NDanql5J4C&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api', 'thumbnail': 'http://books.google.com/books/content?id=l2NDanql5J4C&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api'}, 'language': 'en', 'previewLink': 'http://books.google.com/books?id=l2NDanql5J4C&pg=PA75&dq=BLISS+THOUGHTS&hl=&cd=7&source=gbs_api', 'infoLink': 'http://books.google.com/books?id=l2NDanql5J4C&dq=BLISS+THOUGHTS&hl=&source=gbs_api', 'canonicalVolumeLink': 'https://books.google.com/books/about/Yogic_Bliss_and_Sexual_Healing.html?hl=&id=l2NDanql5J4C'}, 'saleInfo': {'country': 'US', 'saleability': 'NOT_FOR_SALE', 'isEbook': False}, 'accessInfo': {'country': 'US', 'viewability': 'PARTIAL', 'embeddable': True, 'publicDomain': False, 'textToSpeechPermission': 'ALLOWED', 'epub': {'isAvailable': True, 'acsTokenLink': 'http://books.google.com/books/download/Yogic_Bliss_and_Sexual_Healing-sample-epub.acsm?id=l2NDanql5J4C&format=epub&output=acs4_fulfillment_token&dl_type=sample&source=gbs_api'}, 'pdf': {'isAvailable': False}, 'webReaderLink': 'http://play.google.com/books/reader?id=l2NDanql5J4C&hl=&printsec=frontcover&source=gbs_api', 'accessViewStatus': 'SAMPLE', 'quoteSharingAllowed': False}, 'searchInfo': {'textSnippet': '<b>Thought</b>/Emotion. Body and breath have had time to merge with one another <br>\nwhen <b>thoughts</b> and feelings begin to arise. Can we even find the line any more <br>\nbetween before and after when our <b>thoughts</b> and feelings are what give us <br>\nmemory?'}}, {'kind': 'books#volume', 'id': 'EUQqAAAAYAAJ', 'etag': 'aeMzt8xxC+s', 'selfLink': 'https://www.googleapis.com/books/v1/volumes/EUQqAAAAYAAJ', 'volumeInfo': {'title': 'Bliss Divine', 'subtitle': 'A Book of Spiritual Essays on the Lofty Purpose of Human Life and the Means to Its Achievement', 'authors': ['Swami Sivananda'], 'publishedDate': '1964', 'industryIdentifiers': [{'type': 'OTHER', 'identifier': 'UVA:X001687917'}], 'readingModes': {'text': False, 'image': False}, 'pageCount': 520, 'printType': 'BOOK', 'categories': ['Religious life'], 'maturityRating': 'NOT_MATURE', 'allowAnonLogging': False, 'contentVersion': '0.1.2.0.preview.0', 'panelizationSummary': {'containsEpubBubbles': False, 'containsImageBubbles': False}, 'imageLinks': {'smallThumbnail': 'http://books.google.com/books/content?id=EUQqAAAAYAAJ&printsec=frontcover&img=1&zoom=5&source=gbs_api', 'thumbnail': 'http://books.google.com/books/content?id=EUQqAAAAYAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api'}, 'language': 'en', 'previewLink': 'http://books.google.com/books?id=EUQqAAAAYAAJ&q=BLISS+THOUGHTS&dq=BLISS+THOUGHTS&hl=&cd=8&source=gbs_api', 'infoLink': 'http://books.google.com/books?id=EUQqAAAAYAAJ&dq=BLISS+THOUGHTS&hl=&source=gbs_api', 'canonicalVolumeLink': 'https://books.google.com/books/about/Bliss_Divine.html?hl=&id=EUQqAAAAYAAJ'}, 'saleInfo': {'country': 'US', 'saleability': 'NOT_FOR_SALE', 'isEbook': False}, 'accessInfo': {'country': 'US', 'viewability': 'NO_PAGES', 'embeddable': False, 'publicDomain': False, 'textToSpeechPermission': 'ALLOWED', 'epub': {'isAvailable': False}, 'pdf': {'isAvailable': False}, 'webReaderLink': 'http://play.google.com/books/reader?id=EUQqAAAAYAAJ&hl=&printsec=frontcover&source=gbs_api', 'accessViewStatus': 'NONE', 'quoteSharingAllowed': False}, 'searchInfo': {'textSnippet': 'door of 30 closeduce <b>Thoughts</b> gain strength by repetition . If you entertain an evil <br>\n<b>thought</b> or good <b>thought</b> once , this evil <b>thought</b> or good <b>thought</b> has a tendency <br>\nto recur again . Similar <b>thoughts</b> crowd together just as birds of the same feather&nbsp;...'}}, {'kind': 'books#volume', 'id': 'lmPCi5W0r-8C', 'etag': 'XIKcRyouT+0', 'selfLink': 'https://www.googleapis.com/books/v1/volumes/lmPCi5W0r-8C', 'volumeInfo': {'title': '8 Weeks to Bliss', 'subtitle': 'A Proven Weight and Wellness Program With...', 'authors': ['Mary Catherine Casto'], 'publisher': 'AuthorHouse', 'publishedDate': '2012-08-13', 'description': 'Based on a PROVEN program with LIFE CHANGING results. The single biggest difference between your seminars and other programs isyou find the root of the situation and get the person to start healing themselves. Marian Kloter 8 Weeks to BLISS allows anyone to be in control of their mind. Miraculously, even cravings go away. Anonymous. I can tell whos using the technique that controls negative thoughts they are more positive and their self-esteem improves. Additionally, finances, motivation, and appearances improve within 2-6 weeks. Sounds impossible, but with the technique in Lesson 3 negative thoughts DISAPPEAR. Finally, talkative people listen. Chaotic people become prompt. Focusing on the mind definitely creates success. Saying the technique to combat negative thoughts is the key. Does this mean we actually have a wellness program where the results last? Exactly, weight is maintained. The book targets overeaters, 60% of the population. Yet anorexics and bulimics are discussed also. I contacted our toughest cases three years later and guess what? They all were still using the simple technique and were enjoying the desired results. Her program made me a lot healthier and I recommend it wholeheartedly. Ron V. THIS BOOK IS A MUST READ, to allow you to become the person you want to be.', 'industryIdentifiers': [{'type': 'ISBN_13', 'identifier': '9781477263563'}, {'type': 'ISBN_10', 'identifier': '147726356X'}], 'readingModes': {'text': True, 'image': True}, 'pageCount': 140, 'printType': 'BOOK', 'categories': ['Health & Fitness'], 'maturityRating': 'NOT_MATURE', 'allowAnonLogging': True, 'contentVersion': '1.4.3.0.preview.3', 'panelizationSummary': {'containsEpubBubbles': False, 'containsImageBubbles': False}, 'imageLinks': {'smallThumbnail': 'http://books.google.com/books/content?id=lmPCi5W0r-8C&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api', 'thumbnail': 'http://books.google.com/books/content?id=lmPCi5W0r-8C&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api'}, 'language': 'en', 'previewLink': 'http://books.google.com/books?id=lmPCi5W0r-8C&pg=PA12&dq=BLISS+THOUGHTS&hl=&cd=9&source=gbs_api', 'infoLink': 'http://books.google.com/books?id=lmPCi5W0r-8C&dq=BLISS+THOUGHTS&hl=&source=gbs_api', 'canonicalVolumeLink': 'https://books.google.com/books/about/8_Weeks_to_Bliss.html?hl=&id=lmPCi5W0r-8C'}, 'saleInfo': {'country': 'US', 'saleability': 'NOT_FOR_SALE', 'isEbook': False}, 'accessInfo': {'country': 'US', 'viewability': 'PARTIAL', 'embeddable': True, 'publicDomain': False, 'textToSpeechPermission': 'ALLOWED', 'epub': {'isAvailable': True, 'acsTokenLink': 'http://books.google.com/books/download/8_Weeks_to_Bliss-sample-epub.acsm?id=lmPCi5W0r-8C&format=epub&output=acs4_fulfillment_token&dl_type=sample&source=gbs_api'}, 'pdf': {'isAvailable': True, 'acsTokenLink': 'http://books.google.com/books/download/8_Weeks_to_Bliss-sample-pdf.acsm?id=lmPCi5W0r-8C&format=pdf&output=acs4_fulfillment_token&dl_type=sample&source=gbs_api'}, 'webReaderLink': 'http://play.google.com/books/reader?id=lmPCi5W0r-8C&hl=&printsec=frontcover&source=gbs_api', 'accessViewStatus': 'SAMPLE', 'quoteSharingAllowed': False}, 'searchInfo': {'textSnippet': 'I stipulate that you must say it to yourself at the <b>thought</b> of something negative or <br>\nany food <b>thought</b>. ... an anorexic, or a bulimic, the technique will work because it <br>\nputs you in control, not the negative <b>thoughts</b> that cause problems with food.'}}, {'kind': 'books#volume', 'id': 'kUXAZORSAkIC', 'etag': '0lT+4QLMDDc', 'selfLink': 'https://www.googleapis.com/books/v1/volumes/kUXAZORSAkIC', 'volumeInfo': {'title': 'New York Court of Appeals. Records and Briefs.', 'authors': ['New York (State). Court of Appeals.'], 'publishedDate': '1894', 'description': "Volume contains: 146 NY 192 (Sawyer v. Cubby) 146 NY 200 (Converse v. Sickles) 146 NY 245 (Scudder v. Mayor of N.Y.) 146 NY 251 (Foo Long v. American Surety Co.) 146 NY 260 (Heath v. N.Y. Building Loan Banking Co.) 146 NY 275 (Mut. Life Ins. Co. of N.Y. v. O'Donnell) 146 NY 284 (Matter of Goodman) 146 NY 390 (Blazy v. McLean) 146 NY 407 (Anthony v. Amer. Glucose Co.)", 'industryIdentifiers': [{'type': 'OTHER', 'identifier': 'LLMC:NYAEDQY8950A'}], 'readingModes': {'text': False, 'image': True}, 'printType': 'BOOK', 'categories': ['Law'], 'maturityRating': 'NOT_MATURE', 'allowAnonLogging': False, 'contentVersion': '0.2.3.0.full.1', 'panelizationSummary': {'containsEpubBubbles': False, 'containsImageBubbles': False}, 'imageLinks': {'smallThumbnail': 'http://books.google.com/books/content?id=kUXAZORSAkIC&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api', 'thumbnail': 'http://books.google.com/books/content?id=kUXAZORSAkIC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api'}, 'language': 'en', 'previewLink': 'http://books.google.com/books?id=kUXAZORSAkIC&pg=RA4-PA285&dq=BLISS+THOUGHTS&hl=&cd=10&source=gbs_api', 'infoLink': 'https://play.google.com/store/books/details?id=kUXAZORSAkIC&source=gbs_api', 'canonicalVolumeLink': 'https://play.google.com/store/books/details?id=kUXAZORSAkIC'}, 'saleInfo': {'country': 'US', 'saleability': 'FREE', 'isEbook': True, 'buyLink': 'https://play.google.com/store/books/details?id=kUXAZORSAkIC&rdid=book-kUXAZORSAkIC&rdot=1&source=gbs_api'}, 'accessInfo': {'country': 'US', 'viewability': 'ALL_PAGES', 'embeddable': True, 'publicDomain': True, 'textToSpeechPermission': 'ALLOWED', 'epub': {'isAvailable': False}, 'pdf': {'isAvailable': True, 'downloadLink': 'http://books.google.com/books/download/New_York_Court_of_Appeals_Records_and_Br.pdf?id=kUXAZORSAkIC&hl=&output=pdf&sig=ACfU3U1W0RbyESd4e6Va6Ou1Upcpz5OmAw&source=gbs_api'}, 'webReaderLink': 'http://play.google.com/books/reader?id=kUXAZORSAkIC&hl=&printsec=frontcover&source=gbs_api', 'accessViewStatus': 'FULL_PUBLIC_DOMAIN', 'quoteSharingAllowed': False}, 'searchInfo': {'textSnippet': 'A. I cannot tell what Mr. Bliss would have thought. I cannot read Mr. <b>Bliss&#39;s</b> <br>\n<b>thoughts</b>. Q. You cannot read your own thoughts upon this 288 subject? A. I <br>\ncannot read anybody&#39;s thoughts. Q. I am asking you what you did and what you <br>\nhad in your&nbsp;...'}}]}}127.0.0.1 - - [15/Sep/2020 23:52:24] "[37mPOST /api/bookshelf/upload HTTP/1.0[0m" 200 -
+127.0.0.1 - - [15/Sep/2020 23:52:24] "[37mGET /static/images/emptyshelf.jpg HTTP/1.0[0m" 200 -
+127.0.0.1 - - [15/Sep/2020 23:52:47] "[37mPOST /update_status HTTP/1.0[0m" 200 -
+127.0.0.1 - - [15/Sep/2020 23:52:54] "[37mGET / HTTP/1.0[0m" 200 -
+127.0.0.1 - - [15/Sep/2020 23:52:55] "[37mGET /static/images/shelfcolorbig.png HTTP/1.0[0m" 200 -
+127.0.0.1 - - [15/Sep/2020 23:52:55] "[37mGET /api/bookshelf HTTP/1.0[0m" 200 -
+127.0.0.1 - - [15/Sep/2020 23:52:55] "[37mGET /api/bookshelf HTTP/1.0[0m" 200 -
+127.0.0.1 - - [15/Sep/2020 23:52:57] "[33mGET /book-info/static/images/shelfcolorbig.png HTTP/1.0[0m" 404 -
+127.0.0.1 - - [15/Sep/2020 23:52:57] "[37mGET /api/book_info/31 HTTP/1.0[0m" 200 -
+127.0.0.1 - - [15/Sep/2020 23:53:03] "[37mGET /logout HTTP/1.0[0m" 200 -
+127.0.0.1 - - [15/Sep/2020 23:53:04] "[37mGET /api/bookshelf HTTP/1.0[0m" 200 -
+127.0.0.1 - - [15/Sep/2020 23:53:04] "[37mGET / HTTP/1.0[0m" 200 -
+127.0.0.1 - - [15/Sep/2020 23:53:06] "[37mGET /api/bookshelf HTTP/1.0[0m" 200 -
+127.0.0.1 - - [15/Sep/2020 23:56:26] "[37mPOST /login HTTP/1.0[0m" 200 -
+127.0.0.1 - - [15/Sep/2020 23:56:27] "[37mGET /api/bookshelf HTTP/1.0[0m" 200 -
+127.0.0.1 - - [15/Sep/2020 23:56:37] "[33mGET /googlee3fcda834fab719c.html HTTP/1.0[0m" 404 -
+127.0.0.1 - - [15/Sep/2020 23:56:37] "[33mGET /google8bd6bce22ba8db65.html HTTP/1.0[0m" 404 -
+127.0.0.1 - - [15/Sep/2020 23:57:05] "[33mGET /googlee3fcda834fab719c.html HTTP/1.0[0m" 404 -
+127.0.0.1 - - [15/Sep/2020 23:57:06] "[33mGET /google8bd6bce22ba8db65.html HTTP/1.0[0m" 404 -
+127.0.0.1 - - [16/Sep/2020 00:02:35] "[33mGET /google8bd6bce22ba8db65.html HTTP/1.0[0m" 404 -
+127.0.0.1 - - [16/Sep/2020 00:02:35] "[33mGET /googlee3fcda834fab719c.html HTTP/1.0[0m" 404 -
+127.0.0.1 - - [16/Sep/2020 00:04:07] "[37mGET / HTTP/1.0[0m" 200 -
+127.0.0.1 - - [16/Sep/2020 00:04:36] "[33mGET /api/display-shelf/ HTTP/1.0[0m" 404 -
+127.0.0.1 - - [16/Sep/2020 00:05:11] "[37mPOST /api/bookshelf/addbook HTTP/1.0[0m" 200 -
+127.0.0.1 - - [16/Sep/2020 00:05:18] "[37mPOST /update_status HTTP/1.0[0m" 200 -
+127.0.0.1 - - [16/Sep/2020 00:05:21] "[37mGET / HTTP/1.0[0m" 200 -
+127.0.0.1 - - [16/Sep/2020 00:05:22] "[37mGET /static/images/shelfcolorbig.png HTTP/1.0[0m" 200 -
+127.0.0.1 - - [16/Sep/2020 00:05:23] "[37mGET /api/bookshelf HTTP/1.0[0m" 200 -
+127.0.0.1 - - [16/Sep/2020 00:05:23] "[37mGET /api/bookshelf HTTP/1.0[0m" 200 -
+127.0.0.1 - - [16/Sep/2020 00:05:41] "[37mGET /api/display-shelf/SeptemberReads HTTP/1.0[0m" 200 -
+127.0.0.1 - - [16/Sep/2020 00:08:28] "[37mPOST /api/bookshelf/addbook HTTP/1.0[0m" 200 -
+127.0.0.1 - - [16/Sep/2020 00:08:33] "[37mPOST /update_status HTTP/1.0[0m" 200 -
+127.0.0.1 - - [16/Sep/2020 00:08:38] "[37mGET / HTTP/1.0[0m" 200 -
+127.0.0.1 - - [16/Sep/2020 00:08:39] "[37mGET /static/images/shelfcolorbig.png HTTP/1.0[0m" 200 -
+127.0.0.1 - - [16/Sep/2020 00:08:40] "[37mGET /api/bookshelf HTTP/1.0[0m" 200 -
+127.0.0.1 - - [16/Sep/2020 00:08:40] "[37mGET /api/bookshelf HTTP/1.0[0m" 200 -
+127.0.0.1 - - [16/Sep/2020 00:13:04] "[33mGET /googlee3fcda834fab719c.html HTTP/1.0[0m" 404 -
+127.0.0.1 - - [16/Sep/2020 00:13:04] "[33mGET /google8bd6bce22ba8db65.html HTTP/1.0[0m" 404 -
+127.0.0.1 - - [16/Sep/2020 00:18:11] "[37mGET / HTTP/1.0[0m" 200 -
+127.0.0.1 - - [16/Sep/2020 00:18:15] "[37mGET /api/bookshelf HTTP/1.0[0m" 200 -
+127.0.0.1 - - [16/Sep/2020 00:24:52] "[37mGET /logout HTTP/1.0[0m" 200 -
+127.0.0.1 - - [16/Sep/2020 00:24:52] "[37mGET / HTTP/1.0[0m" 200 -
+127.0.0.1 - - [16/Sep/2020 00:24:52] "[37mGET /api/bookshelf HTTP/1.0[0m" 200 -
+127.0.0.1 - - [16/Sep/2020 00:24:54] "[37mGET /api/bookshelf HTTP/1.0[0m" 200 -
+[2020-09-16 00:25:25,545] ERROR in app: Exception on /register [POST]
+Traceback (most recent call last):
+  File "/home/ubuntu/hb-project-shelve-it/env/lib/python3.6/site-packages/flask/app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/ubuntu/hb-project-shelve-it/env/lib/python3.6/site-packages/flask/app.py", line 1952, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/ubuntu/hb-project-shelve-it/env/lib/python3.6/site-packages/flask/app.py", line 1821, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/ubuntu/hb-project-shelve-it/env/lib/python3.6/site-packages/flask/_compat.py", line 39, in reraise
+    raise value
+  File "/home/ubuntu/hb-project-shelve-it/env/lib/python3.6/site-packages/flask/app.py", line 1950, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/ubuntu/hb-project-shelve-it/env/lib/python3.6/site-packages/flask/app.py", line 1936, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "server_react.py", line 231, in register_new_account
+    phnum = data['phone_number']
+KeyError: 'phone_number'
+127.0.0.1 - - [16/Sep/2020 00:25:25] "[35m[1mPOST /register HTTP/1.0[0m" 500 -
+[2020-09-16 00:25:42,506] ERROR in app: Exception on /api/bookshelf/addbook [POST]
+Traceback (most recent call last):
+  File "/home/ubuntu/hb-project-shelve-it/env/lib/python3.6/site-packages/flask/app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/ubuntu/hb-project-shelve-it/env/lib/python3.6/site-packages/flask/app.py", line 1952, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/ubuntu/hb-project-shelve-it/env/lib/python3.6/site-packages/flask/app.py", line 1821, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/ubuntu/hb-project-shelve-it/env/lib/python3.6/site-packages/flask/_compat.py", line 39, in reraise
+    raise value
+  File "/home/ubuntu/hb-project-shelve-it/env/lib/python3.6/site-packages/flask/app.py", line 1950, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/ubuntu/hb-project-shelve-it/env/lib/python3.6/site-packages/flask/app.py", line 1936, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "server_react.py", line 400, in get_book_info
+    if session['user']:
+  File "/home/ubuntu/hb-project-shelve-it/env/lib/python3.6/site-packages/werkzeug/local.py", line 377, in <lambda>
+    __getitem__ = lambda x, i: x._get_current_object()[i]
+  File "/home/ubuntu/hb-project-shelve-it/env/lib/python3.6/site-packages/flask/sessions.py", line 84, in __getitem__
+    return super(SecureCookieSession, self).__getitem__(key)
+KeyError: 'user'
+127.0.0.1 - - [16/Sep/2020 00:25:42] "[35m[1mPOST /api/bookshelf/addbook HTTP/1.0[0m" 500 -
+127.0.0.1 - - [16/Sep/2020 00:25:49] "[37mGET /logout HTTP/1.0[0m" 200 -
+127.0.0.1 - - [16/Sep/2020 00:25:49] "[37mGET /api/bookshelf HTTP/1.0[0m" 200 -
+127.0.0.1 - - [16/Sep/2020 00:25:49] "[37mGET / HTTP/1.0[0m" 200 -
+127.0.0.1 - - [16/Sep/2020 00:25:51] "[37mGET /api/bookshelf HTTP/1.0[0m" 200 -
+Connected to the db!
+ * Serving Flask app "server_react" (lazy loading)
+ * Environment: production
+   WARNING: This is a development server. Do not use it in a production deployment.
+   Use a production WSGI server instead.
+ * Debug mode: off
+ * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+127.0.0.1 - - [16/Sep/2020 00:29:39] "[31m[1mGET /login HTTP/1.0[0m" 405 -
+127.0.0.1 - - [16/Sep/2020 00:29:40] "[33mGET /favicon.ico HTTP/1.0[0m" 404 -
+127.0.0.1 - - [16/Sep/2020 00:29:42] "[37mGET /api/bookshelf HTTP/1.0[0m" 200 -
+[2020-09-16 00:30:00,418] ERROR in app: Exception on /register [POST]
+Traceback (most recent call last):
+  File "/home/ubuntu/hb-project-shelve-it/env/lib/python3.6/site-packages/flask/app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/ubuntu/hb-project-shelve-it/env/lib/python3.6/site-packages/flask/app.py", line 1952, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/ubuntu/hb-project-shelve-it/env/lib/python3.6/site-packages/flask/app.py", line 1821, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/ubuntu/hb-project-shelve-it/env/lib/python3.6/site-packages/flask/_compat.py", line 39, in reraise
+    raise value
+  File "/home/ubuntu/hb-project-shelve-it/env/lib/python3.6/site-packages/flask/app.py", line 1950, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/ubuntu/hb-project-shelve-it/env/lib/python3.6/site-packages/flask/app.py", line 1936, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "server_react.py", line 231, in register_new_account
+    phnum = data['phone_number']
+KeyError: 'phone_number'
+127.0.0.1 - - [16/Sep/2020 00:30:00] "[35m[1mPOST /register HTTP/1.0[0m" 500 -
+127.0.0.1 - - [16/Sep/2020 00:30:03] "[37mGET / HTTP/1.0[0m" 200 -
+127.0.0.1 - - [16/Sep/2020 00:30:04] "[37mGET /static/images/shelfcolorbig.png HTTP/1.0[0m" 200 -
+127.0.0.1 - - [16/Sep/2020 00:30:05] "[37mGET /api/bookshelf HTTP/1.0[0m" 200 -
+[2020-09-16 00:30:20,955] ERROR in app: Exception on /api/bookshelf/addbook [POST]
+Traceback (most recent call last):
+  File "/home/ubuntu/hb-project-shelve-it/env/lib/python3.6/site-packages/flask/app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/ubuntu/hb-project-shelve-it/env/lib/python3.6/site-packages/flask/app.py", line 1952, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/ubuntu/hb-project-shelve-it/env/lib/python3.6/site-packages/flask/app.py", line 1821, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/ubuntu/hb-project-shelve-it/env/lib/python3.6/site-packages/flask/_compat.py", line 39, in reraise
+    raise value
+  File "/home/ubuntu/hb-project-shelve-it/env/lib/python3.6/site-packages/flask/app.py", line 1950, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/ubuntu/hb-project-shelve-it/env/lib/python3.6/site-packages/flask/app.py", line 1936, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "server_react.py", line 400, in get_book_info
+    if session['user']:
+  File "/home/ubuntu/hb-project-shelve-it/env/lib/python3.6/site-packages/werkzeug/local.py", line 377, in <lambda>
+    __getitem__ = lambda x, i: x._get_current_object()[i]
+  File "/home/ubuntu/hb-project-shelve-it/env/lib/python3.6/site-packages/flask/sessions.py", line 84, in __getitem__
+    return super(SecureCookieSession, self).__getitem__(key)
+KeyError: 'user'
+127.0.0.1 - - [16/Sep/2020 00:30:20] "[35m[1mPOST /api/bookshelf/addbook HTTP/1.0[0m" 500 -
+[2020-09-16 00:30:23,052] ERROR in app: Exception on /api/bookshelf/addbook [POST]
+Traceback (most recent call last):
+  File "/home/ubuntu/hb-project-shelve-it/env/lib/python3.6/site-packages/flask/app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/ubuntu/hb-project-shelve-it/env/lib/python3.6/site-packages/flask/app.py", line 1952, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/ubuntu/hb-project-shelve-it/env/lib/python3.6/site-packages/flask/app.py", line 1821, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/ubuntu/hb-project-shelve-it/env/lib/python3.6/site-packages/flask/_compat.py", line 39, in reraise
+    raise value
+  File "/home/ubuntu/hb-project-shelve-it/env/lib/python3.6/site-packages/flask/app.py", line 1950, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/ubuntu/hb-project-shelve-it/env/lib/python3.6/site-packages/flask/app.py", line 1936, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "server_react.py", line 400, in get_book_info
+    if session['user']:
+  File "/home/ubuntu/hb-project-shelve-it/env/lib/python3.6/site-packages/werkzeug/local.py", line 377, in <lambda>
+    __getitem__ = lambda x, i: x._get_current_object()[i]
+  File "/home/ubuntu/hb-project-shelve-it/env/lib/python3.6/site-packages/flask/sessions.py", line 84, in __getitem__
+    return super(SecureCookieSession, self).__getitem__(key)
+KeyError: 'user'
+127.0.0.1 - - [16/Sep/2020 00:30:23] "[35m[1mPOST /api/bookshelf/addbook HTTP/1.0[0m" 500 -
+[2020-09-16 00:30:23,838] ERROR in app: Exception on /api/bookshelf/addbook [POST]
+Traceback (most recent call last):
+  File "/home/ubuntu/hb-project-shelve-it/env/lib/python3.6/site-packages/flask/app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/ubuntu/hb-project-shelve-it/env/lib/python3.6/site-packages/flask/app.py", line 1952, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/ubuntu/hb-project-shelve-it/env/lib/python3.6/site-packages/flask/app.py", line 1821, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/ubuntu/hb-project-shelve-it/env/lib/python3.6/site-packages/flask/_compat.py", line 39, in reraise
+    raise value
+  File "/home/ubuntu/hb-project-shelve-it/env/lib/python3.6/site-packages/flask/app.py", line 1950, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/ubuntu/hb-project-shelve-it/env/lib/python3.6/site-packages/flask/app.py", line 1936, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "server_react.py", line 400, in get_book_info
+    if session['user']:
+  File "/home/ubuntu/hb-project-shelve-it/env/lib/python3.6/site-packages/werkzeug/local.py", line 377, in <lambda>
+    __getitem__ = lambda x, i: x._get_current_object()[i]
+  File "/home/ubuntu/hb-project-shelve-it/env/lib/python3.6/site-packages/flask/sessions.py", line 84, in __getitem__
+    return super(SecureCookieSession, self).__getitem__(key)
+KeyError: 'user'
+127.0.0.1 - - [16/Sep/2020 00:30:23] "[35m[1mPOST /api/bookshelf/addbook HTTP/1.0[0m" 500 -
+127.0.0.1 - - [16/Sep/2020 00:30:50] "[37mPOST /login HTTP/1.0[0m" 200 -
+127.0.0.1 - - [16/Sep/2020 00:43:32] "[33mGET /google8bd6bce22ba8db65.html HTTP/1.0[0m" 404 -
+127.0.0.1 - - [16/Sep/2020 00:43:32] "[33mGET /googlee3fcda834fab719c.html HTTP/1.0[0m" 404 -

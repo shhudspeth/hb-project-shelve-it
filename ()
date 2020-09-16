@@ -224,14 +224,14 @@ def process_logout():
 @app.route('/register', methods=["POST"])
 def register_new_account():
     data = request.get_json()
-    print(data, "DATA")
+    print(data)
     email = data['email']
     pswd = data['password']
     uname = data['username']
-    phnum = data.get('phone_number')
-    email_text = data.get('email_or_text')
-    public = data.get('public_shelf')
-    zipc = data.get('zipcode')
+    phnum = data['phone_number']
+    email_text = data['email_or_text']
+    public = data['public_shelf']
+    zipc = data['zipcode']
 
     new_user = crud.create_user_register(email, pswd, uname, phnum, email_text, public, zipc)
 
