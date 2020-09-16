@@ -30,11 +30,19 @@ function Register(props) {
   
     let history = useHistory();
   
+<<<<<<< HEAD
     const [email, setEmail] = React.useState();
     const [username, setUsername] = React.useState();
     const [password, setPassword] = React.useState();
     const [displayPublic, setDisplayPublic] = React.useState();
     const [emailTextMethod, setEmailTextMethod] = React.useState();
+=======
+    const [email, setEmail] = React.useState("");
+    const [username, setUsername] = React.useState("");
+    const [password, setPassword] = React.useState("");
+    const [displayPublic, setDisplayPublic] = React.useState("");
+    const [emailTextMethod, setEmailTextMethod] = React.useState("");
+>>>>>>> 3ed7acd13d77e0e04127821352ff159939f7c24a
     const [phoneNumber, setPhoneNumber] = React.useState("");
     const [zipcode, setZipcode] = React.useState("");
     const {loggedIn, setLoggedIn} = React.useContext(LoginComplete);

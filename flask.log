@@ -592,3 +592,5 @@ Traceback (most recent call last):
 KeyError: 'user'
 127.0.0.1 - - [16/Sep/2020 00:30:23] "[35m[1mPOST /api/bookshelf/addbook HTTP/1.0[0m" 500 -
 127.0.0.1 - - [16/Sep/2020 00:30:50] "[37mPOST /login HTTP/1.0[0m" 200 -
+127.0.0.1 - - [16/Sep/2020 00:43:32] "[33mGET /google8bd6bce22ba8db65.html HTTP/1.0[0m" 404 -
+127.0.0.1 - - [16/Sep/2020 00:43:32] "[33mGET /googlee3fcda834fab719c.html HTTP/1.0[0m" 404 -
