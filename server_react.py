@@ -224,7 +224,7 @@ def process_logout():
 @app.route('/register', methods=["POST"])
 def register_new_account():
     data = request.get_json()
-    print(data)
+    print(data, "DATA")
     email = data['email']
     pswd = data['password']
     uname = data['username']

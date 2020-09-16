@@ -33,10 +33,10 @@ function Register(props) {
     const [email, setEmail] = React.useState("");
     const [username, setUsername] = React.useState("");
     const [password, setPassword] = React.useState("");
-    const [displayPublic, setDisplayPublic] = React.useState("");
-    const [emailTextMethod, setEmailTextMethod] = React.useState("");
-    const [phoneNumber, setPhoneNumber] = React.useState("");
-    const [zipcode, setZipcode] = React.useState("");
+    const [displayPublic, setDisplayPublic] = React.useState(true);
+    const [emailTextMethod, setEmailTextMethod] = React.useState(false);
+    const [phoneNumber, setPhoneNumber] = React.useState("111-111-1111");
+    const [zipcode, setZipcode] = React.useState("11111");
     const {loggedIn, setLoggedIn} = React.useContext(LoginComplete);
   
     console.log("IN REGISTER")
