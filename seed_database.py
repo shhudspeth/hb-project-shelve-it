@@ -5,7 +5,7 @@ from datetime import datetime
 
 import crud
 import model
-import server
+import server_react as server
 # import crud
 # import model
 # import server
@@ -107,5 +107,3 @@ for book in book_data_seeding:
      new_comment = crud.create_comment(user_id=n_user.user_id, book_id = book.book_id, comment_text= comment)
      print(f"added new comment to database : {new_comment}")
 
-
-    
