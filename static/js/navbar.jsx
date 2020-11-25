@@ -29,13 +29,6 @@ function Register(props) {
     // register a user in React
   
     let history = useHistory();
-
-    const [email, setEmail] = React.useState();
-    const [username, setUsername] = React.useState();
-    const [password, setPassword] = React.useState();
-    const [displayPublic, setDisplayPublic] = React.useState();
-    const [emailTextMethod, setEmailTextMethod] = React.useState();
-
     const [email, setEmail] = React.useState("");
     const [username, setUsername] = React.useState("");
     const [password, setPassword] = React.useState("");
@@ -47,6 +40,7 @@ function Register(props) {
     const {loggedIn, setLoggedIn} = React.useContext(LoginComplete);
   
     console.log("IN REGISTER")
+
     const handleSubmit = (event) => {
   
       const register_user = 
@@ -71,8 +65,9 @@ function Register(props) {
       })
       console.log(register_user, loggedIn)   
         event.preventDefault();
-       history.push(`/`
+       history.push(`/`);
       }
+
       history.push(`/register`)
     return (
       <form className="form-register" onSubmit={handleSubmit}>
