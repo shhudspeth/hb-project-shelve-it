@@ -1,0 +1,12 @@
+List of files in zipfile
+Stored file name:Base/Config/newrelic.ini
+Original path:/Users/shhuds/src/hb_project/newrelic.ini
+
+Stored file name:Python/Env/pipFreeze.txt
+Original path:pipFreeze.txt
+
+Stored file name:nrdiag-filelist.txt
+Original path:./nrdiag-filelist.txt
+
+Stored file name:nrdiag-output.json
+Original path:./nrdiag-output.json
