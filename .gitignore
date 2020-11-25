@@ -15,6 +15,6 @@ sendgrid.env
 sendgrid.env
 images/demo_pics/
 *.mov
-new_relic.ini
+newrelic.ini
 
 
