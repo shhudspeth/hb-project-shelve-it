@@ -113,7 +113,7 @@ SQLAlchemy-Utils==0.36.8
 starkbank-ecdsa==2.0.1
 tensorboard==2.3.0
 tensorboard-plugin-wit==1.7.0
-tensorflow==2.6.4
+tensorflow==2.7.2
 tensorflow-estimator==2.3.0
 termcolor==1.1.0
 terminado==0.9.1
